@@ -1,0 +1,134 @@
+<main class="mx-auto max-w-[90rem] px-4 pb-16 sm:px-6 lg:px-8">
+  <app-top-bar [assessment]="assessment()" />
+
+  @if (notice()) {
+    <div class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded border border-line bg-panel px-4 py-3 text-sm text-ink-dim" role="status">
+      <span>{{ notice() }}</span>
+      @if (offline()) { <button type="button" class="btn" (click)="retry()">Retry connection</button> }
+    </div>
+  }
+
+  <section class="mt-6 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <div class="eyebrow">Crew monitoring · simulated mission</div>
+      <h1 class="display m-0 mt-1 text-4xl leading-none text-ink">Health dashboard</h1>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button type="button" class="btn" [disabled]="offline()" (click)="resetDemo()">Reset demo data</button>
+      <a routerLink="/planner" [queryParams]="{ crew: selectedId() }" class="btn">Open countermeasures planner</a>
+    </div>
+  </section>
+
+  <nav class="mt-5 flex flex-wrap gap-2" aria-label="Crew member">
+    @for (member of crew; track member.id) {
+      <button type="button" class="rounded border px-4 py-2 text-left transition-colors" [disabled]="offline()"
+              [class.border-signal]="member.id === selectedId()" [class.bg-raised]="member.id === selectedId()"
+              [class.border-line]="member.id !== selectedId()" (click)="selectCrew(member.id)">
+        <span class="display block text-lg leading-5 text-ink">{{ member.name }}</span>
+        <span class="eyebrow">{{ member.role }}</span>
+      </button>
+    }
+    @if (summary(); as s) {
+      <div class="ml-auto flex items-center gap-2">
+        <span [class]="statusClass(assessment().overall)">Overall {{ assessment().overall }}</span>
+        <span class="chip num">MISSION DAY {{ assessment().mission_day }}</span>
+      </div>
+    }
+  </nav>
+
+  @if (assessment(); as a) {
+    @if (a.triage_recommended) {
+      <section class="mt-5 rounded border border-crit bg-crit/10 p-4 sm:flex sm:items-center sm:justify-between sm:gap-5" aria-label="Emergency action">
+        <div>
+          <div class="flex items-center gap-2"><span class="status status-red">RED · Triage recommended</span></div>
+          <p class="m-0 mt-2 text-sm leading-6 text-ink">An absolute-limit red indicator is present. This prototype does not auto-dial; follow onboard procedures.</p>
+        </div>
+        <button type="button" class="btn btn-primary mt-3 shrink-0 sm:mt-0" (click)="openTriage()">{{ emergencyLabel }}</button>
+      </section>
+    } @else {
+      <section class="mt-5 flex flex-wrap items-center justify-between gap-3 rounded border border-line bg-panel px-4 py-3">
+        <div>
+          <div class="eyebrow">Emergency action</div>
+          <p class="m-0 mt-1 text-sm text-ink-dim">{{ a.comms.emergency_action === 'CALL_FLIGHT_SURGEON' ? 'Live communication path available.' : 'Autonomous protocol is available; packet will be queued.' }}</p>
+        </div>
+        <button type="button" class="btn" (click)="openTriage()">{{ emergencyLabel }}</button>
+      </section>
+    }
+
+    <section class="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(19rem,0.7fr)]">
+      <app-habitat-switcher
+        [environments]="environments()"
+        [selectedEnvironmentId]="selectedEnvironmentId()"
+        [distanceKm]="distanceKm()"
+        [day]="day()"
+        [maxDay]="maxDay()"
+        [disabled]="offline() || loading()"
+        (environmentSelected)="selectEnvironment($event)"
+        (distanceSelected)="selectDistance($event)"
+        (daySelected)="selectDay($event)"
+      />
+      <section class="panel p-4" aria-label="Mission health summary">
+        <div class="eyebrow">Assessment summary · backend computed</div>
+        <div class="mt-3 flex items-end justify-between gap-3">
+          <div><div class="display text-3xl leading-none text-ink">{{ a.overall }}</div><div class="eyebrow mt-1">Overall status</div></div>
+          <span class="num text-2xl text-ink">{{ a.environment.gravity_g }}<span class="unit ml-1">g</span></span>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          @for (flag of a.flags; track flag) { <span class="chip">{{ flag.replaceAll('_', ' ') }}</span> }
+          @if (!a.flags.length) { <span class="chip">No additional flags</span> }
+        </div>
+        <div class="mt-4 grid grid-cols-3 gap-2 border-t border-line pt-3 text-center">
+          <div><div class="num text-lg text-ink">{{ a.compliance.streak_days }}</div><div class="eyebrow">Routine streak</div></div>
+          <div><div class="num text-lg text-ink">{{ a.compliance.bone_low_days }}</div><div class="eyebrow">Bone low days</div></div>
+          <div><div class="num text-lg text-ink">{{ a.compliance.nutrition_low_days }}</div><div class="eyebrow">Nutrition low days</div></div>
+        </div>
+        @if (a.comms.mode === 'AUTONOMOUS') {
+          <p class="m-0 mt-3 border-t border-line pt-3 text-xs leading-5 text-ink-dim">{{ a.environment.comm_label }} · {{ (a.comms.one_way_delay_s / 60) | number:'1.1-1' }} min one way, from the backend.</p>
+        } @else {
+          <p class="m-0 mt-3 border-t border-line pt-3 text-xs leading-5 text-ink-dim">{{ a.environment.comm_label }} · near-real-time relay.</p>
+        }
+      </section>
+    </section>
+
+    <section class="mt-5 grid gap-4 lg:grid-cols-[minmax(16rem,0.65fr)_minmax(0,1.35fr)]">
+      <app-body-map [regions]="a.regions" (regionSelected)="showRegion($event)" />
+      <div class="panel p-4 sm:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="eyebrow">Daily record · source verified by backend</div>
+            <h2 class="display m-0 mt-1 text-2xl text-ink">{{ selectedCrew().name }} · Day {{ a.mission_day }}</h2>
+          </div>
+          <button type="button" class="btn btn-primary" [disabled]="offline() || loading()" (click)="openMeasurement()">Log next day</button>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span class="chip">{{ a.environment.label }}</span>
+          <span class="chip">Radiation <span class="num">{{ a.environment.radiation_mSv_day }}</span> <span class="unit">mSv/day</span></span>
+          <span class="chip">Cabin CO₂ <span class="num">{{ a.environment.cabin_co2_mmHg }}</span> <span class="unit">mmHg</span></span>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span class="chip">Vitals {{ hasVitals() ? 'logged' : 'not logged' }}</span>
+          <span class="chip">Exercise goal {{ a.environment.resistive_target_min }} <span class="unit">min/day</span></span>
+          <span class="chip">Source: {{ offline() ? 'SIMULATED EXAMPLE' : 'backend assessment' }}</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="mt-8">
+      @if (onlyRegion()) {
+        <div class="mb-3 flex items-center justify-between gap-3"><span class="eyebrow">Filtered by body region</span><button type="button" class="btn" (click)="onlyRegion.set(null)">Show all regions</button></div>
+      }
+      <app-indicator-list [assessment]="a" [onlyRegion]="onlyRegion()" (indicatorSelected)="guideFor.set($event)" />
+    </div>
+
+    <p class="m-0 mt-8 border-t border-line pt-4 text-xs leading-5 text-ink-mute">{{ a.disclaimer }}</p>
+
+    @if (guideFor(); as indicatorId) {
+      <app-measurement-guide-modal [indicatorId]="indicatorId" [assessment]="a" (closed)="guideFor.set(null)" />
+    }
+    @if (measurementOpen()) {
+      <app-measurement-form-modal [assessment]="a" [nextMissionDay]="nextMissionDay()" [environment]="selectedEnvironment()" [submitting]="saving()"
+                                 [error]="measurementError()" (closed)="measurementOpen.set(false)"
+                                 (saveMeasurement)="submitMeasurement($event)" />
+    }
+  }
+</main>

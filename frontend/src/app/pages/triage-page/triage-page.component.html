@@ -1,0 +1,156 @@
+<main class="mx-auto max-w-[84rem] px-4 pb-16 sm:px-6 lg:px-8">
+  <app-top-bar [assessment]="assessment()" />
+
+  <section class="mt-6 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <div class="eyebrow">Emergency checklist · deterministic protocol</div>
+      <h1 class="display m-0 mt-1 text-4xl leading-none text-ink">Crew triage</h1>
+      <p class="m-0 mt-2 max-w-3xl text-sm leading-6 text-ink-dim">Follow the onboard medical procedures. This checklist is decision support only and never diagnoses or selects medication.</p>
+    </div>
+    <a routerLink="/" class="btn">Back to dashboard</a>
+  </section>
+
+  @if (offline()) {
+    <div class="mt-5 rounded border border-signal bg-panel p-4 text-sm leading-6 text-ink" role="alert">
+      <strong>Local protocol mode.</strong> The displayed checklist is the bundled protocol. Responses stay in this browser; the incident packet cannot be sent or queued.
+    </div>
+  }
+  @if (notice()) { <div class="mt-4 rounded border border-line bg-panel p-3 text-sm text-ink-dim" role="status">{{ notice() }}</div> }
+  @if (error()) { <div class="mt-4 rounded border border-signal bg-raised p-3 text-sm text-ink" role="alert">{{ error() }}</div> }
+
+  @if (!incident()) {
+    <section class="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)]">
+      <div class="panel p-5">
+        <div class="eyebrow">Start incident</div>
+        <h2 class="display m-0 mt-1 text-2xl text-ink">Patient and mission context</h2>
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <label class="text-sm text-ink-dim">Patient
+            <select class="mt-1 w-full rounded border border-line bg-hull px-3 py-2 text-ink" [value]="patientId()" [disabled]="loading()" (change)="patientChanged($event)">
+              @for (member of crew; track member.id) { <option [value]="member.id" [selected]="member.id === patientId()">{{ member.name }} · {{ member.role }}</option> }
+            </select>
+          </label>
+          <label class="text-sm text-ink-dim">Habitat
+            <select class="mt-1 w-full rounded border border-line bg-hull px-3 py-2 text-ink" [value]="environmentId()" [disabled]="loading() || offline()" (change)="environmentChanged($event)">
+              @for (habitat of environments(); track habitat.id) { <option [value]="habitat.id" [selected]="habitat.id === environmentId()">{{ habitat.label }}</option> }
+            </select>
+          </label>
+          @if (environment()?.distance_range_km; as range) {
+            <label class="text-sm text-ink-dim sm:col-span-2">Earth distance <span class="num">{{ distanceKm() | number:'1.0-0' }} km</span>
+              <input class="mt-2 w-full accent-signal" type="range" [min]="range.min" [max]="range.max" step="1000000" [value]="distanceKm()" [disabled]="offline()" (change)="distanceChanged($event)" />
+            </label>
+          }
+          <label class="text-sm text-ink-dim sm:col-span-2">Mission day <span class="num">{{ missionDay() }}</span>
+            <input class="mt-2 w-full accent-signal" type="range" min="1" [max]="maxDay()" step="1" [value]="missionDay()" [disabled]="offline()" (change)="dayChanged($event)" />
+          </label>
+        </div>
+        <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+          <span class="eyebrow" aria-live="polite">{{ loading() ? 'Loading patient snapshot…' : (assessment()?.environment?.label ?? '') }}</span>
+          <button type="button" class="btn btn-primary" [disabled]="loading() || busy() || !assessment()" (click)="start()">Start emergency protocol</button>
+        </div>
+      </div>
+      <aside class="panel p-5">
+        <div class="eyebrow">Protocol reference</div>
+        <h2 class="display m-0 mt-1 text-xl text-ink">{{ protocol().scenario.replaceAll('_', ' ') }}</h2>
+        <p class="mt-3 text-sm leading-6 text-ink-dim">{{ protocol().steps.length }} deterministic steps · version {{ protocol().version }}</p>
+        <p class="m-0 rounded border border-line bg-hull p-3 text-xs leading-5 text-ink-mute">{{ protocol().review_status.replaceAll('_', ' ') }}. Use the onboard checklist and trained crew procedures; this prototype content requires clinician review.</p>
+      </aside>
+    </section>
+  }
+
+  @if (incident(); as active) {
+    <section class="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <div class="space-y-4">
+        @if (currentStep(); as step) {
+          <section class="panel p-5 sm:p-7" aria-live="polite">
+            <div class="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <div class="eyebrow">{{ step.type.replaceAll('_', ' ') }} · {{ step.id }}</div>
+                <h2 class="display m-0 mt-2 text-2xl text-ink">{{ step.checklist_label }}</h2>
+              </div>
+              <span class="chip num">{{ active.state.step_log.length }} logged</span>
+            </div>
+            <blockquote class="m-0 mt-6 border-l-2 border-signal bg-hull px-4 py-5 text-lg leading-8 text-ink sm:px-6" [attr.data-step-id]="step.id">{{ step.script }}</blockquote>
+            @if (step.type === 'ASK_YES_NO' && !ended()) {
+              <div class="mt-5 flex flex-wrap gap-3">
+                <button type="button" class="btn btn-primary min-w-28" [disabled]="busy()" (click)="answer('yes')">Yes</button>
+                <button type="button" class="btn min-w-28" [disabled]="busy()" (click)="answer('no')">No</button>
+              </div>
+            } @else if (!step.terminal && !ended()) {
+              <div class="mt-5"><button type="button" class="btn btn-primary min-w-36" [disabled]="busy()" (click)="answer('done')">Done</button></div>
+            }
+            @if (ended()) {
+              <div class="mt-5 rounded border border-line bg-hull p-3 text-sm text-ink-dim">Protocol ended · {{ offline() ? 'local state only' : 'incident recorded by the backend' }}.</div>
+            }
+          </section>
+        } @else if (!ended()) {
+          <section class="panel p-5" role="alert">
+            <div class="eyebrow">Protocol state unavailable</div>
+            <p class="m-0 mt-2 text-sm text-ink-dim">The current step is not in the loaded protocol. End the incident or reload from the server before continuing.</p>
+          </section>
+        }
+
+        @if (active.patient_snapshot.red_indicators.length) {
+          <section class="panel p-4">
+            <div class="eyebrow">Patient snapshot · RED indicators from assessment</div>
+            <ul class="mt-2 flex list-none flex-wrap gap-2 p-0">
+              @for (indicator of active.patient_snapshot.red_indicators; track indicator.id) {
+                <li class="chip"><span class="status status-red">RED</span> {{ redIndicatorLabel(indicator.id) }} · <span class="num">{{ indicator.value ?? '—' }}</span> <span class="unit">{{ indicator.unit }}</span></li>
+              }
+            </ul>
+          </section>
+        }
+      </div>
+
+      <aside class="space-y-4">
+        <section class="panel p-4">
+          <div class="eyebrow">Incident snapshot</div>
+          <div class="mt-3 grid gap-3 text-sm">
+            <div><div class="eyebrow">Patient · mission day</div><div class="mt-1 text-ink">{{ active.patient_id }} · Day {{ active.patient_snapshot.mission_day }}</div></div>
+            <div><div class="eyebrow">Started</div><div class="num mt-1 text-xs text-ink-dim">{{ active.started_at_iso | date:'medium' }}</div></div>
+            <div><div class="eyebrow">Habitat · comm mode</div><div class="mt-1 text-ink">{{ active.environment.label }} · {{ active.environment.comm_mode }}</div></div>
+            @if (active.environment.comm_mode === 'AUTONOMOUS') {
+              <div><div class="eyebrow">One-way delay</div><div class="num mt-1 text-ink">{{ active.environment.one_way_delay_s / 60 | number:'1.1-1' }} min</div></div>
+            }
+          </div>
+        </section>
+        <section class="panel p-4">
+          <div class="flex items-center justify-between gap-2"><h2 class="eyebrow m-0">Step log</h2><span class="chip num">{{ active.state.step_log.length }}</span></div>
+          @if (active.state.step_log.length) {
+            <ol class="mt-3 space-y-3 pl-5">
+              @for (entry of active.state.step_log; track $index) {
+                <li class="text-sm text-ink-dim"><span class="block">{{ stepAnswer(entry.step_id, entry.answer) }}</span><span class="num text-xs text-ink-mute">{{ entry.at_iso | date:'shortTime' }}</span></li>
+              }
+            </ol>
+          } @else {
+            <p class="m-0 mt-3 text-sm text-ink-mute">No steps recorded yet.</p>
+          }
+        </section>
+      </aside>
+    </section>
+
+    <section class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded border border-line bg-panel p-4">
+      <p class="m-0 text-sm text-ink-dim">You can stop at any point, including during the CPR loop.</p>
+      <button type="button" class="btn" [disabled]="busy() || ended()" (click)="endProtocol()">End protocol</button>
+    </section>
+
+    @if (ended() && active.store_and_forward; as packet) {
+      <section class="mt-5 rounded border border-signal bg-panel p-5" aria-labelledby="packet-title">
+        <div class="eyebrow">Store-and-forward packet</div>
+        <h2 id="packet-title" class="display m-0 mt-1 text-2xl text-ink">{{ packet.delivery.replaceAll('_', ' ') }}</h2>
+        <div class="mt-4 grid gap-3 sm:grid-cols-3">
+          <div><div class="eyebrow">Packet ID</div><div class="num mt-1 text-ink">{{ packet.packet_id }}</div></div>
+          <div><div class="eyebrow">Created</div><div class="num mt-1 text-sm text-ink">{{ packet.created_at_iso | date:'medium' }}</div></div>
+          <div><div class="eyebrow">Estimated Earth receipt</div><div class="num mt-1 text-sm text-ink">{{ packet.estimated_earth_receipt_iso | date:'medium' }}</div></div>
+        </div>
+        <p class="mb-0 mt-4 border-t border-line pt-4 text-sm leading-6 text-ink-dim">{{ packet.summary }}</p>
+      </section>
+    } @else if (ended() && offline()) {
+      <section class="mt-5 rounded border border-signal bg-panel p-5">
+        <div class="eyebrow">No packet queued</div>
+        <p class="m-0 mt-2 text-sm leading-6 text-ink-dim">This incident ended locally because the server connection was unavailable. The checklist remains visible here, but the store-and-forward packet was not created.</p>
+      </section>
+    }
+  }
+
+  @if (assessment(); as a) { <p class="m-0 mt-8 border-t border-line pt-4 text-xs leading-5 text-ink-mute">{{ a.disclaimer }}</p> }
+</main>

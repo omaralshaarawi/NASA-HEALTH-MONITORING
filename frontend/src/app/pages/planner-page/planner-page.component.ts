@@ -9,21 +9,11 @@ import { Attachment, ScanKind } from '../../components/planner/ultrasound-attach
 import { UltrasoundAttachmentModalComponent } from '../../components/planner/ultrasound-attachment-modal/ultrasound-attachment-modal.component';
 import { MeasurementGuideModalComponent } from '../../components/planner/measurement-guide-modal/measurement-guide-modal.component';
 import { statusClass } from '../../components/planner/planner-labels';
+import { TopBarComponent } from '../../components/dashboard/top-bar.component';
+import { CREW } from '../../core/crew';
 import { ApiService, GeneratedPlan, PlanSource } from '../../core/api.service';
 import { MOCK_ASSESSMENTS, MOCK_PLANS } from '../../mocks/mock-data';
 import { AssessmentResponse, CountermeasurePlan, IndicatorId } from '../../models/contract';
-
-interface CrewMember {
-  id: string;
-  name: string;
-  role: string;
-}
-
-const CREW: CrewMember[] = [
-  { id: 'ast_nova', name: 'Nova', role: 'Commander' },
-  { id: 'ast_kai', name: 'Kai', role: 'Flight engineer' },
-  { id: 'ast_lin', name: 'Lin', role: 'Mission specialist' },
-];
 
 const SOURCE_TEXT: Record<PlanSource, string> = {
   LIVE: 'Live answer from the planner',
@@ -39,6 +29,7 @@ const SOURCE_TEXT: Record<PlanSource, string> = {
     MeasurementGuideModalComponent,
     MissionReportPrintComponent,
     ModalShellComponent,
+    TopBarComponent,
     UltrasoundAttachmentModalComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

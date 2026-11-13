@@ -1,28 +1,5 @@
 <div class="mx-auto max-w-[84rem] px-4 pb-16 sm:px-6 lg:px-8">
-  <!-- top bar -->
-  <header class="flex flex-wrap items-center justify-between gap-4 border-b border-line py-4">
-    <div class="flex items-center gap-3">
-      <svg viewBox="0 0 32 32" width="32" height="32" fill="none" aria-hidden="true">
-        <circle cx="16" cy="16" r="6" fill="#e8eef6" />
-        <ellipse cx="16" cy="16" rx="14" ry="5.5" stroke="#5ad1f5" stroke-width="1.5" transform="rotate(-24 16 16)" />
-        <circle cx="27.6" cy="10.4" r="1.8" fill="#5ad1f5" />
-      </svg>
-      <div>
-        <div class="display text-xl leading-5 text-ink">Crew Health Console</div>
-        <div class="eyebrow">Countermeasures · Training · Nutrition</div>
-      </div>
-    </div>
-
-    @if (assessment(); as a) {
-      <div class="flex flex-wrap items-center gap-2">
-        <span class="chip">{{ a.environment.label }}</span>
-        <span class="chip num">{{ a.environment.gravity_g }} g</span>
-        <span class="chip" [class.border-signal]="a.comms.mode === 'AUTONOMOUS'" [class.text-signal]="a.comms.mode === 'AUTONOMOUS'">
-          {{ a.comms.mode === 'AUTONOMOUS' ? 'Autonomous · no live link' : 'Live link to Earth' }}
-        </span>
-      </div>
-    }
-  </header>
+  <app-top-bar [assessment]="assessment()" />
 
   <!-- crew switcher -->
   <nav class="mt-6 flex flex-wrap items-end justify-between gap-4" aria-label="Crew member">
