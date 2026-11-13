@@ -1,0 +1,115 @@
+{
+  "schema_version" : "1.0.0",
+  "plan_id" : "plan_fallback_ast_kai_d14",
+  "astronaut_id" : "ast_kai",
+  "generated_for_mission_day" : 14,
+  "generated_at_iso" : "2026-11-14T08:00:00Z",
+  "environment_id" : "DEEP_SPACECRAFT",
+  "triggers" : [ {
+    "indicator" : "hr_rest",
+    "status" : "YELLOW",
+    "reasons" : [ "Z=2.9 vs own normal 61.2" ]
+  }, {
+    "indicator" : "sleep",
+    "status" : "YELLOW",
+    "reasons" : [ "4.8 h at/below yellow limit 5.5" ]
+  }, {
+    "indicator" : "mood",
+    "status" : "YELLOW",
+    "reasons" : [ "Z=2.9 vs own normal 7.9" ]
+  }, {
+    "indicator" : "pvt",
+    "status" : "YELLOW",
+    "reasons" : [ "Z=2.9 vs own normal 249.3" ]
+  }, {
+    "indicator" : "radiation",
+    "status" : "YELLOW",
+    "reasons" : [ "2.98 mSv/day is 2.1x the expected 1.4 - possible Solar Particle Event (solar flare)" ]
+  }, {
+    "indicator" : "resistive",
+    "status" : "YELLOW",
+    "reasons" : [ "under 30 min resistive exercise for 4 days (target 60)" ]
+  }, {
+    "indicator" : "ration",
+    "status" : "YELLOW",
+    "reasons" : [ "ration under 80% for 3 days" ]
+  }, {
+    "indicator" : "immune_risk",
+    "status" : "YELLOW",
+    "reasons" : [ "radiation 2.1x expected together with temp, sleep" ]
+  } ],
+  "draft" : {
+    "sessions" : [ {
+      "exercise_id" : "zero_t2_ergometer",
+      "minutes" : 45,
+      "target_system" : "SPINE_BONE",
+      "instructions" : [ "Set up the compact exercise device and secure yourself.", "Warm up at low load.", "Alternate the cardio and resistive parts at a moderate, steady effort.", "Stop if you feel pain or dizziness, then log the session." ],
+      "rationale" : "Routine loading to protect bone and muscle. Triggered by Resistive exercise: under 30 min resistive exercise for 4 days (target 60)."
+    }, {
+      "exercise_id" : "circadian_led_journaling",
+      "minutes" : 20,
+      "target_system" : "HEAD_NEURO",
+      "instructions" : [ "Set the cabin lights to the daytime setting after waking and dim them in the evening.", "Write a short journal entry about today, including anything that frustrated you.", "Keep screens off and the sleep station dark before your sleep period." ],
+      "rationale" : "Supports sleep and mood. Triggered by Sleep duration: 4.8 h at/below yellow limit 5.5; Mood (1-10): Z=2.9 vs own normal 7.9."
+    }, {
+      "exercise_id" : "microbial_swab_air_check",
+      "minutes" : 15,
+      "target_system" : "SYSTEMIC_IMMUNE_METABOLIC",
+      "instructions" : [ "Swab the marked habitat surfaces with the sampling kit.", "Run the air quality check and note the cabin readings.", "Store the samples and log the results." ],
+      "rationale" : "Checks the habitat while the immune system is under load. Triggered by Radiation dose rate: 2.98 mSv/day is 2.1x the expected 1.4 - possible Solar Particle Event (solar flare); Ration intake: ration under 80% for 3 days."
+    } ],
+    "nutrition" : {
+      "kcal_adjustment" : 200,
+      "focus" : [ "full daily ration", "protein", "hydration", "calcium and vitamin D sources" ],
+      "notes" : "Ration intake has been below target. Finish every planned meal today and log it."
+    },
+    "escalate_to_flight_surgeon" : true,
+    "escalation_reason" : "Several body systems are outside the personal baseline at the same time: HEAD_NEURO, CHEST_CARDIO, SPINE_BONE, SYSTEMIC_IMMUNE_METABOLIC.",
+    "explanation" : "Some readings are outside your personal baseline today: Resting heart rate, Sleep duration, Mood (1-10), PVT reaction time, Radiation dose rate, Resistive exercise, Ration intake, Immune risk (composite). The plan targets those areas and keeps the workload moderate. Hard cardio is left out until the heart readings are back to normal. Ration intake has been low, so finish every planned meal. Several systems are affected at once, so the flight surgeon should review this plan at the next contact. Re-measure tomorrow morning."
+  },
+  "resources" : {
+    "assumptions" : {
+      "mass_kg" : 80.0,
+      "rest_met" : 1.0,
+      "water_ml_per_kcal" : 1.15,
+      "co2_g_per_kcal" : 0.34,
+      "formula" : "extra_kcal = (MET - rest_met) * mass_kg * hours"
+    },
+    "sessions" : [ {
+      "exercise_id" : "zero_t2_ergometer",
+      "minutes" : 45,
+      "met" : 5.0,
+      "gross_kcal" : 300,
+      "extra_kcal" : 240,
+      "extra_water_ml" : 276,
+      "extra_co2_g" : 82
+    }, {
+      "exercise_id" : "circadian_led_journaling",
+      "minutes" : 20,
+      "met" : 1.3,
+      "gross_kcal" : 35,
+      "extra_kcal" : 8,
+      "extra_water_ml" : 9,
+      "extra_co2_g" : 3
+    }, {
+      "exercise_id" : "microbial_swab_air_check",
+      "minutes" : 15,
+      "met" : 2.0,
+      "gross_kcal" : 40,
+      "extra_kcal" : 20,
+      "extra_water_ml" : 23,
+      "extra_co2_g" : 7
+    } ],
+    "totals" : {
+      "extra_kcal" : 268,
+      "extra_water_ml" : 308,
+      "extra_co2_g" : 92
+    },
+    "label" : "decision-support estimate"
+  },
+  "llm" : {
+    "model" : "offline-fallback",
+    "input_hash" : "503a330cd7f5aea425b8e6d02ab8a13ee41866db6a1f7217904c65b08522a047"
+  },
+  "disclaimer" : "Prototype decision-support tool using simulated data. Not a medical device and not a diagnosis. Follow flight-surgeon and onboard medical procedures."
+}

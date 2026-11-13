@@ -1,0 +1,57 @@
+{
+  "schema_version" : "1.0.0",
+  "plan_id" : "plan_fallback_ast_lin_d14",
+  "astronaut_id" : "ast_lin",
+  "generated_for_mission_day" : 14,
+  "generated_at_iso" : "2026-11-14T08:00:00Z",
+  "environment_id" : "DEEP_SPACECRAFT",
+  "triggers" : [ {
+    "indicator" : "hr_rest",
+    "status" : "RED",
+    "reasons" : [ "118 bpm above red limit 100", "Z=19.1 on a single reading: re-measure to confirm", "drifting +5.81 bpm/day (drift Z=11.6)" ]
+  }, {
+    "indicator" : "sbp",
+    "status" : "RED",
+    "reasons" : [ "168 mmHg above red limit 160", "Z=10.5 on a single reading: re-measure to confirm", "drifting +4.89 mmHg/day (drift Z=5.9)" ]
+  }, {
+    "indicator" : "dbp",
+    "status" : "RED",
+    "reasons" : [ "104 mmHg above red limit 100", "Z=6.9 on a single reading: re-measure to confirm", "drifting +3.25 mmHg/day (drift Z=4.9)" ]
+  }, {
+    "indicator" : "mood",
+    "status" : "YELLOW",
+    "reasons" : [ "Z=2.6 vs own normal 7.6" ]
+  } ],
+  "draft" : {
+    "sessions" : [ ],
+    "nutrition" : {
+      "kcal_adjustment" : 0,
+      "focus" : [ "hydration" ],
+      "notes" : "Keep to the normal ration unless the medical checklist says otherwise."
+    },
+    "escalate_to_flight_surgeon" : true,
+    "escalation_reason" : "Overall status is RED (Resting heart rate, Systolic BP, Diastolic BP). Follow the emergency triage checklist and report to the flight surgeon.",
+    "explanation" : "These readings are in the red range today: Resting heart rate, Systolic BP, Diastolic BP. All exercise is on hold. Follow the emergency triage checklist now and keep the crew member at rest with a crewmate nearby. Earth is too far away for a live call, so the triage report is queued for the flight surgeon. Training restarts only after the readings are re-measured and the status is cleared."
+  },
+  "resources" : {
+    "assumptions" : {
+      "mass_kg" : 80.0,
+      "rest_met" : 1.0,
+      "water_ml_per_kcal" : 1.15,
+      "co2_g_per_kcal" : 0.34,
+      "formula" : "extra_kcal = (MET - rest_met) * mass_kg * hours"
+    },
+    "sessions" : [ ],
+    "totals" : {
+      "extra_kcal" : 0,
+      "extra_water_ml" : 0,
+      "extra_co2_g" : 0
+    },
+    "label" : "decision-support estimate"
+  },
+  "llm" : {
+    "model" : "offline-fallback",
+    "input_hash" : "2dfda58f160217849bdcade2169e459e925b2c9fd2e159c41d9481df3e2dfdde"
+  },
+  "disclaimer" : "Prototype decision-support tool using simulated data. Not a medical device and not a diagnosis. Follow flight-surgeon and onboard medical procedures."
+}

@@ -1,0 +1,7354 @@
+{
+ "session_impacts": [
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 15,
+    "extra_kcal": 10,
+    "extra_water_ml": 12,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 16,
+    "extra_kcal": 12,
+    "extra_water_ml": 13,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 18,
+    "extra_kcal": 12,
+    "extra_water_ml": 14,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 20,
+    "extra_kcal": 15,
+    "extra_water_ml": 17,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 23,
+    "extra_kcal": 17,
+    "extra_water_ml": 19,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 27,
+    "extra_kcal": 19,
+    "extra_water_ml": 22,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 29,
+    "extra_kcal": 21,
+    "extra_water_ml": 24,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 32,
+    "extra_kcal": 23,
+    "extra_water_ml": 27,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 35,
+    "extra_kcal": 25,
+    "extra_water_ml": 29,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 41,
+    "extra_kcal": 29,
+    "extra_water_ml": 34,
+    "extra_co2_g": 10
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 47,
+    "extra_kcal": 33,
+    "extra_water_ml": 38,
+    "extra_co2_g": 11
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 54,
+    "extra_kcal": 38,
+    "extra_water_ml": 44,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 44,
+    "extra_kcal": 31,
+    "extra_water_ml": 36,
+    "extra_co2_g": 11
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 49,
+    "extra_kcal": 35,
+    "extra_water_ml": 40,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 52,
+    "extra_kcal": 38,
+    "extra_water_ml": 43,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 61,
+    "extra_kcal": 44,
+    "extra_water_ml": 50,
+    "extra_co2_g": 15
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 70,
+    "extra_kcal": 50,
+    "extra_water_ml": 57,
+    "extra_co2_g": 17
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 81,
+    "extra_kcal": 58,
+    "extra_water_ml": 66,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 50,
+    "extra_kcal": 35,
+    "extra_water_ml": 41,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 55,
+    "extra_kcal": 39,
+    "extra_water_ml": 45,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 60,
+    "extra_kcal": 42,
+    "extra_water_ml": 49,
+    "extra_co2_g": 14
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 69,
+    "extra_kcal": 50,
+    "extra_water_ml": 57,
+    "extra_co2_g": 17
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 79,
+    "extra_kcal": 57,
+    "extra_water_ml": 65,
+    "extra_co2_g": 19
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 92,
+    "extra_kcal": 65,
+    "extra_water_ml": 75,
+    "extra_co2_g": 22
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 88,
+    "extra_kcal": 62,
+    "extra_water_ml": 72,
+    "extra_co2_g": 21
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 97,
+    "extra_kcal": 69,
+    "extra_water_ml": 80,
+    "extra_co2_g": 24
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 105,
+    "extra_kcal": 75,
+    "extra_water_ml": 86,
+    "extra_co2_g": 26
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 122,
+    "extra_kcal": 88,
+    "extra_water_ml": 101,
+    "extra_co2_g": 30
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 140,
+    "extra_kcal": 100,
+    "extra_water_ml": 115,
+    "extra_co2_g": 34
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 162,
+    "extra_kcal": 115,
+    "extra_water_ml": 133,
+    "extra_co2_g": 39
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 131,
+    "extra_kcal": 94,
+    "extra_water_ml": 108,
+    "extra_co2_g": 32
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 146,
+    "extra_kcal": 104,
+    "extra_water_ml": 120,
+    "extra_co2_g": 35
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 158,
+    "extra_kcal": 112,
+    "extra_water_ml": 129,
+    "extra_co2_g": 38
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 184,
+    "extra_kcal": 131,
+    "extra_water_ml": 151,
+    "extra_co2_g": 45
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 210,
+    "extra_kcal": 150,
+    "extra_water_ml": 172,
+    "extra_co2_g": 51
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 242,
+    "extra_kcal": 173,
+    "extra_water_ml": 199,
+    "extra_co2_g": 59
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 175,
+    "extra_kcal": 125,
+    "extra_water_ml": 144,
+    "extra_co2_g": 42
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 194,
+    "extra_kcal": 139,
+    "extra_water_ml": 160,
+    "extra_co2_g": 47
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 210,
+    "extra_kcal": 150,
+    "extra_water_ml": 172,
+    "extra_co2_g": 51
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 245,
+    "extra_kcal": 175,
+    "extra_water_ml": 201,
+    "extra_co2_g": 60
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 280,
+    "extra_kcal": 200,
+    "extra_water_ml": 230,
+    "extra_co2_g": 68
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 323,
+    "extra_kcal": 231,
+    "extra_water_ml": 265,
+    "extra_co2_g": 78
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 262,
+    "extra_kcal": 188,
+    "extra_water_ml": 216,
+    "extra_co2_g": 64
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 291,
+    "extra_kcal": 208,
+    "extra_water_ml": 239,
+    "extra_co2_g": 71
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 315,
+    "extra_kcal": 225,
+    "extra_water_ml": 259,
+    "extra_co2_g": 76
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 368,
+    "extra_kcal": 262,
+    "extra_water_ml": 302,
+    "extra_co2_g": 89
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 420,
+    "extra_kcal": 300,
+    "extra_water_ml": 345,
+    "extra_co2_g": 102
+   }
+  },
+  {
+   "exercise_id": "resistive_moderate",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 485,
+    "extra_kcal": 346,
+    "extra_water_ml": 398,
+    "extra_co2_g": 118
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 25,
+    "extra_kcal": 21,
+    "extra_water_ml": 24,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 28,
+    "extra_kcal": 23,
+    "extra_water_ml": 27,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 30,
+    "extra_kcal": 25,
+    "extra_water_ml": 29,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 35,
+    "extra_kcal": 29,
+    "extra_water_ml": 34,
+    "extra_co2_g": 10
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 40,
+    "extra_kcal": 33,
+    "extra_water_ml": 38,
+    "extra_co2_g": 11
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 46,
+    "extra_kcal": 38,
+    "extra_water_ml": 44,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 50,
+    "extra_kcal": 42,
+    "extra_water_ml": 48,
+    "extra_co2_g": 14
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 56,
+    "extra_kcal": 46,
+    "extra_water_ml": 53,
+    "extra_co2_g": 16
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 60,
+    "extra_kcal": 50,
+    "extra_water_ml": 57,
+    "extra_co2_g": 17
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 70,
+    "extra_kcal": 58,
+    "extra_water_ml": 67,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 80,
+    "extra_kcal": 67,
+    "extra_water_ml": 77,
+    "extra_co2_g": 23
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 92,
+    "extra_kcal": 77,
+    "extra_water_ml": 88,
+    "extra_co2_g": 26
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 75,
+    "extra_kcal": 62,
+    "extra_water_ml": 72,
+    "extra_co2_g": 21
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 83,
+    "extra_kcal": 69,
+    "extra_water_ml": 80,
+    "extra_co2_g": 24
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 90,
+    "extra_kcal": 75,
+    "extra_water_ml": 86,
+    "extra_co2_g": 26
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 105,
+    "extra_kcal": 88,
+    "extra_water_ml": 101,
+    "extra_co2_g": 30
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 120,
+    "extra_kcal": 100,
+    "extra_water_ml": 115,
+    "extra_co2_g": 34
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 138,
+    "extra_kcal": 115,
+    "extra_water_ml": 133,
+    "extra_co2_g": 39
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 85,
+    "extra_kcal": 71,
+    "extra_water_ml": 81,
+    "extra_co2_g": 24
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 94,
+    "extra_kcal": 79,
+    "extra_water_ml": 90,
+    "extra_co2_g": 27
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 102,
+    "extra_kcal": 85,
+    "extra_water_ml": 98,
+    "extra_co2_g": 29
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 119,
+    "extra_kcal": 99,
+    "extra_water_ml": 114,
+    "extra_co2_g": 34
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 136,
+    "extra_kcal": 113,
+    "extra_water_ml": 130,
+    "extra_co2_g": 39
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 157,
+    "extra_kcal": 131,
+    "extra_water_ml": 150,
+    "extra_co2_g": 44
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 150,
+    "extra_kcal": 125,
+    "extra_water_ml": 144,
+    "extra_co2_g": 42
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 166,
+    "extra_kcal": 139,
+    "extra_water_ml": 160,
+    "extra_co2_g": 47
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 180,
+    "extra_kcal": 150,
+    "extra_water_ml": 172,
+    "extra_co2_g": 51
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 210,
+    "extra_kcal": 175,
+    "extra_water_ml": 201,
+    "extra_co2_g": 60
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 240,
+    "extra_kcal": 200,
+    "extra_water_ml": 230,
+    "extra_co2_g": 68
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 277,
+    "extra_kcal": 231,
+    "extra_water_ml": 265,
+    "extra_co2_g": 78
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 225,
+    "extra_kcal": 188,
+    "extra_water_ml": 216,
+    "extra_co2_g": 64
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 250,
+    "extra_kcal": 208,
+    "extra_water_ml": 239,
+    "extra_co2_g": 71
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 270,
+    "extra_kcal": 225,
+    "extra_water_ml": 259,
+    "extra_co2_g": 76
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 315,
+    "extra_kcal": 262,
+    "extra_water_ml": 302,
+    "extra_co2_g": 89
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 360,
+    "extra_kcal": 300,
+    "extra_water_ml": 345,
+    "extra_co2_g": 102
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 415,
+    "extra_kcal": 346,
+    "extra_water_ml": 398,
+    "extra_co2_g": 118
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 300,
+    "extra_kcal": 250,
+    "extra_water_ml": 288,
+    "extra_co2_g": 85
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 333,
+    "extra_kcal": 278,
+    "extra_water_ml": 319,
+    "extra_co2_g": 94
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 360,
+    "extra_kcal": 300,
+    "extra_water_ml": 345,
+    "extra_co2_g": 102
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 420,
+    "extra_kcal": 350,
+    "extra_water_ml": 402,
+    "extra_co2_g": 119
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 480,
+    "extra_kcal": 400,
+    "extra_water_ml": 460,
+    "extra_co2_g": 136
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 554,
+    "extra_kcal": 462,
+    "extra_water_ml": 531,
+    "extra_co2_g": 157
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 450,
+    "extra_kcal": 375,
+    "extra_water_ml": 431,
+    "extra_co2_g": 128
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 500,
+    "extra_kcal": 416,
+    "extra_water_ml": 479,
+    "extra_co2_g": 142
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 540,
+    "extra_kcal": 450,
+    "extra_water_ml": 518,
+    "extra_co2_g": 153
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 630,
+    "extra_kcal": 525,
+    "extra_water_ml": 604,
+    "extra_co2_g": 178
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 720,
+    "extra_kcal": 600,
+    "extra_water_ml": 690,
+    "extra_co2_g": 204
+   }
+  },
+  {
+   "exercise_id": "resistive_vigorous",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.0,
+    "gross_kcal": 831,
+    "extra_kcal": 692,
+    "extra_water_ml": 796,
+    "extra_co2_g": 235
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 28,
+    "extra_kcal": 24,
+    "extra_water_ml": 28,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 31,
+    "extra_kcal": 27,
+    "extra_water_ml": 31,
+    "extra_co2_g": 9
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 34,
+    "extra_kcal": 29,
+    "extra_water_ml": 33,
+    "extra_co2_g": 10
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 40,
+    "extra_kcal": 34,
+    "extra_water_ml": 39,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 45,
+    "extra_kcal": 39,
+    "extra_water_ml": 44,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 52,
+    "extra_kcal": 45,
+    "extra_water_ml": 51,
+    "extra_co2_g": 15
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 57,
+    "extra_kcal": 48,
+    "extra_water_ml": 56,
+    "extra_co2_g": 16
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 63,
+    "extra_kcal": 54,
+    "extra_water_ml": 62,
+    "extra_co2_g": 18
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 68,
+    "extra_kcal": 58,
+    "extra_water_ml": 67,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 79,
+    "extra_kcal": 68,
+    "extra_water_ml": 78,
+    "extra_co2_g": 23
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 91,
+    "extra_kcal": 77,
+    "extra_water_ml": 89,
+    "extra_co2_g": 26
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 105,
+    "extra_kcal": 89,
+    "extra_water_ml": 103,
+    "extra_co2_g": 30
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 85,
+    "extra_kcal": 72,
+    "extra_water_ml": 83,
+    "extra_co2_g": 25
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 94,
+    "extra_kcal": 80,
+    "extra_water_ml": 93,
+    "extra_co2_g": 27
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 102,
+    "extra_kcal": 87,
+    "extra_water_ml": 100,
+    "extra_co2_g": 30
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 119,
+    "extra_kcal": 102,
+    "extra_water_ml": 117,
+    "extra_co2_g": 35
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 136,
+    "extra_kcal": 116,
+    "extra_water_ml": 133,
+    "extra_co2_g": 39
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 157,
+    "extra_kcal": 134,
+    "extra_water_ml": 154,
+    "extra_co2_g": 46
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 96,
+    "extra_kcal": 82,
+    "extra_water_ml": 94,
+    "extra_co2_g": 28
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 107,
+    "extra_kcal": 91,
+    "extra_water_ml": 105,
+    "extra_co2_g": 31
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 116,
+    "extra_kcal": 99,
+    "extra_water_ml": 113,
+    "extra_co2_g": 34
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 135,
+    "extra_kcal": 115,
+    "extra_water_ml": 132,
+    "extra_co2_g": 39
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 154,
+    "extra_kcal": 131,
+    "extra_water_ml": 151,
+    "extra_co2_g": 45
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 178,
+    "extra_kcal": 152,
+    "extra_water_ml": 174,
+    "extra_co2_g": 52
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 170,
+    "extra_kcal": 145,
+    "extra_water_ml": 167,
+    "extra_co2_g": 49
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 189,
+    "extra_kcal": 161,
+    "extra_water_ml": 185,
+    "extra_co2_g": 55
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 204,
+    "extra_kcal": 174,
+    "extra_water_ml": 200,
+    "extra_co2_g": 59
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 238,
+    "extra_kcal": 203,
+    "extra_water_ml": 233,
+    "extra_co2_g": 69
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 272,
+    "extra_kcal": 232,
+    "extra_water_ml": 267,
+    "extra_co2_g": 79
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 314,
+    "extra_kcal": 268,
+    "extra_water_ml": 308,
+    "extra_co2_g": 91
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 255,
+    "extra_kcal": 218,
+    "extra_water_ml": 250,
+    "extra_co2_g": 74
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 283,
+    "extra_kcal": 241,
+    "extra_water_ml": 278,
+    "extra_co2_g": 82
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 306,
+    "extra_kcal": 261,
+    "extra_water_ml": 300,
+    "extra_co2_g": 89
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 357,
+    "extra_kcal": 304,
+    "extra_water_ml": 350,
+    "extra_co2_g": 104
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 408,
+    "extra_kcal": 348,
+    "extra_water_ml": 400,
+    "extra_co2_g": 118
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 471,
+    "extra_kcal": 402,
+    "extra_water_ml": 462,
+    "extra_co2_g": 137
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 340,
+    "extra_kcal": 290,
+    "extra_water_ml": 334,
+    "extra_co2_g": 99
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 377,
+    "extra_kcal": 322,
+    "extra_water_ml": 370,
+    "extra_co2_g": 109
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 408,
+    "extra_kcal": 348,
+    "extra_water_ml": 400,
+    "extra_co2_g": 118
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 476,
+    "extra_kcal": 406,
+    "extra_water_ml": 467,
+    "extra_co2_g": 138
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 544,
+    "extra_kcal": 464,
+    "extra_water_ml": 534,
+    "extra_co2_g": 158
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 628,
+    "extra_kcal": 535,
+    "extra_water_ml": 616,
+    "extra_co2_g": 182
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 510,
+    "extra_kcal": 435,
+    "extra_water_ml": 500,
+    "extra_co2_g": 148
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 566,
+    "extra_kcal": 483,
+    "extra_water_ml": 555,
+    "extra_co2_g": 164
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 612,
+    "extra_kcal": 522,
+    "extra_water_ml": 600,
+    "extra_co2_g": 177
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 714,
+    "extra_kcal": 609,
+    "extra_water_ml": 700,
+    "extra_co2_g": 207
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 816,
+    "extra_kcal": 696,
+    "extra_water_ml": 800,
+    "extra_co2_g": 237
+   }
+  },
+  {
+   "exercise_id": "cycle_ergometer",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 6.8,
+    "gross_kcal": 941,
+    "extra_kcal": 803,
+    "extra_water_ml": 923,
+    "extra_co2_g": 273
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 29,
+    "extra_kcal": 25,
+    "extra_water_ml": 29,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 32,
+    "extra_kcal": 28,
+    "extra_water_ml": 32,
+    "extra_co2_g": 9
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 35,
+    "extra_kcal": 30,
+    "extra_water_ml": 34,
+    "extra_co2_g": 10
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 41,
+    "extra_kcal": 35,
+    "extra_water_ml": 40,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 47,
+    "extra_kcal": 40,
+    "extra_water_ml": 46,
+    "extra_co2_g": 14
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 54,
+    "extra_kcal": 46,
+    "extra_water_ml": 53,
+    "extra_co2_g": 16
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 58,
+    "extra_kcal": 50,
+    "extra_water_ml": 57,
+    "extra_co2_g": 17
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 65,
+    "extra_kcal": 56,
+    "extra_water_ml": 64,
+    "extra_co2_g": 19
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 70,
+    "extra_kcal": 60,
+    "extra_water_ml": 69,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 82,
+    "extra_kcal": 70,
+    "extra_water_ml": 80,
+    "extra_co2_g": 24
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 93,
+    "extra_kcal": 80,
+    "extra_water_ml": 92,
+    "extra_co2_g": 27
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 108,
+    "extra_kcal": 92,
+    "extra_water_ml": 106,
+    "extra_co2_g": 31
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 88,
+    "extra_kcal": 75,
+    "extra_water_ml": 86,
+    "extra_co2_g": 26
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 97,
+    "extra_kcal": 83,
+    "extra_water_ml": 96,
+    "extra_co2_g": 28
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 105,
+    "extra_kcal": 90,
+    "extra_water_ml": 103,
+    "extra_co2_g": 31
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 122,
+    "extra_kcal": 105,
+    "extra_water_ml": 121,
+    "extra_co2_g": 36
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 140,
+    "extra_kcal": 120,
+    "extra_water_ml": 138,
+    "extra_co2_g": 41
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 162,
+    "extra_kcal": 138,
+    "extra_water_ml": 159,
+    "extra_co2_g": 47
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 99,
+    "extra_kcal": 85,
+    "extra_water_ml": 98,
+    "extra_co2_g": 29
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 110,
+    "extra_kcal": 94,
+    "extra_water_ml": 109,
+    "extra_co2_g": 32
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 119,
+    "extra_kcal": 102,
+    "extra_water_ml": 117,
+    "extra_co2_g": 35
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 139,
+    "extra_kcal": 119,
+    "extra_water_ml": 137,
+    "extra_co2_g": 40
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 159,
+    "extra_kcal": 136,
+    "extra_water_ml": 156,
+    "extra_co2_g": 46
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 183,
+    "extra_kcal": 157,
+    "extra_water_ml": 180,
+    "extra_co2_g": 53
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 175,
+    "extra_kcal": 150,
+    "extra_water_ml": 172,
+    "extra_co2_g": 51
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 194,
+    "extra_kcal": 166,
+    "extra_water_ml": 191,
+    "extra_co2_g": 57
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 210,
+    "extra_kcal": 180,
+    "extra_water_ml": 207,
+    "extra_co2_g": 61
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 245,
+    "extra_kcal": 210,
+    "extra_water_ml": 241,
+    "extra_co2_g": 71
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 280,
+    "extra_kcal": 240,
+    "extra_water_ml": 276,
+    "extra_co2_g": 82
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 323,
+    "extra_kcal": 277,
+    "extra_water_ml": 318,
+    "extra_co2_g": 94
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 262,
+    "extra_kcal": 225,
+    "extra_water_ml": 259,
+    "extra_co2_g": 76
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 291,
+    "extra_kcal": 250,
+    "extra_water_ml": 287,
+    "extra_co2_g": 85
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 315,
+    "extra_kcal": 270,
+    "extra_water_ml": 310,
+    "extra_co2_g": 92
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 368,
+    "extra_kcal": 315,
+    "extra_water_ml": 362,
+    "extra_co2_g": 107
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 420,
+    "extra_kcal": 360,
+    "extra_water_ml": 414,
+    "extra_co2_g": 122
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 485,
+    "extra_kcal": 415,
+    "extra_water_ml": 478,
+    "extra_co2_g": 141
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 350,
+    "extra_kcal": 300,
+    "extra_water_ml": 345,
+    "extra_co2_g": 102
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 388,
+    "extra_kcal": 333,
+    "extra_water_ml": 383,
+    "extra_co2_g": 113
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 420,
+    "extra_kcal": 360,
+    "extra_water_ml": 414,
+    "extra_co2_g": 122
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 490,
+    "extra_kcal": 420,
+    "extra_water_ml": 483,
+    "extra_co2_g": 143
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 560,
+    "extra_kcal": 480,
+    "extra_water_ml": 552,
+    "extra_co2_g": 163
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 646,
+    "extra_kcal": 554,
+    "extra_water_ml": 637,
+    "extra_co2_g": 188
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 525,
+    "extra_kcal": 450,
+    "extra_water_ml": 518,
+    "extra_co2_g": 153
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 583,
+    "extra_kcal": 500,
+    "extra_water_ml": 574,
+    "extra_co2_g": 170
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 630,
+    "extra_kcal": 540,
+    "extra_water_ml": 621,
+    "extra_co2_g": 184
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 735,
+    "extra_kcal": 630,
+    "extra_water_ml": 724,
+    "extra_co2_g": 214
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 840,
+    "extra_kcal": 720,
+    "extra_water_ml": 828,
+    "extra_co2_g": 245
+   }
+  },
+  {
+   "exercise_id": "treadmill_harness",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 7.0,
+    "gross_kcal": 969,
+    "extra_kcal": 831,
+    "extra_water_ml": 955,
+    "extra_co2_g": 282
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 21,
+    "extra_kcal": 17,
+    "extra_water_ml": 19,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 23,
+    "extra_kcal": 18,
+    "extra_water_ml": 21,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 25,
+    "extra_kcal": 20,
+    "extra_water_ml": 23,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 29,
+    "extra_kcal": 23,
+    "extra_water_ml": 27,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 33,
+    "extra_kcal": 27,
+    "extra_water_ml": 31,
+    "extra_co2_g": 9
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 38,
+    "extra_kcal": 31,
+    "extra_water_ml": 35,
+    "extra_co2_g": 10
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 42,
+    "extra_kcal": 33,
+    "extra_water_ml": 38,
+    "extra_co2_g": 11
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 46,
+    "extra_kcal": 37,
+    "extra_water_ml": 43,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 50,
+    "extra_kcal": 40,
+    "extra_water_ml": 46,
+    "extra_co2_g": 14
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 58,
+    "extra_kcal": 47,
+    "extra_water_ml": 54,
+    "extra_co2_g": 16
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 67,
+    "extra_kcal": 53,
+    "extra_water_ml": 61,
+    "extra_co2_g": 18
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 77,
+    "extra_kcal": 62,
+    "extra_water_ml": 71,
+    "extra_co2_g": 21
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 62,
+    "extra_kcal": 50,
+    "extra_water_ml": 57,
+    "extra_co2_g": 17
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 69,
+    "extra_kcal": 56,
+    "extra_water_ml": 64,
+    "extra_co2_g": 19
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 75,
+    "extra_kcal": 60,
+    "extra_water_ml": 69,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 88,
+    "extra_kcal": 70,
+    "extra_water_ml": 80,
+    "extra_co2_g": 24
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 100,
+    "extra_kcal": 80,
+    "extra_water_ml": 92,
+    "extra_co2_g": 27
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 115,
+    "extra_kcal": 92,
+    "extra_water_ml": 106,
+    "extra_co2_g": 31
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 71,
+    "extra_kcal": 57,
+    "extra_water_ml": 65,
+    "extra_co2_g": 19
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 79,
+    "extra_kcal": 63,
+    "extra_water_ml": 72,
+    "extra_co2_g": 21
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 85,
+    "extra_kcal": 68,
+    "extra_water_ml": 78,
+    "extra_co2_g": 23
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 99,
+    "extra_kcal": 79,
+    "extra_water_ml": 91,
+    "extra_co2_g": 27
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 113,
+    "extra_kcal": 91,
+    "extra_water_ml": 104,
+    "extra_co2_g": 31
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 131,
+    "extra_kcal": 105,
+    "extra_water_ml": 120,
+    "extra_co2_g": 36
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 125,
+    "extra_kcal": 100,
+    "extra_water_ml": 115,
+    "extra_co2_g": 34
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 139,
+    "extra_kcal": 111,
+    "extra_water_ml": 128,
+    "extra_co2_g": 38
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 150,
+    "extra_kcal": 120,
+    "extra_water_ml": 138,
+    "extra_co2_g": 41
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 175,
+    "extra_kcal": 140,
+    "extra_water_ml": 161,
+    "extra_co2_g": 48
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 200,
+    "extra_kcal": 160,
+    "extra_water_ml": 184,
+    "extra_co2_g": 54
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 231,
+    "extra_kcal": 185,
+    "extra_water_ml": 212,
+    "extra_co2_g": 63
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 188,
+    "extra_kcal": 150,
+    "extra_water_ml": 172,
+    "extra_co2_g": 51
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 208,
+    "extra_kcal": 166,
+    "extra_water_ml": 191,
+    "extra_co2_g": 57
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 225,
+    "extra_kcal": 180,
+    "extra_water_ml": 207,
+    "extra_co2_g": 61
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 262,
+    "extra_kcal": 210,
+    "extra_water_ml": 241,
+    "extra_co2_g": 71
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 300,
+    "extra_kcal": 240,
+    "extra_water_ml": 276,
+    "extra_co2_g": 82
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 346,
+    "extra_kcal": 277,
+    "extra_water_ml": 318,
+    "extra_co2_g": 94
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 250,
+    "extra_kcal": 200,
+    "extra_water_ml": 230,
+    "extra_co2_g": 68
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 278,
+    "extra_kcal": 222,
+    "extra_water_ml": 255,
+    "extra_co2_g": 75
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 300,
+    "extra_kcal": 240,
+    "extra_water_ml": 276,
+    "extra_co2_g": 82
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 350,
+    "extra_kcal": 280,
+    "extra_water_ml": 322,
+    "extra_co2_g": 95
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 400,
+    "extra_kcal": 320,
+    "extra_water_ml": 368,
+    "extra_co2_g": 109
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 462,
+    "extra_kcal": 369,
+    "extra_water_ml": 425,
+    "extra_co2_g": 126
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 375,
+    "extra_kcal": 300,
+    "extra_water_ml": 345,
+    "extra_co2_g": 102
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 416,
+    "extra_kcal": 333,
+    "extra_water_ml": 383,
+    "extra_co2_g": 113
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 450,
+    "extra_kcal": 360,
+    "extra_water_ml": 414,
+    "extra_co2_g": 122
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 525,
+    "extra_kcal": 420,
+    "extra_water_ml": 483,
+    "extra_co2_g": 143
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 600,
+    "extra_kcal": 480,
+    "extra_water_ml": 552,
+    "extra_co2_g": 163
+   }
+  },
+  {
+   "exercise_id": "zero_t2_ergometer",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 5.0,
+    "gross_kcal": 692,
+    "extra_kcal": 554,
+    "extra_water_ml": 637,
+    "extra_co2_g": 188
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 15,
+    "extra_kcal": 10,
+    "extra_water_ml": 12,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 16,
+    "extra_kcal": 12,
+    "extra_water_ml": 13,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 18,
+    "extra_kcal": 12,
+    "extra_water_ml": 14,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 20,
+    "extra_kcal": 15,
+    "extra_water_ml": 17,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 23,
+    "extra_kcal": 17,
+    "extra_water_ml": 19,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 27,
+    "extra_kcal": 19,
+    "extra_water_ml": 22,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 29,
+    "extra_kcal": 21,
+    "extra_water_ml": 24,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 32,
+    "extra_kcal": 23,
+    "extra_water_ml": 27,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 35,
+    "extra_kcal": 25,
+    "extra_water_ml": 29,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 41,
+    "extra_kcal": 29,
+    "extra_water_ml": 34,
+    "extra_co2_g": 10
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 47,
+    "extra_kcal": 33,
+    "extra_water_ml": 38,
+    "extra_co2_g": 11
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 54,
+    "extra_kcal": 38,
+    "extra_water_ml": 44,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 44,
+    "extra_kcal": 31,
+    "extra_water_ml": 36,
+    "extra_co2_g": 11
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 49,
+    "extra_kcal": 35,
+    "extra_water_ml": 40,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 52,
+    "extra_kcal": 38,
+    "extra_water_ml": 43,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 61,
+    "extra_kcal": 44,
+    "extra_water_ml": 50,
+    "extra_co2_g": 15
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 70,
+    "extra_kcal": 50,
+    "extra_water_ml": 57,
+    "extra_co2_g": 17
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 81,
+    "extra_kcal": 58,
+    "extra_water_ml": 66,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 50,
+    "extra_kcal": 35,
+    "extra_water_ml": 41,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 55,
+    "extra_kcal": 39,
+    "extra_water_ml": 45,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 60,
+    "extra_kcal": 42,
+    "extra_water_ml": 49,
+    "extra_co2_g": 14
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 69,
+    "extra_kcal": 50,
+    "extra_water_ml": 57,
+    "extra_co2_g": 17
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 79,
+    "extra_kcal": 57,
+    "extra_water_ml": 65,
+    "extra_co2_g": 19
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 92,
+    "extra_kcal": 65,
+    "extra_water_ml": 75,
+    "extra_co2_g": 22
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 88,
+    "extra_kcal": 62,
+    "extra_water_ml": 72,
+    "extra_co2_g": 21
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 97,
+    "extra_kcal": 69,
+    "extra_water_ml": 80,
+    "extra_co2_g": 24
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 105,
+    "extra_kcal": 75,
+    "extra_water_ml": 86,
+    "extra_co2_g": 26
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 122,
+    "extra_kcal": 88,
+    "extra_water_ml": 101,
+    "extra_co2_g": 30
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 140,
+    "extra_kcal": 100,
+    "extra_water_ml": 115,
+    "extra_co2_g": 34
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 162,
+    "extra_kcal": 115,
+    "extra_water_ml": 133,
+    "extra_co2_g": 39
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 131,
+    "extra_kcal": 94,
+    "extra_water_ml": 108,
+    "extra_co2_g": 32
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 146,
+    "extra_kcal": 104,
+    "extra_water_ml": 120,
+    "extra_co2_g": 35
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 158,
+    "extra_kcal": 112,
+    "extra_water_ml": 129,
+    "extra_co2_g": 38
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 184,
+    "extra_kcal": 131,
+    "extra_water_ml": 151,
+    "extra_co2_g": 45
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 210,
+    "extra_kcal": 150,
+    "extra_water_ml": 172,
+    "extra_co2_g": 51
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 242,
+    "extra_kcal": 173,
+    "extra_water_ml": 199,
+    "extra_co2_g": 59
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 175,
+    "extra_kcal": 125,
+    "extra_water_ml": 144,
+    "extra_co2_g": 42
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 194,
+    "extra_kcal": 139,
+    "extra_water_ml": 160,
+    "extra_co2_g": 47
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 210,
+    "extra_kcal": 150,
+    "extra_water_ml": 172,
+    "extra_co2_g": 51
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 245,
+    "extra_kcal": 175,
+    "extra_water_ml": 201,
+    "extra_co2_g": 60
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 280,
+    "extra_kcal": 200,
+    "extra_water_ml": 230,
+    "extra_co2_g": 68
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 323,
+    "extra_kcal": 231,
+    "extra_water_ml": 265,
+    "extra_co2_g": 78
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 262,
+    "extra_kcal": 188,
+    "extra_water_ml": 216,
+    "extra_co2_g": 64
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 291,
+    "extra_kcal": 208,
+    "extra_water_ml": 239,
+    "extra_co2_g": 71
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 315,
+    "extra_kcal": 225,
+    "extra_water_ml": 259,
+    "extra_co2_g": 76
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 368,
+    "extra_kcal": 262,
+    "extra_water_ml": 302,
+    "extra_co2_g": 89
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 420,
+    "extra_kcal": 300,
+    "extra_water_ml": 345,
+    "extra_co2_g": 102
+   }
+  },
+  {
+   "exercise_id": "walk_surface",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 3.5,
+    "gross_kcal": 485,
+    "extra_kcal": 346,
+    "extra_water_ml": 398,
+    "extra_co2_g": 118
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 10,
+    "extra_kcal": 5,
+    "extra_water_ml": 6,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 11,
+    "extra_kcal": 6,
+    "extra_water_ml": 7,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 12,
+    "extra_kcal": 6,
+    "extra_water_ml": 7,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 13,
+    "extra_kcal": 8,
+    "extra_water_ml": 9,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 15,
+    "extra_kcal": 9,
+    "extra_water_ml": 10,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 18,
+    "extra_kcal": 10,
+    "extra_water_ml": 11,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 19,
+    "extra_kcal": 11,
+    "extra_water_ml": 12,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 21,
+    "extra_kcal": 12,
+    "extra_water_ml": 14,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 23,
+    "extra_kcal": 13,
+    "extra_water_ml": 15,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 27,
+    "extra_kcal": 15,
+    "extra_water_ml": 17,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 31,
+    "extra_kcal": 17,
+    "extra_water_ml": 20,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 35,
+    "extra_kcal": 20,
+    "extra_water_ml": 23,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 29,
+    "extra_kcal": 16,
+    "extra_water_ml": 19,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 32,
+    "extra_kcal": 18,
+    "extra_water_ml": 21,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 34,
+    "extra_kcal": 19,
+    "extra_water_ml": 22,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 40,
+    "extra_kcal": 23,
+    "extra_water_ml": 26,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 46,
+    "extra_kcal": 26,
+    "extra_water_ml": 30,
+    "extra_co2_g": 9
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 53,
+    "extra_kcal": 30,
+    "extra_water_ml": 34,
+    "extra_co2_g": 10
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 33,
+    "extra_kcal": 18,
+    "extra_water_ml": 21,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 36,
+    "extra_kcal": 20,
+    "extra_water_ml": 24,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 39,
+    "extra_kcal": 22,
+    "extra_water_ml": 25,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 46,
+    "extra_kcal": 26,
+    "extra_water_ml": 30,
+    "extra_co2_g": 9
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 52,
+    "extra_kcal": 29,
+    "extra_water_ml": 34,
+    "extra_co2_g": 10
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 60,
+    "extra_kcal": 34,
+    "extra_water_ml": 39,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 57,
+    "extra_kcal": 32,
+    "extra_water_ml": 37,
+    "extra_co2_g": 11
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 64,
+    "extra_kcal": 36,
+    "extra_water_ml": 41,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 69,
+    "extra_kcal": 39,
+    "extra_water_ml": 45,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 80,
+    "extra_kcal": 45,
+    "extra_water_ml": 52,
+    "extra_co2_g": 15
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 92,
+    "extra_kcal": 52,
+    "extra_water_ml": 60,
+    "extra_co2_g": 18
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 106,
+    "extra_kcal": 60,
+    "extra_water_ml": 69,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 86,
+    "extra_kcal": 49,
+    "extra_water_ml": 56,
+    "extra_co2_g": 17
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 96,
+    "extra_kcal": 54,
+    "extra_water_ml": 62,
+    "extra_co2_g": 18
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 104,
+    "extra_kcal": 58,
+    "extra_water_ml": 67,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 121,
+    "extra_kcal": 68,
+    "extra_water_ml": 78,
+    "extra_co2_g": 23
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 138,
+    "extra_kcal": 78,
+    "extra_water_ml": 90,
+    "extra_co2_g": 27
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 159,
+    "extra_kcal": 90,
+    "extra_water_ml": 103,
+    "extra_co2_g": 31
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 115,
+    "extra_kcal": 65,
+    "extra_water_ml": 75,
+    "extra_co2_g": 22
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 128,
+    "extra_kcal": 72,
+    "extra_water_ml": 83,
+    "extra_co2_g": 25
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 138,
+    "extra_kcal": 78,
+    "extra_water_ml": 90,
+    "extra_co2_g": 27
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 161,
+    "extra_kcal": 91,
+    "extra_water_ml": 105,
+    "extra_co2_g": 31
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 184,
+    "extra_kcal": 104,
+    "extra_water_ml": 120,
+    "extra_co2_g": 35
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 212,
+    "extra_kcal": 120,
+    "extra_water_ml": 138,
+    "extra_co2_g": 41
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 172,
+    "extra_kcal": 97,
+    "extra_water_ml": 112,
+    "extra_co2_g": 33
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 191,
+    "extra_kcal": 108,
+    "extra_water_ml": 124,
+    "extra_co2_g": 37
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 207,
+    "extra_kcal": 117,
+    "extra_water_ml": 135,
+    "extra_co2_g": 40
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 242,
+    "extra_kcal": 136,
+    "extra_water_ml": 157,
+    "extra_co2_g": 46
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 276,
+    "extra_kcal": 156,
+    "extra_water_ml": 179,
+    "extra_co2_g": 53
+   }
+  },
+  {
+   "exercise_id": "stretch_mobility",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.3,
+    "gross_kcal": 318,
+    "extra_kcal": 180,
+    "extra_water_ml": 207,
+    "extra_co2_g": 61
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 4,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 5,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 5,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 6,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 7,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 8,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 8,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 9,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 10,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 12,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 13,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 15,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 12,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 14,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 15,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 18,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 20,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 23,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 14,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 16,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 17,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 20,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 23,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 26,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 25,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 28,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 30,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 35,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 40,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 46,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 38,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 42,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 45,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 52,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 60,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 69,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 50,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 56,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 60,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 70,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 80,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 92,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 75,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 83,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 90,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 105,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 120,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "thigh_cuff_bcomplex",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 138,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 4,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 5,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 5,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 6,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 7,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 8,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 8,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 9,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 10,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 12,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 13,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 15,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 12,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 14,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 15,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 18,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 20,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 23,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 14,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 16,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 17,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 20,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 23,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 26,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 25,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 28,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 30,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 35,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 40,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 46,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 38,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 42,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 45,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 52,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 60,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 69,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 50,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 56,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 60,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 70,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 80,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 92,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 75,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 83,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 90,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 105,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 120,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "compression_fluid_loading",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.0,
+    "gross_kcal": 138,
+    "extra_kcal": 0,
+    "extra_water_ml": 0,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 5,
+    "extra_kcal": 1,
+    "extra_water_ml": 1,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 6,
+    "extra_kcal": 1,
+    "extra_water_ml": 2,
+    "extra_co2_g": 0
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 6,
+    "extra_kcal": 2,
+    "extra_water_ml": 2,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 8,
+    "extra_kcal": 2,
+    "extra_water_ml": 2,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 9,
+    "extra_kcal": 2,
+    "extra_water_ml": 2,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 10,
+    "extra_kcal": 2,
+    "extra_water_ml": 3,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 11,
+    "extra_kcal": 2,
+    "extra_water_ml": 3,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 12,
+    "extra_kcal": 3,
+    "extra_water_ml": 3,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 13,
+    "extra_kcal": 3,
+    "extra_water_ml": 3,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 15,
+    "extra_kcal": 4,
+    "extra_water_ml": 4,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 17,
+    "extra_kcal": 4,
+    "extra_water_ml": 5,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 20,
+    "extra_kcal": 5,
+    "extra_water_ml": 5,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 16,
+    "extra_kcal": 4,
+    "extra_water_ml": 4,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 18,
+    "extra_kcal": 4,
+    "extra_water_ml": 5,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 20,
+    "extra_kcal": 5,
+    "extra_water_ml": 5,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 23,
+    "extra_kcal": 5,
+    "extra_water_ml": 6,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 26,
+    "extra_kcal": 6,
+    "extra_water_ml": 7,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 30,
+    "extra_kcal": 7,
+    "extra_water_ml": 8,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 18,
+    "extra_kcal": 4,
+    "extra_water_ml": 5,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 20,
+    "extra_kcal": 5,
+    "extra_water_ml": 5,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 22,
+    "extra_kcal": 5,
+    "extra_water_ml": 6,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 26,
+    "extra_kcal": 6,
+    "extra_water_ml": 7,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 29,
+    "extra_kcal": 7,
+    "extra_water_ml": 8,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 34,
+    "extra_kcal": 8,
+    "extra_water_ml": 9,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 32,
+    "extra_kcal": 8,
+    "extra_water_ml": 9,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 36,
+    "extra_kcal": 8,
+    "extra_water_ml": 10,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 39,
+    "extra_kcal": 9,
+    "extra_water_ml": 10,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 46,
+    "extra_kcal": 11,
+    "extra_water_ml": 12,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 52,
+    "extra_kcal": 12,
+    "extra_water_ml": 14,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 60,
+    "extra_kcal": 14,
+    "extra_water_ml": 16,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 49,
+    "extra_kcal": 11,
+    "extra_water_ml": 13,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 54,
+    "extra_kcal": 12,
+    "extra_water_ml": 14,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 58,
+    "extra_kcal": 14,
+    "extra_water_ml": 16,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 68,
+    "extra_kcal": 16,
+    "extra_water_ml": 18,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 78,
+    "extra_kcal": 18,
+    "extra_water_ml": 21,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 90,
+    "extra_kcal": 21,
+    "extra_water_ml": 24,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 65,
+    "extra_kcal": 15,
+    "extra_water_ml": 17,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 72,
+    "extra_kcal": 17,
+    "extra_water_ml": 19,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 78,
+    "extra_kcal": 18,
+    "extra_water_ml": 21,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 91,
+    "extra_kcal": 21,
+    "extra_water_ml": 24,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 104,
+    "extra_kcal": 24,
+    "extra_water_ml": 28,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 120,
+    "extra_kcal": 28,
+    "extra_water_ml": 32,
+    "extra_co2_g": 9
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 98,
+    "extra_kcal": 23,
+    "extra_water_ml": 26,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 108,
+    "extra_kcal": 25,
+    "extra_water_ml": 29,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 117,
+    "extra_kcal": 27,
+    "extra_water_ml": 31,
+    "extra_co2_g": 9
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 136,
+    "extra_kcal": 32,
+    "extra_water_ml": 36,
+    "extra_co2_g": 11
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 156,
+    "extra_kcal": 36,
+    "extra_water_ml": 41,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "circadian_led_journaling",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 1.3,
+    "gross_kcal": 180,
+    "extra_kcal": 42,
+    "extra_water_ml": 48,
+    "extra_co2_g": 14
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 5,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 8,
+    "extra_kcal": 4,
+    "extra_water_ml": 5,
+    "extra_co2_g": 1
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 5,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 9,
+    "extra_kcal": 5,
+    "extra_water_ml": 5,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 5,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 10,
+    "extra_kcal": 5,
+    "extra_water_ml": 6,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 5,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 12,
+    "extra_kcal": 6,
+    "extra_water_ml": 7,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 5,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 13,
+    "extra_kcal": 7,
+    "extra_water_ml": 8,
+    "extra_co2_g": 2
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 5,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 15,
+    "extra_kcal": 8,
+    "extra_water_ml": 9,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 10,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 17,
+    "extra_kcal": 8,
+    "extra_water_ml": 10,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 10,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 18,
+    "extra_kcal": 9,
+    "extra_water_ml": 11,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 10,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 20,
+    "extra_kcal": 10,
+    "extra_water_ml": 12,
+    "extra_co2_g": 3
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 10,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 23,
+    "extra_kcal": 12,
+    "extra_water_ml": 13,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 10,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 27,
+    "extra_kcal": 13,
+    "extra_water_ml": 15,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 10,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 31,
+    "extra_kcal": 15,
+    "extra_water_ml": 18,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 15,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 25,
+    "extra_kcal": 12,
+    "extra_water_ml": 14,
+    "extra_co2_g": 4
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 15,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 28,
+    "extra_kcal": 14,
+    "extra_water_ml": 16,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 15,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 30,
+    "extra_kcal": 15,
+    "extra_water_ml": 17,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 15,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 35,
+    "extra_kcal": 18,
+    "extra_water_ml": 20,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 15,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 40,
+    "extra_kcal": 20,
+    "extra_water_ml": 23,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 15,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 46,
+    "extra_kcal": 23,
+    "extra_water_ml": 27,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 17,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 28,
+    "extra_kcal": 14,
+    "extra_water_ml": 16,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 17,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 31,
+    "extra_kcal": 16,
+    "extra_water_ml": 18,
+    "extra_co2_g": 5
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 17,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 34,
+    "extra_kcal": 17,
+    "extra_water_ml": 20,
+    "extra_co2_g": 6
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 17,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 40,
+    "extra_kcal": 20,
+    "extra_water_ml": 23,
+    "extra_co2_g": 7
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 17,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 45,
+    "extra_kcal": 23,
+    "extra_water_ml": 26,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 17,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 52,
+    "extra_kcal": 26,
+    "extra_water_ml": 30,
+    "extra_co2_g": 9
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 30,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 50,
+    "extra_kcal": 25,
+    "extra_water_ml": 29,
+    "extra_co2_g": 8
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 30,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 56,
+    "extra_kcal": 28,
+    "extra_water_ml": 32,
+    "extra_co2_g": 9
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 30,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 60,
+    "extra_kcal": 30,
+    "extra_water_ml": 34,
+    "extra_co2_g": 10
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 30,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 70,
+    "extra_kcal": 35,
+    "extra_water_ml": 40,
+    "extra_co2_g": 12
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 30,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 80,
+    "extra_kcal": 40,
+    "extra_water_ml": 46,
+    "extra_co2_g": 14
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 30,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 92,
+    "extra_kcal": 46,
+    "extra_water_ml": 53,
+    "extra_co2_g": 16
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 45,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 75,
+    "extra_kcal": 38,
+    "extra_water_ml": 43,
+    "extra_co2_g": 13
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 45,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 83,
+    "extra_kcal": 42,
+    "extra_water_ml": 48,
+    "extra_co2_g": 14
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 45,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 90,
+    "extra_kcal": 45,
+    "extra_water_ml": 52,
+    "extra_co2_g": 15
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 45,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 105,
+    "extra_kcal": 52,
+    "extra_water_ml": 60,
+    "extra_co2_g": 18
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 45,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 120,
+    "extra_kcal": 60,
+    "extra_water_ml": 69,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 45,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 138,
+    "extra_kcal": 69,
+    "extra_water_ml": 80,
+    "extra_co2_g": 24
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 60,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 100,
+    "extra_kcal": 50,
+    "extra_water_ml": 57,
+    "extra_co2_g": 17
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 60,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 111,
+    "extra_kcal": 56,
+    "extra_water_ml": 64,
+    "extra_co2_g": 19
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 60,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 120,
+    "extra_kcal": 60,
+    "extra_water_ml": 69,
+    "extra_co2_g": 20
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 60,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 140,
+    "extra_kcal": 70,
+    "extra_water_ml": 80,
+    "extra_co2_g": 24
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 60,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 160,
+    "extra_kcal": 80,
+    "extra_water_ml": 92,
+    "extra_co2_g": 27
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 60,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 185,
+    "extra_kcal": 92,
+    "extra_water_ml": 106,
+    "extra_co2_g": 31
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 90,
+   "mass_kg": 50,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 150,
+    "extra_kcal": 75,
+    "extra_water_ml": 86,
+    "extra_co2_g": 26
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 90,
+   "mass_kg": 55.5,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 166,
+    "extra_kcal": 83,
+    "extra_water_ml": 96,
+    "extra_co2_g": 28
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 90,
+   "mass_kg": 60,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 180,
+    "extra_kcal": 90,
+    "extra_water_ml": 103,
+    "extra_co2_g": 31
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 90,
+   "mass_kg": 70,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 210,
+    "extra_kcal": 105,
+    "extra_water_ml": 121,
+    "extra_co2_g": 36
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 90,
+   "mass_kg": 80,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 240,
+    "extra_kcal": 120,
+    "extra_water_ml": 138,
+    "extra_co2_g": 41
+   }
+  },
+  {
+   "exercise_id": "microbial_swab_air_check",
+   "minutes": 90,
+   "mass_kg": 92.3,
+   "expected": {
+    "met": 2.0,
+    "gross_kcal": 277,
+    "extra_kcal": 138,
+    "extra_water_ml": 159,
+    "extra_co2_g": 47
+   }
+  }
+ ],
+ "resource_blocks": [
+  {
+   "sessions": [
+    {
+     "exercise_id": "resistive_vigorous",
+     "minutes": 30
+    },
+    {
+     "exercise_id": "circadian_led_journaling",
+     "minutes": 20
+    }
+   ],
+   "mass_kg": 80,
+   "expected": {
+    "assumptions": {
+     "mass_kg": 80,
+     "rest_met": 1.0,
+     "water_ml_per_kcal": 1.15,
+     "co2_g_per_kcal": 0.34,
+     "formula": "extra_kcal = (MET - rest_met) * mass_kg * hours"
+    },
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "met": 6.0,
+      "gross_kcal": 240,
+      "extra_kcal": 200,
+      "extra_water_ml": 230,
+      "extra_co2_g": 68
+     },
+     {
+      "exercise_id": "circadian_led_journaling",
+      "minutes": 20,
+      "met": 1.3,
+      "gross_kcal": 35,
+      "extra_kcal": 8,
+      "extra_water_ml": 9,
+      "extra_co2_g": 3
+     }
+    ],
+    "totals": {
+     "extra_kcal": 208,
+     "extra_water_ml": 239,
+     "extra_co2_g": 71
+    },
+    "label": "decision-support estimate"
+   }
+  },
+  {
+   "sessions": [
+    {
+     "exercise_id": "zero_t2_ergometer",
+     "minutes": 45
+    },
+    {
+     "exercise_id": "cycle_ergometer",
+     "minutes": 30
+    },
+    {
+     "exercise_id": "stretch_mobility",
+     "minutes": 10
+    }
+   ],
+   "mass_kg": 72.5,
+   "expected": {
+    "assumptions": {
+     "mass_kg": 72.5,
+     "rest_met": 1.0,
+     "water_ml_per_kcal": 1.15,
+     "co2_g_per_kcal": 0.34,
+     "formula": "extra_kcal = (MET - rest_met) * mass_kg * hours"
+    },
+    "sessions": [
+     {
+      "exercise_id": "zero_t2_ergometer",
+      "minutes": 45,
+      "met": 5.0,
+      "gross_kcal": 272,
+      "extra_kcal": 218,
+      "extra_water_ml": 250,
+      "extra_co2_g": 74
+     },
+     {
+      "exercise_id": "cycle_ergometer",
+      "minutes": 30,
+      "met": 6.8,
+      "gross_kcal": 246,
+      "extra_kcal": 210,
+      "extra_water_ml": 242,
+      "extra_co2_g": 71
+     },
+     {
+      "exercise_id": "stretch_mobility",
+      "minutes": 10,
+      "met": 2.3,
+      "gross_kcal": 28,
+      "extra_kcal": 16,
+      "extra_water_ml": 18,
+      "extra_co2_g": 5
+     }
+    ],
+    "totals": {
+     "extra_kcal": 444,
+     "extra_water_ml": 510,
+     "extra_co2_g": 150
+    },
+    "label": "decision-support estimate"
+   }
+  },
+  {
+   "sessions": [
+    {
+     "exercise_id": "thigh_cuff_bcomplex",
+     "minutes": 20
+    }
+   ],
+   "mass_kg": 64,
+   "expected": {
+    "assumptions": {
+     "mass_kg": 64,
+     "rest_met": 1.0,
+     "water_ml_per_kcal": 1.15,
+     "co2_g_per_kcal": 0.34,
+     "formula": "extra_kcal = (MET - rest_met) * mass_kg * hours"
+    },
+    "sessions": [
+     {
+      "exercise_id": "thigh_cuff_bcomplex",
+      "minutes": 20,
+      "met": 1.0,
+      "gross_kcal": 21,
+      "extra_kcal": 0,
+      "extra_water_ml": 0,
+      "extra_co2_g": 0
+     }
+    ],
+    "totals": {
+     "extra_kcal": 0,
+     "extra_water_ml": 0,
+     "extra_co2_g": 0
+    },
+    "label": "decision-support estimate"
+   }
+  },
+  {
+   "sessions": [],
+   "mass_kg": 80,
+   "expected": {
+    "assumptions": {
+     "mass_kg": 80,
+     "rest_met": 1.0,
+     "water_ml_per_kcal": 1.15,
+     "co2_g_per_kcal": 0.34,
+     "formula": "extra_kcal = (MET - rest_met) * mass_kg * hours"
+    },
+    "sessions": [],
+    "totals": {
+     "extra_kcal": 0,
+     "extra_water_ml": 0,
+     "extra_co2_g": 0
+    },
+    "label": "decision-support estimate"
+   }
+  }
+ ],
+ "validations": [
+  {
+   "name": "good draft",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": []
+  },
+  {
+   "name": "unknown exercise",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "bench_press",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: unknown exercise_id 'bench_press'"
+   ]
+  },
+  {
+   "name": "ARED on Mars",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.38,
+   "expected": []
+  },
+  {
+   "name": "ARED above 0.5 g",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 1.0,
+   "expected": [
+    "sessions[0]: resistive_vigorous not allowed above 0.5 g"
+   ]
+  },
+  {
+   "name": "minutes 200",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 200,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: minutes 200 outside 5-90"
+   ]
+  },
+  {
+   "name": "minutes 30.5",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30.5,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: minutes 30.5 outside 5-90"
+   ]
+  },
+  {
+   "name": "minutes missing",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: minutes None outside 5-90"
+   ]
+  },
+  {
+   "name": "minutes as text",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": "30",
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: minutes '30' outside 5-90"
+   ]
+  },
+  {
+   "name": "thigh cuff without escalation",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "thigh_cuff_bcomplex",
+      "minutes": 30,
+      "target_system": "HEAD_NEURO",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "a PROTOCOL needing flight-surgeon direction was chosen but escalate_to_flight_surgeon is false"
+   ]
+  },
+  {
+   "name": "thigh cuff with escalation",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "thigh_cuff_bcomplex",
+      "minutes": 30,
+      "target_system": "HEAD_NEURO",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": true,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": []
+  },
+  {
+   "name": "walk on the surface in 0 g",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "walk_surface",
+      "minutes": 30,
+      "target_system": "CHEST_CARDIO",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: walk_surface needs at least 0.1 g"
+   ]
+  },
+  {
+   "name": "walk on the Moon",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "walk_surface",
+      "minutes": 30,
+      "target_system": "CHEST_CARDIO",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.16,
+   "expected": []
+  },
+  {
+   "name": "bad target system",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "LEGS",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: bad target_system 'LEGS'"
+   ]
+  },
+  {
+   "name": "target system missing",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: bad target_system None"
+   ]
+  },
+  {
+   "name": "dosing in instructions",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Take 500 mg of B-complex"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: dosing language in 'Take 500 mg of B-complex'"
+   ]
+  },
+  {
+   "name": "dosing in rationale",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "One tablet helps with sleep"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: dosing language in 'One tablet helps with sleep'"
+   ]
+  },
+  {
+   "name": "dosing in notes",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Add 2.5 mcg of vitamin D"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "dosing language in 'Add 2.5 mcg of vitamin D'"
+   ]
+  },
+  {
+   "name": "dosing in focus",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein",
+      "iron capsule"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "dosing language in 'iron capsule'"
+   ]
+  },
+  {
+   "name": "dosing in explanation",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "An injection is not needed."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "dosing language in 'An injection is not needed.'"
+   ]
+  },
+  {
+   "name": "long dosing text",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "It's a long sentence that keeps going before it says take 10 IU daily"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: dosing language in \"It's a long sentence that keeps going before it sa\""
+   ]
+  },
+  {
+   "name": "kcal +900",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 900,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "nutrition.kcal_adjustment 900 outside -300..600"
+   ]
+  },
+  {
+   "name": "kcal 250.5",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 250.5,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "nutrition.kcal_adjustment 250.5 outside -300..600"
+   ]
+  },
+  {
+   "name": "kcal missing",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "focus": [],
+     "notes": ""
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "nutrition.kcal_adjustment None outside -300..600"
+   ]
+  },
+  {
+   "name": "nutrition missing",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "nutrition.kcal_adjustment None outside -300..600"
+   ]
+  },
+  {
+   "name": "121 words",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word"
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "explanation longer than 120 words"
+   ]
+  },
+  {
+   "name": "120 words",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": 200,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word"
+   },
+   "gravity_g": 0.0,
+   "expected": []
+  },
+  {
+   "name": "several problems",
+   "draft": {
+    "sessions": [
+     {
+      "exercise_id": "resistive_vigorous",
+      "minutes": 3,
+      "target_system": null,
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     },
+     {
+      "exercise_id": "yoga",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     },
+     {
+      "exercise_id": "compression_fluid_loading",
+      "minutes": 30,
+      "target_system": "SPINE_BONE",
+      "instructions": [
+       "Warm up",
+       "Use the restraints"
+      ],
+      "rationale": "Resistive time was low for 4 days"
+     }
+    ],
+    "nutrition": {
+     "kcal_adjustment": -400,
+     "focus": [
+      "protein"
+     ],
+     "notes": "Eat the full ration"
+    },
+    "escalate_to_flight_surgeon": false,
+    "escalation_reason": "",
+    "explanation": "Short plan."
+   },
+   "gravity_g": 0.0,
+   "expected": [
+    "sessions[0]: minutes 3 outside 5-90",
+    "sessions[0]: bad target_system None",
+    "sessions[1]: unknown exercise_id 'yoga'",
+    "a PROTOCOL needing flight-surgeon direction was chosen but escalate_to_flight_surgeon is false",
+    "nutrition.kcal_adjustment -400 outside -300..600"
+   ]
+  },
+  {
+   "name": "empty draft",
+   "draft": {},
+   "gravity_g": 0.0,
+   "expected": [
+    "nutrition.kcal_adjustment None outside -300..600"
+   ]
+  }
+ ]
+}

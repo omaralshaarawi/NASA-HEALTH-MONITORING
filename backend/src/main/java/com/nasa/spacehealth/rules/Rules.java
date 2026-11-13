@@ -12,6 +12,7 @@ public record Rules(
         String version,
         Constants constants,
         @JsonProperty("global") Global global,
+        ResourceMath resourceMath,
         Radiation radiation,
         ComplianceRules compliance,
         Composites composites,
@@ -31,6 +32,13 @@ public record Rules(
             int driftWindowDays,
             int minPoints,
             @JsonProperty("red_z_needs_confirmation") boolean redZNeedsConfirmation) {
+    }
+
+    public record ResourceMath(
+            double restMet,
+            double kcalPerMetKgH,
+            double waterMlPerKcal,
+            @JsonProperty("co2_g_per_kcal") double co2GPerKcal) {
     }
 
     public record Radiation(double ratioYellow, double ratioRed, String eventLabel) {

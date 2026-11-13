@@ -34,6 +34,8 @@ Settings in `application.properties`:
 | `POST /api/triage/step` | `{"incident_id": "...", "answer": "yes"}` (`yes`/`no` or `done`) |
 | `POST /api/triage/end` | `{"incident_id": "..."}`, stops the protocol at any step |
 | `GET /api/triage/{incidentId}` | current state of an incident |
+| `POST /api/plans/generate?massKg=` | body is an `AssessmentResponse`, returns a `CountermeasurePlan` |
+| `GET /api/plans/{astronautId}` | last generated plan, or the saved day-14 plan for Nova, Kai and Lin |
 
 All JSON uses snake_case like `contract.ts`. Errors look like `{"status": 400, "error": "Bad Request", "message": "..."}`.
 
@@ -44,6 +46,35 @@ Notes:
 - The triage packet (`store_and_forward`) is created when the protocol reaches END or when `/end` is called.
   If the habitat is autonomous it is `QUEUED_FOR_UPLINK`, and `estimated_earth_receipt_iso` is the creation time plus
   the one-way light delay.
+
+## Countermeasure planner (`planner/`)
+
+`POST /api/plans/generate` takes the assessment the frontend already has and returns a full plan.
+
+1. The menu (`contract/exercise_menu.json`) is filtered by the habitat's gravity.
+2. Gemini writes a `CountermeasurePlanDraft` (sessions, nutrition, escalation, explanation). It gets a response
+   schema where `exercise_id` can only be one of the allowed items.
+3. The server clamps `minutes` (5..90) and `kcal_adjustment` (-300..600), then checks the draft: contract schema,
+   the rules of `validate_draft()` from `resources.py`, no numbers in the explanation that are not in the assessment,
+   no exercise while the status is RED. A rejected draft is sent back once with the reasons.
+4. If there is no key, the call fails or the second draft is rejected too, the rule-based `FallbackPlanner` writes
+   the draft instead. `llm.model` is then `offline-fallback`.
+5. `ResourcesService` (Java version of `resources.py`) computes the resource block:
+   `extra_kcal = (MET - 1) * mass_kg * hours`, water = 1.15 mL/kcal, CO2 = 0.34 g/kcal. The LLM never sees or writes
+   these numbers.
+
+To use Gemini, set the key before starting the backend:
+
+```bash
+export GEMINI_API_KEY=your-key
+```
+
+Other settings: `planner.gemini.model` (default `gemini-2.5-flash`), `planner.gemini.timeout-seconds` (20),
+`planner.default-mass-kg` (80, override per request with `?massKg=`).
+
+The saved plans for Nova, Kai and Lin (day 14) are in `src/main/resources/fallback-plans/`. The frontend can copy them
+into its assets to have a plan even when the backend is down. They are produced by the offline planner; rewrite them
+with `./mvnw test -Dtest=PlannerApiTest -Dfallback.write=true`.
 
 ## Things worth knowing
 
@@ -61,6 +92,10 @@ check those two fields by hand.
 cases in `src/test/resources/reference/python_reference.json` (regenerate with `make_reference.py`), and the checks
 from `contract/test_engine.py`. `ApiIntegrationTest` covers the endpoints.
 
+`ResourcesServiceTest` and `DraftValidatorTest` do the same for `resources.py` (reference in
+`resources_reference.json`, regenerate with `make_resources_reference.py`). `PlannerApiTest` runs the planner with a
+stub in place of the LLM and `GeminiDraftGeneratorTest` checks the request we send, so no test needs a key.
+
 ## Code layout
 
 ```
@@ -70,6 +105,7 @@ dto/         request bodies and the astronaut list item
 engine/      StatusEngine and its helpers
 exception/   ApiException and the error handler
 model/       records matching contract.ts
+planner/     countermeasure plans: Gemini client, draft checks, offline planner, resource math
 repository/  in-memory measurement storage
 rules/       typed rules.json
 service/     assessments, triage, schema validation
