@@ -1,39 +1,39 @@
 {
   "schema_version" : "1.0.0",
-  "plan_id" : "plan_fallback_ast_nova_d14",
+  "plan_id" : "plan_gemini-3_6-flash_ast_nova_d14",
   "astronaut_id" : "ast_nova",
   "generated_for_mission_day" : 14,
-  "generated_at_iso" : "2026-11-14T08:00:00Z",
+  "generated_at_iso" : "2026-11-13T19:32:29Z",
   "environment_id" : "DEEP_SPACECRAFT",
   "triggers" : [ ],
   "draft" : {
     "sessions" : [ {
       "exercise_id" : "zero_t2_ergometer",
-      "minutes" : 30,
+      "minutes" : 45,
       "target_system" : "SPINE_BONE",
-      "instructions" : [ "Set up the compact exercise device and secure yourself.", "Warm up at low load.", "Alternate the cardio and resistive parts at a moderate, steady effort.", "Stop if you feel pain or dizziness, then log the session." ],
-      "rationale" : "Routine loading to protect bone and muscle."
+      "instructions" : [ "Attach harness securely to compact unit.", "Perform ergometer session at nominal pace.", "Complete targeted resistive movements.", "Wipe down equipment after exercise." ],
+      "rationale" : "All system regions are GREEN and routine spine maintenance is preferred via compact zero_t2_ergometer in DEEP_SPACECRAFT."
     }, {
-      "exercise_id" : "cycle_ergometer",
+      "exercise_id" : "circadian_led_journaling",
       "minutes" : 30,
-      "target_system" : "CHEST_CARDIO",
-      "instructions" : [ "Strap in to the cycle ergometer.", "Start easy, then hold a moderate pace at which you can still talk.", "Cool down at low resistance and log the session." ],
-      "rationale" : "Routine cardio to keep the heart and blood vessels conditioned."
+      "target_system" : "HEAD_NEURO",
+      "instructions" : [ "Set habitat lighting to circadian protocol mode.", "Complete daily reflection in private crew journal.", "Log sleep readiness status." ],
+      "rationale" : "Routine circadian alignment and isolation mitigation for optimal HEAD_NEURO status."
     }, {
-      "exercise_id" : "stretch_mobility",
-      "minutes" : 10,
-      "target_system" : "SPINE_BONE",
-      "instructions" : [ "Anchor your feet.", "Stretch back, hips and shoulders slowly, without bouncing.", "Breathe steadily and hold each stretch for a few breaths." ],
-      "rationale" : "Routine mobility for the back and hips."
+      "exercise_id" : "microbial_swab_air_check",
+      "minutes" : 15,
+      "target_system" : "SYSTEMIC_IMMUNE_METABOLIC",
+      "instructions" : [ "Collect air filter sample.", "Swab designated habitat surfaces.", "Process samples in habitat analyzer." ],
+      "rationale" : "Routine habitat environmental check to support SYSTEMIC_IMMUNE_METABOLIC stability."
     } ],
     "nutrition" : {
       "kcal_adjustment" : 0,
-      "focus" : [ "protein", "hydration" ],
-      "notes" : "Keep to the planned ration."
+      "focus" : [ "hydration", "protein" ],
+      "notes" : "Maintain standard energy intake and focus on daily hydration and protein to support exercise recovery."
     },
     "escalate_to_flight_surgeon" : false,
     "escalation_reason" : "",
-    "explanation" : "All monitored systems are inside your personal baseline today. This is a maintenance day: resistive loading to protect bone and muscle, cardio, and a short stretch. Keep to the planned ration, stay hydrated and log tomorrow morning's vitals as usual."
+    "explanation" : "Your health indicators are GREEN across all systems on mission day 14. Continue your excellent fourteen day compliance streak. Today's schedule features a compact Zero T2 workout for bone and spine health, ideal for our deep space vehicle setup. You also have a session for circadian LED lighting and crew journaling to maintain mood and sleep quality, alongside routine microbial air and surface sampling to keep our closed environment safe. Keep up your balanced diet with regular focus on hydration and protein. No adjustments to daily caloric intake are required."
   },
   "resources" : {
     "assumptions" : {
@@ -45,39 +45,39 @@
     },
     "sessions" : [ {
       "exercise_id" : "zero_t2_ergometer",
-      "minutes" : 30,
+      "minutes" : 45,
       "met" : 5.0,
-      "gross_kcal" : 200,
-      "extra_kcal" : 160,
-      "extra_water_ml" : 184,
-      "extra_co2_g" : 54
+      "gross_kcal" : 300,
+      "extra_kcal" : 240,
+      "extra_water_ml" : 276,
+      "extra_co2_g" : 82
     }, {
-      "exercise_id" : "cycle_ergometer",
+      "exercise_id" : "circadian_led_journaling",
       "minutes" : 30,
-      "met" : 6.8,
-      "gross_kcal" : 272,
-      "extra_kcal" : 232,
-      "extra_water_ml" : 267,
-      "extra_co2_g" : 79
+      "met" : 1.3,
+      "gross_kcal" : 52,
+      "extra_kcal" : 12,
+      "extra_water_ml" : 14,
+      "extra_co2_g" : 4
     }, {
-      "exercise_id" : "stretch_mobility",
-      "minutes" : 10,
-      "met" : 2.3,
-      "gross_kcal" : 31,
-      "extra_kcal" : 17,
-      "extra_water_ml" : 20,
-      "extra_co2_g" : 6
+      "exercise_id" : "microbial_swab_air_check",
+      "minutes" : 15,
+      "met" : 2.0,
+      "gross_kcal" : 40,
+      "extra_kcal" : 20,
+      "extra_water_ml" : 23,
+      "extra_co2_g" : 7
     } ],
     "totals" : {
-      "extra_kcal" : 409,
-      "extra_water_ml" : 471,
-      "extra_co2_g" : 139
+      "extra_kcal" : 272,
+      "extra_water_ml" : 313,
+      "extra_co2_g" : 93
     },
     "label" : "decision-support estimate"
   },
   "llm" : {
-    "model" : "offline-fallback",
-    "input_hash" : "623564fd6e5d3bb58aefa29039ffe1911e3104c01984c8490b73ac12d5a969f7"
+    "model" : "gemini-3.6-flash",
+    "input_hash" : "ed0a1eae7a6172f17a37d7a73be697cd7332150ee0e37aaf2177ebd90ada8fa8"
   },
   "disclaimer" : "Prototype decision-support tool using simulated data. Not a medical device and not a diagnosis. Follow flight-surgeon and onboard medical procedures."
 }

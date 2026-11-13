@@ -10,14 +10,14 @@ import java.util.regex.Pattern;
 
 // Spring does not read .env files, so we do: lines like KEY=value or export KEY=value from
 // backend/.env become system properties. A real environment variable with the same name wins.
-final class DotEnv {
+public final class DotEnv {
 
     private static final Pattern LINE = Pattern.compile("^\\s*(?:export\\s+)?([A-Za-z_][A-Za-z0-9_]*)\\s*=\\s*(.*?)\\s*$");
 
     private DotEnv() {
     }
 
-    static void load() {
+    public static void load() {
         for (Path file : List.of(Path.of(".env"), Path.of("backend", ".env"))) {
             if (Files.isRegularFile(file)) {
                 try {

@@ -146,11 +146,8 @@ public class FallbackPlanner {
                 ? "Ration intake has been below target. Finish every planned meal today and log it."
                 : "Keep to the planned ration.");
 
-        List<String> regionsOff = a.regions().values().stream()
-                .filter(r -> r.status() != Status.GREEN)
-                .map(r -> r.id())
-                .toList();
-        boolean escalate = regionsOff.size() >= 3;
+        List<String> regionsOff = DraftPolicy.regionsOffBaseline(a);
+        boolean escalate = regionsOff.size() >= DraftPolicy.ESCALATE_AT_REGIONS;
         String reason = escalate
                 ? "Several body systems are outside the personal baseline at the same time: "
                 + String.join(", ", regionsOff) + "."

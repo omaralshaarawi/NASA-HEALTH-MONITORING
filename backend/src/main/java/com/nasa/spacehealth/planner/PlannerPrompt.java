@@ -36,7 +36,8 @@ final class PlannerPrompt {
             the flight surgeon sets the details.
             6. If triage_recommended is true or overall is RED: plan no EXERCISE sessions, set escalate_to_flight_surgeon \
             to true and tell the crew to follow the emergency triage checklist first.
-            7. If a region is YELLOW, keep the load on that region moderate and say what to re-measure.
+            7. If a region is YELLOW, keep the load on that region moderate and say what to re-measure. \
+            If three or more regions are not GREEN, set escalate_to_flight_surgeon to true.
             8. nutrition.kcal_adjustment is a whole number from -300 to 600, and 0 when no change is needed. \
             focus lists food groups or habits such as "protein" or "hydration", never products or amounts.
             9. escalation_reason is an empty string when escalate_to_flight_surgeon is false.

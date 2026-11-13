@@ -1,9 +1,9 @@
 {
   "schema_version" : "1.0.0",
-  "plan_id" : "plan_fallback_ast_lin_d14",
+  "plan_id" : "plan_gemini-3_6-flash_ast_lin_d14",
   "astronaut_id" : "ast_lin",
   "generated_for_mission_day" : 14,
-  "generated_at_iso" : "2026-11-14T08:00:00Z",
+  "generated_at_iso" : "2026-11-13T19:33:36Z",
   "environment_id" : "DEEP_SPACECRAFT",
   "triggers" : [ {
     "indicator" : "hr_rest",
@@ -27,11 +27,11 @@
     "nutrition" : {
       "kcal_adjustment" : 0,
       "focus" : [ "hydration" ],
-      "notes" : "Keep to the normal ration unless the medical checklist says otherwise."
+      "notes" : "Maintain standard nutrition and hydration while following the emergency triage checklist."
     },
     "escalate_to_flight_surgeon" : true,
-    "escalation_reason" : "Overall status is RED (Resting heart rate, Systolic BP, Diastolic BP). Follow the emergency triage checklist and report to the flight surgeon.",
-    "explanation" : "These readings are in the red range today: Resting heart rate, Systolic BP, Diastolic BP. All exercise is on hold. Follow the emergency triage checklist now and keep the crew member at rest with a crewmate nearby. Earth is too far away for a live call, so the triage report is queued for the flight surgeon. Training restarts only after the readings are re-measured and the status is cleared."
+    "escalation_reason" : "Overall health status is RED and triage is recommended due to severely elevated cardiac and blood pressure indicators.",
+    "explanation" : "Your overall health status is RED and emergency triage is recommended. Do not perform any exercise sessions right now. Please follow the emergency triage checklist first while we escalate your situation to the flight surgeon."
   },
   "resources" : {
     "assumptions" : {
@@ -50,8 +50,8 @@
     "label" : "decision-support estimate"
   },
   "llm" : {
-    "model" : "offline-fallback",
-    "input_hash" : "2dfda58f160217849bdcade2169e459e925b2c9fd2e159c41d9481df3e2dfdde"
+    "model" : "gemini-3.6-flash",
+    "input_hash" : "486e4c65842b7ce05dab44aefc2425a07533695f7679293bca8b5b6b1e44153a"
   },
   "disclaimer" : "Prototype decision-support tool using simulated data. Not a medical device and not a diagnosis. Follow flight-surgeon and onboard medical procedures."
 }

@@ -22,10 +22,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -102,6 +101,10 @@ class PlannerApiTest {
     DraftValidator validator;
     @Autowired
     Rules rules;
+    @Autowired
+    SavedPlans savedPlans;
+    @Autowired
+    DraftPolicy policy;
 
     @BeforeEach
     void reset() {
@@ -117,10 +120,35 @@ class PlannerApiTest {
                 .andReturn().getResponse().getContentAsString());
     }
 
+    private MvcResult call(String query, JsonNode assessment) throws Exception {
+        return mvc.perform(post("/api/plans/generate" + query).contentType(MediaType.APPLICATION_JSON)
+                .content(assessment.toString())).andExpect(status().isOk()).andReturn();
+    }
+
+    private JsonNode body(MvcResult r) throws Exception {
+        return mapper.readTree(r.getResponse().getContentAsString());
+    }
+
+    private String source(MvcResult r) {
+        return r.getResponse().getHeader(PlannerController.SOURCE_HEADER);
+    }
+
     private JsonNode generate(JsonNode assessment) throws Exception {
-        return mapper.readTree(mvc.perform(post("/api/plans/generate").contentType(MediaType.APPLICATION_JSON)
-                        .content(assessment.toString()))
+        return body(call("", assessment));
+    }
+
+    // skips the saved plans, so the (stub) LLM is asked
+    private JsonNode generateFresh(JsonNode assessment) throws Exception {
+        return body(call("?fresh=true", assessment));
+    }
+
+    private JsonNode assessment(String astronautId, int day) throws Exception {
+        return mapper.readTree(mvc.perform(get("/api/assessments/" + astronautId + "?day=" + day))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString());
+    }
+
+    private CountermeasurePlan offline(String astronautId, int day, String envId) {
+        return planner.offlinePlan(assessments.assess(astronautId, day, envId, null), 80, "plan_test");
     }
 
     private ObjectNode draft(String exerciseId, int minutes, String region) {
@@ -141,21 +169,22 @@ class PlannerApiTest {
         return d;
     }
 
-    // offline planner
+    // plans as the API returns them
 
     @ParameterizedTest
-    @ValueSource(strings = {"ast_nova", "ast_kai", "ast_lin"})
-    void offlinePlanIsCompleteAndValid(String astronautId) throws Exception {
-        JsonNode a = assessment(astronautId);
+    @ValueSource(strings = {"ast_nova", "ast_kai", "ast_lin", "ast_kai@9", "ast_lin@3"})
+    void planIsCompleteAndValid(String which) throws Exception {
+        String astronautId = which.split("@")[0];
+        int day = which.contains("@") ? Integer.parseInt(which.split("@")[1]) : 14;
+        JsonNode a = assessment(astronautId, day);
         JsonNode plan = generate(a);
 
         assertThat(plan.get("schema_version").asText()).isEqualTo("1.0.0");
         assertThat(plan.get("plan_id").asText()).startsWith("plan_");
         assertThat(plan.get("astronaut_id").asText()).isEqualTo(astronautId);
-        assertThat(plan.get("generated_for_mission_day").asInt()).isEqualTo(14);
+        assertThat(plan.get("generated_for_mission_day").asInt()).isEqualTo(day);
         assertThat(plan.get("generated_at_iso").asText()).isEqualTo("2026-11-14T08:00:00Z");
         assertThat(plan.get("environment_id").asText()).isEqualTo("DEEP_SPACECRAFT");
-        assertThat(plan.get("llm").get("model").asText()).isEqualTo(PlannerService.OFFLINE_MODEL);
         assertThat(plan.get("llm").get("input_hash").asText()).matches("[0-9a-f]{64}");
         assertThat(plan.get("disclaimer").asText()).isEqualTo(a.get("disclaimer").asText());
         assertThat(validator.validate(plan.get("draft"), 0.0)).isEmpty();
@@ -178,22 +207,24 @@ class PlannerApiTest {
         assertThat(JsonDiff.diff(mapper.valueToTree(expected), plan.get("resources"))).isEmpty();
     }
 
+    // offline planner
+
     @Test
-    void offlinePlansFitTheThreeStories() throws Exception {
-        JsonNode nova = generate(assessment("ast_nova")).get("draft");
+    void offlinePlansFitTheThreeStories() {
+        JsonNode nova = mapper.valueToTree(offline("ast_nova", 14, "DEEP_SPACECRAFT").draft());
         assertThat(nova.get("sessions")).hasSize(3);
         assertThat(nova.get("sessions").get(0).get("exercise_id").asText()).isEqualTo("zero_t2_ergometer");
         assertThat(nova.get("escalate_to_flight_surgeon").asBoolean()).isFalse();
         assertThat(nova.get("nutrition").get("kcal_adjustment").asInt()).isZero();
 
-        JsonNode kai = generate(assessment("ast_kai")).get("draft");
+        JsonNode kai = mapper.valueToTree(offline("ast_kai", 14, "DEEP_SPACECRAFT").draft());
         assertThat(kai.get("sessions").findValuesAsText("exercise_id"))
                 .containsExactly("zero_t2_ergometer", "circadian_led_journaling", "microbial_swab_air_check");
         assertThat(kai.get("sessions").get(0).get("minutes").asInt()).isEqualTo(45);
         assertThat(kai.get("nutrition").get("kcal_adjustment").asInt()).isEqualTo(200);
         assertThat(kai.get("escalate_to_flight_surgeon").asBoolean()).isTrue();
 
-        JsonNode lin = generate(assessment("ast_lin"));
+        JsonNode lin = mapper.valueToTree(offline("ast_lin", 14, "DEEP_SPACECRAFT"));
         assertThat(lin.get("draft").get("sessions")).isEmpty();
         assertThat(lin.get("draft").get("escalate_to_flight_surgeon").asBoolean()).isTrue();
         assertThat(lin.get("draft").get("explanation").asText()).contains("triage checklist");
@@ -206,8 +237,8 @@ class PlannerApiTest {
             for (String env : rules.environments().keySet()) {
                 for (int day = 1; day <= 14; day++) {
                     AssessmentResponse a = assessments.assess(astronaut, day, env, null);
-                    // buildPlan throws if the offline draft breaks any rule
-                    CountermeasurePlan plan = planner.buildPlan(a, 80, "plan_test", false);
+                    // offlinePlan throws if the draft breaks any rule
+                    CountermeasurePlan plan = planner.offlinePlan(a, 80, "plan_test");
                     double gravity = rules.environments().get(env).gravityG();
                     assertThat(validator.validate(mapper.valueToTree(plan.draft()), gravity))
                             .as("%s %s day %d", astronaut, env, day).isEmpty();
@@ -221,11 +252,9 @@ class PlannerApiTest {
 
     @Test
     void walkingIsOnlyPlannedWhereThereIsGravity() {
-        CountermeasurePlan moon = planner.buildPlan(assessments.assess("ast_nova", 14, "PLANETARY_BASE_MOON", null),
-                80, "plan_test", false);
+        CountermeasurePlan moon = offline("ast_nova", 14, "PLANETARY_BASE_MOON");
         assertThat(moon.draft().sessions()).extracting("exerciseId").contains("walk_surface", "resistive_moderate");
-        CountermeasurePlan transit = planner.buildPlan(assessments.assess("ast_nova", 14, "DEEP_SPACECRAFT", null),
-                80, "plan_test", false);
+        CountermeasurePlan transit = offline("ast_nova", 14, "DEEP_SPACECRAFT");
         assertThat(transit.draft().sessions()).extracting("exerciseId").doesNotContain("walk_surface");
     }
 
@@ -238,7 +267,7 @@ class PlannerApiTest {
         ((ObjectNode) d.get("nutrition")).put("kcal_adjustment", 900.4);
         llm.answers.add(d);
 
-        JsonNode plan = generate(assessment("ast_nova"));
+        JsonNode plan = generateFresh(assessment("ast_nova"));
 
         assertThat(plan.get("llm").get("model").asText()).isEqualTo("stub-model");
         assertThat(plan.get("draft").get("sessions").get(0).get("minutes").asInt()).isEqualTo(90);
@@ -271,26 +300,45 @@ class PlannerApiTest {
         llm.answers.add(bad);
         llm.answers.add(draft("zero_t2_ergometer", 30, "SPINE_BONE"));
 
-        JsonNode plan = generate(assessment("ast_nova"));
+        JsonNode plan = generateFresh(assessment("ast_nova"));
 
         assertThat(plan.get("llm").get("model").asText()).isEqualTo("stub-model");
         assertThat(llm.prompts).hasSize(2);
         assertThat(llm.prompts.get(1)).contains("rejected").contains("9999");
     }
 
-    @Test
-    void twoRejectedDraftsFallBackToTheOfflinePlan() throws Exception {
-        llm.configured = true;
-        llm.answers.add(draft("bench_press", 30, "SPINE_BONE"));
+    private ObjectNode dosingDraft() {
         ObjectNode dosing = draft("zero_t2_ergometer", 30, "SPINE_BONE");
         dosing.put("explanation", "Take one tablet before training.");
-        llm.answers.add(dosing);
+        return dosing;
+    }
 
-        JsonNode plan = generate(assessment("ast_nova"));
+    @Test
+    void twoRejectedDraftsFallBackToTheRecordedPlan() throws Exception {
+        llm.configured = true;
+        llm.answers.add(draft("bench_press", 30, "SPINE_BONE"));
+        llm.answers.add(dosingDraft());
+
+        MvcResult r = call("?fresh=true", assessment("ast_nova"));
 
         assertThat(llm.prompts).hasSize(2);
-        assertThat(plan.get("llm").get("model").asText()).isEqualTo(PlannerService.OFFLINE_MODEL);
-        assertThat(plan.get("draft").get("sessions")).hasSize(3);
+        assertThat(source(r)).isEqualTo("SAVED");
+        assertThat(body(r).get("llm").get("model").asText())
+                .isEqualTo(savedPlans.recordedFor("ast_nova").llm().model());
+    }
+
+    @Test
+    void twoRejectedDraftsWithNothingSavedFallBackToTheOfflinePlan() throws Exception {
+        llm.configured = true;
+        llm.answers.add(draft("bench_press", 30, "SPINE_BONE"));
+        llm.answers.add(dosingDraft());
+
+        MvcResult r = call("", assessment("ast_nova", 10));
+
+        assertThat(llm.prompts).hasSize(2);
+        assertThat(source(r)).isEqualTo("OFFLINE");
+        assertThat(body(r).get("llm").get("model").asText()).isEqualTo(PlannerService.OFFLINE_MODEL);
+        assertThat(body(r).get("draft").get("sessions")).hasSize(3);
     }
 
     @Test
@@ -298,10 +346,10 @@ class PlannerApiTest {
         llm.configured = true;
         llm.answers.add(new IllegalStateException("connection refused"));
 
-        JsonNode plan = generate(assessment("ast_kai"));
+        MvcResult r = call("?fresh=true", assessment("ast_kai"));
 
         assertThat(llm.prompts).hasSize(1);
-        assertThat(plan.get("llm").get("model").asText()).isEqualTo(PlannerService.OFFLINE_MODEL);
+        assertThat(source(r)).isEqualTo("SAVED");
     }
 
     @Test
@@ -310,11 +358,63 @@ class PlannerApiTest {
         llm.answers.add(draft("cycle_ergometer", 30, "CHEST_CARDIO"));
         llm.answers.add(draft("cycle_ergometer", 20, "CHEST_CARDIO"));
 
-        JsonNode plan = generate(assessment("ast_lin"));
+        JsonNode plan = generateFresh(assessment("ast_lin"));
 
         assertThat(llm.prompts.get(1)).contains("exercise is on hold");
-        assertThat(plan.get("llm").get("model").asText()).isEqualTo(PlannerService.OFFLINE_MODEL);
         assertThat(plan.get("draft").get("sessions")).isEmpty();
+        assertThat(plan.get("draft").get("escalate_to_flight_surgeon").asBoolean()).isTrue();
+    }
+
+    @Test
+    void threeRegionsOffBaselineForceEscalation() throws Exception {
+        llm.configured = true;
+        llm.answers.add(draft("zero_t2_ergometer", 30, "SPINE_BONE"));   // says escalate = false
+
+        JsonNode d = generateFresh(assessment("ast_kai")).get("draft");
+
+        assertThat(d.get("escalate_to_flight_surgeon").asBoolean()).isTrue();
+        assertThat(d.get("escalation_reason").asText()).contains("Several body systems");
+    }
+
+    // saved plans
+
+    @Test
+    void recordedPlanIsServedWithoutCallingTheLlm() throws Exception {
+        llm.configured = true;
+
+        MvcResult r = call("", assessment("ast_kai"));
+
+        assertThat(llm.prompts).isEmpty();
+        assertThat(source(r)).isEqualTo("SAVED");
+        assertThat(body(r).get("plan_id").asText()).isNotEqualTo(savedPlans.recordedFor("ast_kai").planId());
+        assertThat(body(r).get("draft").get("explanation").asText())
+                .isEqualTo(savedPlans.recordedFor("ast_kai").draft().explanation());
+    }
+
+    @Test
+    void liveAnswerIsReusedForTheSameAssessment() throws Exception {
+        llm.configured = true;
+        llm.answers.add(draft("zero_t2_ergometer", 30, "SPINE_BONE"));
+        JsonNode a = assessment("ast_nova", 10);
+
+        MvcResult first = call("", a);
+        MvcResult second = call("", a);
+
+        assertThat(llm.prompts).hasSize(1);
+        assertThat(source(first)).isEqualTo("LIVE");
+        assertThat(source(second)).isEqualTo("SAVED");
+        assertThat(body(second).get("llm").get("model").asText()).isEqualTo("stub-model");
+    }
+
+    @Test
+    void otherAssessmentsAreNotServedASavedPlan() throws Exception {
+        llm.configured = true;
+        llm.answers.add(draft("zero_t2_ergometer", 30, "SPINE_BONE"));
+
+        MvcResult r = call("", assessment("ast_kai", 13));
+
+        assertThat(source(r)).isEqualTo("LIVE");
+        assertThat(llm.prompts).hasSize(1);
     }
 
     @Test
@@ -322,7 +422,7 @@ class PlannerApiTest {
         llm.configured = true;
         llm.answers.add(draft("thigh_cuff_bcomplex", 20, "HEAD_NEURO"));
 
-        JsonNode d = generate(assessment("ast_nova")).get("draft");
+        JsonNode d = generateFresh(assessment("ast_nova")).get("draft");
 
         assertThat(d.get("escalate_to_flight_surgeon").asBoolean()).isTrue();
         assertThat(d.get("escalation_reason").asText()).contains("thigh cuff");
@@ -332,7 +432,7 @@ class PlannerApiTest {
     void theLlmNeverSeesResourceNumbersOrRawSeries() throws Exception {
         llm.configured = true;
         llm.answers.add(draft("zero_t2_ergometer", 30, "SPINE_BONE"));
-        generate(assessment("ast_kai"));
+        generateFresh(assessment("ast_kai"));
 
         JsonNode input = mapper.readTree(llm.prompts.get(0));
         assertThat(input.get("triggers")).hasSize(8);
@@ -355,7 +455,7 @@ class PlannerApiTest {
     void latestPlanIsTheFallbackFileUntilOneIsGenerated() throws Exception {
         JsonNode before = mapper.readTree(mvc.perform(get("/api/plans/ast_kai")).andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString());
-        assertThat(before.get("plan_id").asText()).isEqualTo("plan_fallback_ast_kai_d14");
+        assertThat(before.get("plan_id").asText()).isEqualTo(savedPlans.recordedFor("ast_kai").planId());
 
         JsonNode generated = generate(assessment("ast_kai"));
         JsonNode after = mapper.readTree(mvc.perform(get("/api/plans/ast_kai")).andExpect(status().isOk())
@@ -363,25 +463,28 @@ class PlannerApiTest {
         assertThat(after.get("plan_id").asText()).isEqualTo(generated.get("plan_id").asText());
     }
 
-    // The files in src/main/resources/fallback-plans are what the offline planner gives for day 14.
-    // Rewrite them with: ./mvnw test -Dtest=PlannerApiTest -Dfallback.write=true
+    // The recorded plans in src/main/resources/fallback-plans must still match today's day-14 assessment
+    // and pass every check unchanged. Re-record with: ./mvnw test -Dtest=RecordPlans -Dplans.record=true
     @ParameterizedTest
     @ValueSource(strings = {"ast_nova", "ast_kai", "ast_lin"})
-    void fallbackFilesAreUpToDate(String astronautId) throws Exception {
-        AssessmentResponse a = assessments.assess(astronautId, 14, "DEEP_SPACECRAFT", null);
-        CountermeasurePlan plan = planner.buildPlan(a, 80, "plan_fallback_" + astronautId + "_d14", false);
-        JsonNode actual = mapper.valueToTree(plan);
-
-        if (Boolean.getBoolean("fallback.write")) {
-            Path dir = Path.of("src/main/resources/fallback-plans");
-            Files.createDirectories(dir);
-            Files.writeString(dir.resolve(astronautId + ".json"),
-                    mapper.writerWithDefaultPrettyPrinter().writeValueAsString(actual) + "\n");
-            return;
-        }
+    void recordedPlansAreCurrentAndClean(String astronautId) throws Exception {
+        JsonNode file;
         try (InputStream in = getClass().getResourceAsStream("/fallback-plans/" + astronautId + ".json")) {
-            assertThat(in).as("fallback file for %s", astronautId).isNotNull();
-            assertThat(JsonDiff.diff(mapper.readTree(in), actual)).isEmpty();
+            assertThat(in).as("recorded plan for %s", astronautId).isNotNull();
+            file = mapper.readTree(in);
         }
+        CountermeasurePlan plan = mapper.treeToValue(file, CountermeasurePlan.class);
+        AssessmentResponse a = assessments.assess(astronautId, 14, "DEEP_SPACECRAFT", null);
+
+        assertThat(plan.llm().inputHash()).as("prompt or assessment changed since recording: re-record the plans")
+                .isEqualTo(planner.inputHash(a));
+        JsonNode draft = file.get("draft");
+        JsonNode clamped = policy.clamp(draft, a);
+        assertThat(JsonDiff.diff(draft, clamped)).as("the server would change this draft").isEmpty();
+        assertThat(policy.check(clamped, a, 0.0)).isEmpty();
+        ResourceBlock expected = resources.buildResourceBlock(plan.draft().sessions(), 80);
+        assertThat(JsonDiff.diff(mapper.valueToTree(expected), file.get("resources"))).isEmpty();
+        assertThat(JsonDiff.diff(mapper.valueToTree(offline(astronautId, 14, "DEEP_SPACECRAFT").triggers()),
+                file.get("triggers"))).isEmpty();
     }
 }

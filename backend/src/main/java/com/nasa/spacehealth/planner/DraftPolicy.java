@@ -25,6 +25,9 @@ import java.util.regex.Pattern;
 @Component
 public class DraftPolicy {
 
+    // this many body regions off their baseline at once is the flight surgeon's call, not the planner's
+    public static final int ESCALATE_AT_REGIONS = 3;
+
     private static final int MAX_INSTRUCTIONS = 4;
     private static final Pattern NUMBER = Pattern.compile("\\d+(?:\\.\\d+)?");
 
@@ -43,6 +46,13 @@ public class DraftPolicy {
 
     static boolean isEmergency(AssessmentResponse a) {
         return a.triageRecommended() || a.overall() == Status.RED;
+    }
+
+    static List<String> regionsOffBaseline(AssessmentResponse a) {
+        return a.regions().values().stream()
+                .filter(r -> r.status() != Status.GREEN)
+                .map(r -> r.id())
+                .toList();
     }
 
     // Returns a cleaned copy. Only fixes what is safe to fix; everything else is left for check().
@@ -78,12 +88,16 @@ public class DraftPolicy {
                     DraftValidator.KCAL_MIN, DraftValidator.KCAL_MAX);
         }
 
-        // escalation is not the LLM's call in these two cases
+        // escalation is not the LLM's call in these cases
+        List<String> regionsOff = regionsOffBaseline(assessment);
         String forcedReason = null;
         if (isEmergency(assessment)) {
             forcedReason = "Overall status is RED. Follow the emergency triage checklist and report to the flight surgeon.";
         } else if (!directedLabels.isEmpty()) {
             forcedReason = "Needs flight-surgeon direction: " + String.join("; ", directedLabels) + ".";
+        } else if (regionsOff.size() >= ESCALATE_AT_REGIONS) {
+            forcedReason = "Several body systems are outside the personal baseline at the same time: "
+                    + String.join(", ", regionsOff) + ".";
         }
         if (forcedReason != null) {
             draft.put("escalate_to_flight_surgeon", true);

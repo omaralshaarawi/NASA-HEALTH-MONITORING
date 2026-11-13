@@ -34,8 +34,8 @@ Settings in `application.properties`:
 | `POST /api/triage/step` | `{"incident_id": "...", "answer": "yes"}` (`yes`/`no` or `done`) |
 | `POST /api/triage/end` | `{"incident_id": "..."}`, stops the protocol at any step |
 | `GET /api/triage/{incidentId}` | current state of an incident |
-| `POST /api/plans/generate?massKg=` | body is an `AssessmentResponse`, returns a `CountermeasurePlan` |
-| `GET /api/plans/{astronautId}` | last generated plan, or the saved day-14 plan for Nova, Kai and Lin |
+| `POST /api/plans/generate?massKg=&fresh=` | body is an `AssessmentResponse`, returns a `CountermeasurePlan` |
+| `GET /api/plans/{astronautId}` | last generated plan, or the recorded day-14 plan for Nova, Kai and Lin |
 
 All JSON uses snake_case like `contract.ts`. Errors look like `{"status": 400, "error": "Bad Request", "message": "..."}`.
 
@@ -57,8 +57,11 @@ Notes:
 3. The server clamps `minutes` (5..90) and `kcal_adjustment` (-300..600), then checks the draft: contract schema,
    the rules of `validate_draft()` from `resources.py`, no numbers in the explanation that are not in the assessment,
    no exercise while the status is RED. A rejected draft is sent back once with the reasons.
-4. If there is no key, the call fails or the second draft is rejected too, the rule-based `FallbackPlanner` writes
-   the draft instead. `llm.model` is then `offline-fallback`.
+4. Plans are reused by `llm.input_hash` (a hash of exactly what the model is sent). The order is: a saved plan for the
+   same input, a live Gemini answer, a saved plan again if Gemini fails, and finally the rule-based `FallbackPlanner`
+   (`llm.model` is then `offline-fallback`). `?fresh=true` skips the first step. Saved plans go through the same checks
+   and their resource numbers are recomputed. The response header `X-Plan-Source` says `SAVED`, `LIVE` or `OFFLINE`.
+   If three or more body regions are not GREEN, the server sets `escalate_to_flight_surgeon` itself.
 5. `ResourcesService` (Java version of `resources.py`) computes the resource block:
    `extra_kcal = (MET - 1) * mass_kg * hours`, water = 1.15 mL/kcal, CO2 = 0.34 g/kcal. The LLM never sees or writes
    these numbers.
@@ -75,9 +78,17 @@ Other settings: `planner.gemini.model` (default `gemini-3.6-flash`; `gemini-2.5-
 3.7/3.8 were overloaded when tested), `planner.gemini.timeout-seconds` (20),
 `planner.default-mass-kg` (80, override per request with `?massKg=`).
 
-The saved plans for Nova, Kai and Lin (day 14) are in `src/main/resources/fallback-plans/`. The frontend can copy them
-into its assets to have a plan even when the backend is down. They are produced by the offline planner; rewrite them
-with `./mvnw test -Dtest=PlannerApiTest -Dfallback.write=true`.
+**Free tier limits:** 5 requests per minute and 20 per day for each model, and one plan can take two requests. So the
+UI should show `GET /api/plans/{id}` and only call generate on a button press.
+
+The recorded plans for Nova, Kai and Lin (day 14) in `src/main/resources/fallback-plans/` are live `gemini-3.6-flash`
+answers. They are served instantly for the day-14 assessments, without using any quota, and the frontend can copy them
+into its assets as a last resort. A test fails if the prompt or the assessment changes and they no longer match;
+record them again (needs the key, takes about 2 minutes) and read them before committing:
+
+```bash
+./mvnw test -Dtest=RecordPlans -Dplans.record=true
+```
 
 ## Things worth knowing
 
@@ -97,7 +108,8 @@ from `contract/test_engine.py`. `ApiIntegrationTest` covers the endpoints.
 
 `ResourcesServiceTest` and `DraftValidatorTest` do the same for `resources.py` (reference in
 `resources_reference.json`, regenerate with `make_resources_reference.py`). `PlannerApiTest` runs the planner with a
-stub in place of the LLM and `GeminiDraftGeneratorTest` checks the request we send, so no test needs a key.
+stub in place of the LLM and `GeminiDraftGeneratorTest` checks the request we send, so no test needs a key
+(except `RecordPlans`, which only runs when asked).
 
 ## Code layout
 
