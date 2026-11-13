@@ -166,12 +166,14 @@ def assess_day(records, env_id, floor_overrides=None):
             if v is not None:
                 ratio = v / env["radiation_expected_mSv_day"]
                 r["ratio"] = round(ratio, 2)
+                label = RULES["radiation"].get("event_label", "")
+                msg = f"{v:g} mSv/day is {ratio:.1f}x the expected {env['radiation_expected_mSv_day']:g}" + (f" - {label}" if label else "")
                 if ratio >= RULES["radiation"]["ratio_red"]:
                     r["status"] = 2
-                    r["reasons"].append(f"{v:g} mSv/day is {ratio:.1f}x the expected {env['radiation_expected_mSv_day']:g}")
+                    r["reasons"].append(msg)
                 elif ratio >= RULES["radiation"]["ratio_yellow"]:
                     r["status"] = 1
-                    r["reasons"].append(f"{v:g} mSv/day is {ratio:.1f}x the expected {env['radiation_expected_mSv_day']:g}")
+                    r["reasons"].append(msg)
             res[iid] = r
 
     # compliance --------------------------------------------------------------------

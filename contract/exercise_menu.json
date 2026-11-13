@@ -1,13 +1,29 @@
 {
-  "status": "PROTOTYPE. MET values are approximate Compendium of Physical Activities figures; verify before citing. The LLM may only choose exercise_id from this list; code computes all numbers.",
+  "status": "PROTOTYPE. Item names follow the NASA HRP countermeasures the team extracted from the Hazards videos and pages (names not verified by Claude against the pages). MET values are team simulation assumptions. The LLM may only choose exercise_id from this list; code computes every number. 'PROTOCOL' items are not exercise: they carry no dosing or settings in this app and must be directed by a flight surgeon where requires_flight_surgeon_direction is true.",
   "min_minutes": 5,
   "max_minutes_per_session": 90,
   "items": [
-    { "exercise_id": "resistive_moderate", "label": "Resistive exercise, moderate (ARED or bands)", "met": 3.5, "target_system": "SPINE_BONE", "gravity_max_g": 0.5 },
-    { "exercise_id": "resistive_vigorous", "label": "Resistive exercise, vigorous (ARED)", "met": 6.0, "target_system": "SPINE_BONE", "gravity_max_g": 0.5 },
-    { "exercise_id": "cycle_ergometer", "label": "Cycle ergometer, moderate", "met": 6.8, "target_system": "CHEST_CARDIO", "gravity_max_g": 0.5 },
-    { "exercise_id": "treadmill_harness", "label": "Treadmill with harness, brisk walk/jog", "met": 7.0, "target_system": "CHEST_CARDIO", "gravity_max_g": 0.5 },
-    { "exercise_id": "walk_surface", "label": "Walking on surface (partial gravity)", "met": 3.5, "target_system": "CHEST_CARDIO", "gravity_min_g": 0.1 },
-    { "exercise_id": "stretch_mobility", "label": "Stretching and mobility", "met": 2.3, "target_system": "SPINE_BONE", "gravity_max_g": 1.0 }
+    { "exercise_id": "resistive_moderate", "label": "ARED resistive loading, moderate (or bands)", "kind": "EXERCISE", "met": 3.5, "target_system": "SPINE_BONE", "gravity_max_g": 0.5, "requires_flight_surgeon_direction": false,
+      "nasa_basis": "HRP Gravity: fitness and exercise protocols; spine and hip bone loss of ~1-1.5% per month in microgravity" },
+    { "exercise_id": "resistive_vigorous", "label": "ARED resistive loading, vigorous", "kind": "EXERCISE", "met": 6.0, "target_system": "SPINE_BONE", "gravity_max_g": 0.5, "requires_flight_surgeon_direction": false,
+      "nasa_basis": "HRP Gravity: fitness and exercise protocols (ISS crews exercise ~2 h/day)" },
+    { "exercise_id": "cycle_ergometer", "label": "Cycle ergometer (cardio), moderate", "kind": "EXERCISE", "met": 6.8, "target_system": "CHEST_CARDIO", "gravity_max_g": 0.5, "requires_flight_surgeon_direction": false,
+      "nasa_basis": "HRP Gravity: cardiovascular adaptation" },
+    { "exercise_id": "treadmill_harness", "label": "Treadmill with harness, brisk walk or jog", "kind": "EXERCISE", "met": 7.0, "target_system": "CHEST_CARDIO", "gravity_max_g": 0.5, "requires_flight_surgeon_direction": false,
+      "nasa_basis": "HRP Gravity: ISS exercise protocols" },
+    { "exercise_id": "zero_t2_ergometer", "label": "Zero T2 treadmill-free compact ergometer and resistive session", "kind": "EXERCISE", "met": 5.0, "target_system": "SPINE_BONE", "gravity_max_g": 0.5, "requires_flight_surgeon_direction": false,
+      "nasa_basis": "HRP Gravity: compact exercise for smaller Moon and Mars spacecraft" },
+    { "exercise_id": "walk_surface", "label": "Walking on the surface (partial gravity)", "kind": "EXERCISE", "met": 3.5, "target_system": "CHEST_CARDIO", "gravity_min_g": 0.1, "requires_flight_surgeon_direction": false,
+      "nasa_basis": "HRP Gravity: partial-gravity fields (Moon, Mars)" },
+    { "exercise_id": "stretch_mobility", "label": "Stretching and mobility", "kind": "EXERCISE", "met": 2.3, "target_system": "SPINE_BONE", "gravity_max_g": 1.0, "requires_flight_surgeon_direction": false,
+      "nasa_basis": "HRP Gravity: spine elongation (height can increase by up to ~3%)" },
+    { "exercise_id": "thigh_cuff_bcomplex", "label": "Veno-constrictive thigh cuff and B-complex protocol (vision / SANS)", "kind": "PROTOCOL", "met": 1.0, "target_system": "HEAD_NEURO", "gravity_max_g": 0.5, "requires_flight_surgeon_direction": true,
+      "nasa_basis": "HRP Gravity: SANS countermeasures. Cuff settings and any supplement amounts must come from the flight surgeon, never from this app." },
+    { "exercise_id": "compression_fluid_loading", "label": "Lower-body compression and fluid loading (before landing or surface work)", "kind": "PROTOCOL", "met": 1.0, "target_system": "CHEST_CARDIO", "gravity_max_g": 1.0, "requires_flight_surgeon_direction": true,
+      "nasa_basis": "HRP Gravity: low blood pressure and fainting on landing. Fluid amounts must come from the flight surgeon." },
+    { "exercise_id": "circadian_led_journaling", "label": "Circadian LED lighting and crew journaling session", "kind": "PROTOCOL", "met": 1.3, "target_system": "HEAD_NEURO", "gravity_max_g": 1.0, "requires_flight_surgeon_direction": false,
+      "nasa_basis": "HRP Isolation: Earth-simulating LED lighting for circadian alignment; crew journaling as a safe place to vent frustration" },
+    { "exercise_id": "microbial_swab_air_check", "label": "Habitat microbial surface swab and air check", "kind": "PROTOCOL", "met": 2.0, "target_system": "SYSTEMIC_IMMUNE_METABOLIC", "gravity_max_g": 1.0, "requires_flight_surgeon_direction": false,
+      "nasa_basis": "HRP Hostile/Closed Environments: spacecraft microbial surface swabbing; habitability factor 'Air'" }
   ]
 }

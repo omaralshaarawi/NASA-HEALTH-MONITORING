@@ -19,7 +19,7 @@ def base_day(rng, a, d):
             "mood_1_10": int(np.clip(round(7.5 + rng.normal(0, 0.5)), 1, 10)),
         },
         "pvt": {"median_rt_ms": round(250 + rng.normal(0, 8), 0), "lapses_gt500ms": 0, "n_trials": 20, "source": "BROWSER_30S"},
-        "habitat": {"radiation_mSv_day": round(1.75 + rng.normal(0, 0.05), 2), "cabin_co2_mmHg": round(2.7 + rng.normal(0, 0.1), 1)},
+        "habitat": {"radiation_mSv_day": round(1.4 + rng.normal(0, 0.05), 2), "cabin_co2_mmHg": round(2.7 + rng.normal(0, 0.1), 1)},
         "compliance": {"morning_vitals_logged": True, "ared_resistive_minutes": int(60 + rng.integers(-3, 4)), "ration_intake_pct": int(100 - rng.integers(0, 4))},
         "attachments": [],
     }
@@ -41,7 +41,7 @@ def build():
             k["compliance"]["ared_resistive_minutes"] = int(rng.integers(10, 25))
         if d >= 12:
             k["compliance"]["ration_intake_pct"] = int(rng.integers(66, 76))
-        if d >= 13:                                                              # solar particle event
+        if d >= 13:                                                              # Solar Particle Event (solar flare) alert, about 2.2x the 1.4 mSv/day preset
             k["habitat"]["radiation_mSv_day"] = round(3.1 + rng.normal(0, 0.1), 2)
         out["ast_kai"].append(k)
         l = base_day(rng, "ast_lin", d)                                          # acute event on day 14

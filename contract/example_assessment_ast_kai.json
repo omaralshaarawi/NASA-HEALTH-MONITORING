@@ -13,7 +13,7 @@
   "one_way_delay_s": 750.519,
   "comm_label": "Light-time delay",
   "comm_mode": "AUTONOMOUS",
-  "radiation_expected_mSv_day": 1.75,
+  "radiation_expected_mSv_day": 1.4,
   "radiation_mSv_day": 2.98,
   "cabin_co2_mmHg": 2.6,
   "resistive_target_min": 60,
@@ -359,7 +359,7 @@
    "value": 2.98,
    "status": "YELLOW",
    "reasons": [
-    "2.98 mSv/day is 1.7x the expected 1.75"
+    "2.98 mSv/day is 2.1x the expected 1.4 - possible Solar Particle Event (solar flare)"
    ],
    "anchor": null,
    "z": null,
@@ -368,22 +368,22 @@
    "abs_level": 0,
    "remeasure": false,
    "trend": [
-    1.68,
-    1.72,
-    1.69,
-    1.8,
-    1.74,
-    1.79,
-    1.72,
-    1.8,
-    1.75,
-    1.73,
-    1.72,
-    1.7,
+    1.33,
+    1.37,
+    1.34,
+    1.45,
+    1.39,
+    1.44,
+    1.37,
+    1.45,
+    1.4,
+    1.38,
+    1.37,
+    1.35,
     3.12,
     2.98
    ],
-   "ratio": 1.7
+   "ratio": 2.13
   },
   {
    "id": "resistive",
@@ -461,7 +461,7 @@
    "value": null,
    "status": "YELLOW",
    "reasons": [
-    "radiation 1.7x expected together with temp, sleep"
+    "radiation 2.1x expected together with temp, sleep"
    ],
    "anchor": null,
    "z": null,
