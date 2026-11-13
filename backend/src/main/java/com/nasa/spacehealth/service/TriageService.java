@@ -1,6 +1,10 @@
 package com.nasa.spacehealth.service;
 
-import com.nasa.spacehealth.controller.ApiException;
+import com.nasa.spacehealth.dto.EndTriageRequest;
+import com.nasa.spacehealth.dto.StartTriageRequest;
+import com.nasa.spacehealth.dto.TriageStepRequest;
+import com.nasa.spacehealth.engine.PyFormat;
+import com.nasa.spacehealth.exception.ApiException;
 import com.nasa.spacehealth.model.AssessmentResponse;
 import com.nasa.spacehealth.model.CommMode;
 import com.nasa.spacehealth.model.Contract;
@@ -11,10 +15,11 @@ import com.nasa.spacehealth.model.EmergencyTriagePayload.PatientSnapshot;
 import com.nasa.spacehealth.model.EmergencyTriagePayload.RedIndicator;
 import com.nasa.spacehealth.model.EmergencyTriagePayload.StepLogEntry;
 import com.nasa.spacehealth.model.EmergencyTriagePayload.StoreAndForward;
+import com.nasa.spacehealth.model.EnvironmentProfile;
 import com.nasa.spacehealth.model.Status;
 import com.nasa.spacehealth.model.TriageProtocol;
-import com.nasa.spacehealth.model.TriageRequests;
 import com.nasa.spacehealth.model.TriageStep;
+import com.nasa.spacehealth.repository.MeasurementRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,20 +32,13 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-/**
- * Deterministic state machine over contract/triage_protocol.json.
- *
- * The server owns the position in the protocol: a client can only answer the current step, and the only way forward
- * is that step's `next` map. Nothing here is generated: scripts come from the protocol file, vitals from the store,
- * statuses and the light-time delay from the engine.
- */
+// Walks an incident through triage_protocol.json. The server keeps track of the current step;
+// the client can only answer it, and the step's "next" map decides where to go.
 @Service
 public class TriageService {
 
-    /** How many days back attachments count as "recent" for the snapshot and the packet. */
-    private static final int ATTACHMENT_WINDOW_DAYS = 7;
+    private static final int ATTACHMENT_DAYS = 7;
 
-    /** EmergencyTriagePayload.agent_rules: hard rules for anything (voice agent or screen) that presents the steps. */
     static final List<String> AGENT_RULES = List.of(
             "Speak each step's script verbatim. Do not paraphrase, shorten, add to or skip a script.",
             "Move only along the current step's 'next' map: yes or no for ASK_YES_NO, done for every other step.",
@@ -51,9 +49,9 @@ public class TriageService {
             "The crew can end the protocol at any time. Stop as soon as they ask.",
             "This is decision support on simulated data. It does not replace onboard medical procedures.");
 
-    private static final class Incident {
+    private static class Incident {
         String id;
-        String startedAtIso;
+        String startedAt;
         String patientId;
         String reporterId;
         EmergencyTriagePayload.Environment environment;
@@ -66,137 +64,140 @@ public class TriageService {
 
     private final TriageProtocol protocol;
     private final Map<String, TriageStep> steps = new LinkedHashMap<>();
-    private final AssessmentService assessments;
-    private final MeasurementStore store;
+    private final AssessmentService assessmentService;
+    private final MeasurementRepository repository;
     private final Map<String, Incident> incidents = new ConcurrentHashMap<>();
 
-    public TriageService(TriageProtocol protocol, AssessmentService assessments, MeasurementStore store) {
+    public TriageService(TriageProtocol protocol, AssessmentService assessmentService,
+                         MeasurementRepository repository) {
         this.protocol = protocol;
-        this.assessments = assessments;
-        this.store = store;
+        this.assessmentService = assessmentService;
+        this.repository = repository;
         protocol.steps().forEach(s -> steps.put(s.id(), s));
         if (!steps.containsKey(protocol.start())) {
-            throw new IllegalStateException("triage_protocol.json: start step '" + protocol.start() + "' does not exist");
+            throw new IllegalStateException("triage_protocol.json: start step '" + protocol.start() + "' not found");
         }
     }
 
-    public TriageProtocol protocol() {
+    public TriageProtocol getProtocol() {
         return protocol;
     }
 
-    public EmergencyTriagePayload start(TriageRequests.Start req) {
-        if (req == null || req.patientId() == null || req.patientId().isBlank()) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "patient_id is required");
+    public EmergencyTriagePayload start(StartTriageRequest req) {
+        if (req == null || isBlank(req.patientId())) {
+            throw ApiException.badRequest("patient_id is required");
         }
-        AssessmentResponse a = assessments.assess(req.patientId(), req.missionDay(), req.environmentId(), req.distanceKm());
-        List<DailyMeasurementAndCompliance> records = store.upTo(req.patientId(), a.missionDay());
-        DailyMeasurementAndCompliance latest = records.get(records.size() - 1);
+        AssessmentResponse assessment = assessmentService.assess(req.patientId(), req.missionDay(),
+                req.environmentId(), req.distanceKm());
+        List<DailyMeasurementAndCompliance> records = repository.findUpTo(req.patientId(), assessment.missionDay());
 
         Incident inc = new Incident();
         inc.id = "inc_" + UUID.randomUUID().toString().substring(0, 8);
-        inc.startedAtIso = assessments.nowIso();
+        inc.startedAt = assessmentService.nowIso();
         inc.patientId = req.patientId();
-        inc.reporterId = req.reporterId() == null || req.reporterId().isBlank() ? req.patientId() : req.reporterId();
-        inc.environment = new EmergencyTriagePayload.Environment(a.environment().id(), a.environment().label(),
-                a.environment().gravityG(), a.environment().oneWayDelayS(), a.environment().commMode());
-        List<RedIndicator> red = a.indicators().stream()
-                .filter(i -> i.status() == Status.RED)
-                .map(i -> new RedIndicator(i.id(), i.value(), i.unit(), i.reasons()))
-                .toList();
-        List<Attachment> attachments = records.stream()
-                .skip(Math.max(0, records.size() - ATTACHMENT_WINDOW_DAYS))
-                .filter(r -> r.attachments() != null)
-                .flatMap(r -> r.attachments().stream())
-                .toList();
-        inc.snapshot = new PatientSnapshot(a.missionDay(), a.overall(), red, latest.vitals(), attachments);
+        inc.reporterId = isBlank(req.reporterId()) ? req.patientId() : req.reporterId();
+        EnvironmentProfile env = assessment.environment();
+        inc.environment = new EmergencyTriagePayload.Environment(env.id(), env.label(), env.gravityG(),
+                env.oneWayDelayS(), env.commMode());
+        inc.snapshot = snapshot(assessment, records);
         inc.currentStepId = protocol.start();
+
         incidents.put(inc.id, inc);
-        return payload(inc);
+        return toPayload(inc);
     }
 
     public EmergencyTriagePayload get(String incidentId) {
-        Incident inc = incident(incidentId);
+        Incident inc = findIncident(incidentId);
         synchronized (inc) {
-            return payload(inc);
+            return toPayload(inc);
         }
     }
 
-    /** Answer the current step and move to the step its `next` map names. Reaching a terminal step ends the incident. */
-    public EmergencyTriagePayload step(TriageRequests.Step req) {
-        Incident inc = incident(req == null ? null : req.incidentId());
+    public EmergencyTriagePayload answer(TriageStepRequest req) {
+        Incident inc = findIncident(req == null ? null : req.incidentId());
         synchronized (inc) {
             if (inc.ended) {
-                throw new ApiException(HttpStatus.CONFLICT, "Incident " + inc.id + " has already ended");
+                throw ApiException.conflict("Incident " + inc.id + " has already ended");
             }
             TriageStep current = steps.get(inc.currentStepId);
             if (req.stepId() != null && !req.stepId().equals(current.id())) {
-                throw new ApiException(HttpStatus.CONFLICT, "Out of sync: the incident is at step " + current.id()
+                throw ApiException.conflict("Out of sync: the incident is at step " + current.id()
                         + ", not " + req.stepId());
             }
+
             Map<String, String> next = current.next() == null ? Map.of() : current.next();
             String answer = req.answer() == null ? "" : req.answer().trim().toLowerCase();
             String nextId = next.get(answer);
             if (nextId == null) {
-                throw new ApiException(HttpStatus.BAD_REQUEST, "Step " + current.id() + " (" + current.type()
-                        + ") accepts answer " + String.join(" or ", next.keySet()) + ", got '" + req.answer() + "'");
+                throw ApiException.badRequest("Step " + current.id() + " (" + current.type() + ") accepts answer "
+                        + String.join(" or ", next.keySet()) + ", got '" + req.answer() + "'");
             }
             TriageStep target = steps.get(nextId);
             if (target == null) {
-                throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "triage_protocol.json: step " + current.id()
-                        + " points to unknown step " + nextId);
+                throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "triage_protocol.json: step " + current.id() + " points to unknown step " + nextId);
             }
-            String now = assessments.nowIso();
+
+            String now = assessmentService.nowIso();
             inc.log.add(new StepLogEntry(current.id(), now, answer));
             inc.currentStepId = target.id();
             if (target.endsProtocol()) {
                 inc.log.add(new StepLogEntry(target.id(), now, null));
-                finish(inc, now, "protocol completed");
+                close(inc, now, "protocol completed");
             }
-            return payload(inc);
+            return toPayload(inc);
         }
     }
 
-    /**
-     * Manual exit, allowed at any step (the CPR loop A3 -> A6 -> A3 has no other way out while the patient does not
-     * recover). Builds the store-and-forward packet from whatever has been done so far. Idempotent.
-     */
-    public EmergencyTriagePayload end(TriageRequests.End req) {
-        Incident inc = incident(req == null ? null : req.incidentId());
+    // The crew can stop at any step (this is also the only way out of the CPR loop). Calling it twice is fine.
+    public EmergencyTriagePayload end(EndTriageRequest req) {
+        Incident inc = findIncident(req == null ? null : req.incidentId());
         synchronized (inc) {
             if (!inc.ended) {
                 TriageStep current = steps.get(inc.currentStepId);
-                String now = assessments.nowIso();
+                String now = assessmentService.nowIso();
                 inc.log.add(new StepLogEntry(current.id(), now, null));
-                String reason = req.reason() == null || req.reason().isBlank() ? "" : ": " + req.reason().trim();
-                finish(inc, now, "ended manually by the crew at step " + current.id() + " (" + current.checklistLabel()
-                        + ")" + reason);
+                String reason = isBlank(req.reason()) ? "" : ": " + req.reason().trim();
+                close(inc, now, "ended manually by the crew at step " + current.id()
+                        + " (" + current.checklistLabel() + ")" + reason);
             }
-            return payload(inc);
+            return toPayload(inc);
         }
     }
 
-    // ---------------------------------------------------------------- internals
+    private PatientSnapshot snapshot(AssessmentResponse assessment, List<DailyMeasurementAndCompliance> records) {
+        List<RedIndicator> red = assessment.indicators().stream()
+                .filter(i -> i.status() == Status.RED)
+                .map(i -> new RedIndicator(i.id(), i.value(), i.unit(), i.reasons()))
+                .toList();
+        List<Attachment> attachments = records.stream()
+                .skip(Math.max(0, records.size() - ATTACHMENT_DAYS))
+                .filter(r -> r.attachments() != null)
+                .flatMap(r -> r.attachments().stream())
+                .toList();
+        DailyMeasurementAndCompliance latest = records.get(records.size() - 1);
+        return new PatientSnapshot(assessment.missionDay(), assessment.overall(), red, latest.vitals(), attachments);
+    }
 
-    private Incident incident(String incidentId) {
-        if (incidentId == null || incidentId.isBlank()) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "incident_id is required");
+    private Incident findIncident(String incidentId) {
+        if (isBlank(incidentId)) {
+            throw ApiException.badRequest("incident_id is required");
         }
         Incident inc = incidents.get(incidentId);
         if (inc == null) {
-            throw new ApiException(HttpStatus.NOT_FOUND, "Unknown incident '" + incidentId + "'");
+            throw ApiException.notFound("Unknown incident '" + incidentId + "'");
         }
         return inc;
     }
 
-    /** estimated_earth_receipt_iso = created_at + one_way_delay_s (light time, to the millisecond). */
-    private void finish(Incident inc, String nowIso, String outcome) {
+    // Builds the store-and-forward packet. Earth gets it one light-delay after it is created.
+    private void close(Incident inc, String now, String outcome) {
         inc.ended = true;
         boolean autonomous = inc.environment.commMode() == CommMode.AUTONOMOUS;
-        Instant created = Instant.parse(nowIso);
-        Instant receipt = created.plusMillis(Math.round(inc.environment.oneWayDelayS() * 1000.0));
+        Instant receipt = Instant.parse(now).plusMillis(Math.round(inc.environment.oneWayDelayS() * 1000.0));
         inc.packet = new StoreAndForward(
-                "pkt_" + inc.id.substring(inc.id.indexOf('_') + 1),
-                nowIso,
+                "pkt_" + inc.id.substring("inc_".length()),
+                now,
                 autonomous ? "QUEUED_FOR_UPLINK" : "SENT_LIVE",
                 receipt.toString(),
                 summary(inc, outcome, autonomous),
@@ -204,28 +205,32 @@ public class TriageService {
     }
 
     private String summary(Incident inc, String outcome, boolean autonomous) {
-        String red = inc.snapshot.redIndicators().isEmpty() ? "none"
-                : inc.snapshot.redIndicators().stream()
+        String red = inc.snapshot.redIndicators().isEmpty() ? "none" : inc.snapshot.redIndicators().stream()
                 .map(r -> r.id() + " " + (r.value() == null ? "no reading" : PyFormat.general(r.value()) + " " + r.unit())
                         + " [" + String.join("; ", r.reasons()) + "]")
                 .collect(Collectors.joining(", "));
         String path = inc.log.stream()
                 .map(e -> e.answer() == null ? e.stepId() : e.stepId() + "=" + e.answer())
                 .collect(Collectors.joining(" > "));
-        return protocol.scenario() + " incident " + inc.id + ". Patient " + inc.patientId + ", reported by "
-                + inc.reporterId + ", mission day " + inc.snapshot.missionDay() + ", overall status "
-                + inc.snapshot.overall() + ". RED indicators: " + red + ". Steps: " + path + ". Outcome: " + outcome
-                + ". Comms: " + inc.environment.commMode() + ", one-way delay "
-                + PyFormat.general(inc.environment.oneWayDelayS()) + " s, "
+
+        return protocol.scenario() + " incident " + inc.id + ". Patient " + inc.patientId
+                + ", reported by " + inc.reporterId
+                + ", mission day " + inc.snapshot.missionDay()
+                + ", overall status " + inc.snapshot.overall()
+                + ". RED indicators: " + red
+                + ". Steps: " + path
+                + ". Outcome: " + outcome
+                + ". Comms: " + inc.environment.commMode()
+                + ", one-way delay " + PyFormat.general(inc.environment.oneWayDelayS()) + " s, "
                 + (autonomous ? "packet queued for uplink" : "packet sent live")
                 + ". Simulated data; decision support only.";
     }
 
-    private EmergencyTriagePayload payload(Incident inc) {
+    private EmergencyTriagePayload toPayload(Incident inc) {
         return new EmergencyTriagePayload(
                 Contract.SCHEMA_VERSION,
                 inc.id,
-                inc.startedAtIso,
+                inc.startedAt,
                 protocol.scenario(),
                 inc.patientId,
                 inc.reporterId,
@@ -237,5 +242,9 @@ public class TriageService {
                 AGENT_RULES,
                 inc.packet,
                 Contract.DISCLAIMER);
+    }
+
+    private static boolean isBlank(String s) {
+        return s == null || s.isBlank();
     }
 }

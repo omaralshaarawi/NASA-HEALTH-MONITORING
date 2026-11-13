@@ -1,6 +1,7 @@
-package com.nasa.spacehealth.model;
+package com.nasa.spacehealth.dto;
 
-/** One row of GET /api/astronauts. Not part of contract.ts; status fields are computed by the engine. */
+import com.nasa.spacehealth.model.Status;
+
 public record AstronautSummary(
         String astronautId,
         String displayName,

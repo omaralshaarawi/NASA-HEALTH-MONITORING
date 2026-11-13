@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-/** contract.ts section 2 (INPUT). A missing vital is "not measured today", never zero. */
+// A null vital means it was not measured that day (not zero).
 public record DailyMeasurementAndCompliance(
         String astronautId,
         Integer missionDay,

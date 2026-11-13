@@ -1,17 +1,13 @@
-package com.nasa.spacehealth.model;
+package com.nasa.spacehealth.rules;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 import java.util.Map;
 
-/**
- * Typed view of contract/rules.json. Only the fields the engine reads are mapped; the rest is ignored.
- *
- * It is loaded strictly (see ContractConfig): if a component below does not find its key in rules.json the application
- * refuses to start, instead of silently running with 0 / false. Names the SNAKE_CASE strategy would get wrong
- * (redZNeedsConfirmation becomes red_zneeds_confirmation) carry an explicit @JsonProperty.
- */
+// Typed view of contract/rules.json (only the parts the engine uses).
+// Loaded strictly, so a missing key fails start-up. Keys that the snake_case strategy would
+// mangle (e.g. red_z_needs_confirmation -> red_zneeds_confirmation) are mapped by hand.
 public record Rules(
         String version,
         Constants constants,
@@ -19,10 +15,8 @@ public record Rules(
         Radiation radiation,
         ComplianceRules compliance,
         Composites composites,
-        /** RegionId -> member indicator ids, in file order. */
         Map<String, List<String>> regions,
         List<IndicatorRule> indicators,
-        /** EnvironmentId -> preset, in file order. */
         Map<String, EnvironmentPreset> environments) {
 
     public record Constants(@JsonProperty("c_km_s") double cKmS, double autonomousDelayS) {
@@ -43,6 +37,7 @@ public record Rules(
     }
 
     public record ComplianceRules(Resistive resistive, Ration ration) {
+
         public record Resistive(double lowFractionOfTarget, int lowDaysYellow) {
         }
 
@@ -51,6 +46,7 @@ public record Rules(
     }
 
     public record Composites(ImmuneRisk immuneRisk) {
+
         public record ImmuneRisk(double radiationRatioMin, double mildZ, List<String> members) {
         }
     }
@@ -59,17 +55,16 @@ public record Rules(
                                 Double floorSd, @JsonProperty("abs") Map<String, Double> abs) {
     }
 
+    // distanceKm is either {fixed} (LEO, Moon) or {min, max, default} (Mars)
     public record EnvironmentPreset(
             String label,
             String environment,
             String body,
             double gravityG,
-            /** Either {fixed} (LEO, Moon) or {min, max, default} (Mars: the frontend slider). */
             Map<String, Long> distanceKm,
             String commLabel,
             @JsonProperty("radiation_expected_mSv_day") double radiationExpectedMsvDay,
             @JsonProperty("cabin_co2_default_mmHg") double cabinCo2DefaultMmHg,
             int resistiveTargetMin) {
     }
-
 }

@@ -1,4 +1,4 @@
-package com.nasa.spacehealth.service;
+package com.nasa.spacehealth.engine;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -7,7 +7,8 @@ import com.nasa.spacehealth.JsonDiff;
 import com.nasa.spacehealth.config.ContractFiles;
 import com.nasa.spacehealth.model.AssessmentResponse;
 import com.nasa.spacehealth.model.DailyMeasurementAndCompliance;
-import com.nasa.spacehealth.service.StatusEngineService.IndicatorResult;
+import com.nasa.spacehealth.repository.MeasurementRepository;
+import com.nasa.spacehealth.service.SchemaValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -26,21 +27,17 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Proves the Java engine is the same engine as contract/status_engine.py.
- *  - the three locked example files, field for field
- *  - 47 more outputs of the Python reference (other habitats, earlier days, synthetic edge cases)
- *  - the unit checks of contract/test_engine.py (tests 1 to 5)
- */
+// Checks the Java engine against the Python one: the example files, 47 extra reference
+// outputs and the unit checks from contract/test_engine.py.
 @SpringBootTest
-class StatusEngineServiceTest {
+class StatusEngineTest {
 
     private static final String NOW = "2026-11-14T08:00:00Z";
 
     @Autowired
-    StatusEngineService engine;
+    StatusEngine engine;
     @Autowired
-    MeasurementStore store;
+    MeasurementRepository store;
     @Autowired
     ContractFiles contract;
     @Autowired
@@ -53,12 +50,12 @@ class StatusEngineServiceTest {
         store.reset();
     }
 
-    // ------------------------------------------------------------ contract examples
+    // contract examples
 
     @ParameterizedTest
     @ValueSource(strings = {"ast_nova", "ast_kai", "ast_lin"})
     void day14MatchesContractExampleFieldForField(String astronautId) {
-        AssessmentResponse response = engine.assess(store.upTo(astronautId, 14), "DEEP_SPACECRAFT", null, NOW);
+        AssessmentResponse response = engine.assess(store.findUpTo(astronautId, 14), "DEEP_SPACECRAFT", null, NOW);
         JsonNode actual = mapper.valueToTree(response);
         JsonNode expected = contract.tree("example_assessment_" + astronautId + ".json");
 
@@ -69,19 +66,19 @@ class StatusEngineServiceTest {
 
     @Test
     void seededStoriesHoldOnDay14() {
-        assertThat(engine.assess(store.upTo("ast_nova", 14), "DEEP_SPACECRAFT", null, NOW).overall().name())
+        assertThat(engine.assess(store.findUpTo("ast_nova", 14), "DEEP_SPACECRAFT", null, NOW).overall().name())
                 .isEqualTo("GREEN");
-        AssessmentResponse kai = engine.assess(store.upTo("ast_kai", 14), "DEEP_SPACECRAFT", null, NOW);
+        AssessmentResponse kai = engine.assess(store.findUpTo("ast_kai", 14), "DEEP_SPACECRAFT", null, NOW);
         assertThat(kai.overall().name()).isEqualTo("YELLOW");
         assertThat(kai.triageRecommended()).isFalse();
         assertThat(kai.flags()).contains("SYSTEMIC_IMMUNE", "SPINE_BONE", "INADEQUATE_NUTRITION");
-        AssessmentResponse lin = engine.assess(store.upTo("ast_lin", 14), "DEEP_SPACECRAFT", null, NOW);
+        AssessmentResponse lin = engine.assess(store.findUpTo("ast_lin", 14), "DEEP_SPACECRAFT", null, NOW);
         assertThat(lin.overall().name()).isEqualTo("RED");
         assertThat(lin.triageRecommended()).isTrue();
         assertThat(lin.regions().get("CHEST_CARDIO").status().name()).isEqualTo("RED");
     }
 
-    // ------------------------------------------------------------ wider Python reference
+    // wider Python reference
 
     @TestFactory
     Stream<DynamicTest> matchesPythonReference() throws Exception {
@@ -96,7 +93,7 @@ class StatusEngineServiceTest {
                 List<DailyMeasurementAndCompliance> records = c.has("records")
                         ? mapper.convertValue(c.get("records"), new TypeReference<>() {
                         })
-                        : store.upTo(c.get("astronaut_id").asText(), c.get("day").asInt());
+                        : store.findUpTo(c.get("astronaut_id").asText(), c.get("day").asInt());
                 JsonNode actual = mapper.valueToTree(engine.assess(records, c.get("env_id").asText(), null, NOW));
                 assertThat(JsonDiff.diff(c.get("expected"), actual)).isEmpty();
                 assertThat(schemas.validate("AssessmentResponse", actual)).isEmpty();
@@ -105,7 +102,7 @@ class StatusEngineServiceTest {
         return tests.stream();
     }
 
-    // ------------------------------------------------------------ contract/test_engine.py, tests 1-5
+    // contract/test_engine.py, tests 1-5
 
     private static final double[] ANCHOR_HR = {60, 61, 62, 61, 60, 62, 61};
 

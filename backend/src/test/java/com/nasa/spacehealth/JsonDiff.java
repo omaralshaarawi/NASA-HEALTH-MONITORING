@@ -7,11 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
-/**
- * Field-for-field comparison of two JSON trees. Returns one line per difference, with its path.
- * Numbers are compared by exact double value (58 equals 58.0, but 2.35 does not equal 2.3500001, and -0.0 does not
- * equal 0.0). Everything else must be identical, including null versus absent and array order.
- */
+// Compares two JSON trees field by field and returns one line per difference.
+// Numbers must be the exact same double (-0.0 != 0.0); null and missing are different.
 public final class JsonDiff {
 
     private JsonDiff() {

@@ -5,17 +5,12 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Every JSON key follows contract.ts, which is snake_case.
- *
- * Keys that are NOT plain snake_case (sbp_mmHg, radiation_mSv_day, cabin_co2_mmHg, mood_1_10 ...) carry an explicit
- * {@code @JsonProperty} on the record component, because SNAKE_CASE alone would turn them into sbp_mm_hg etc.
- */
+// contract.ts uses snake_case. Odd keys like sbp_mmHg are set with @JsonProperty on the records.
 @Configuration
 public class JacksonConfig {
 
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer snakeCaseCustomizer() {
+    public Jackson2ObjectMapperBuilderCustomizer snakeCase() {
         return builder -> builder.propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
     }
 }

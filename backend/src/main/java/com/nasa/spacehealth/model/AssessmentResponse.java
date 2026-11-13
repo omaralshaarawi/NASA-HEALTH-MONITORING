@@ -3,7 +3,6 @@ package com.nasa.spacehealth.model;
 import java.util.List;
 import java.util.Map;
 
-/** contract.ts section 3 (OUTPUT). */
 public record AssessmentResponse(
         String schemaVersion,
         String astronautId,
@@ -12,7 +11,6 @@ public record AssessmentResponse(
         EnvironmentProfile environment,
         Status overall,
         List<IndicatorAssessment> indicators,
-        /** Keyed by RegionId, in rules.json order. */
         Map<String, RegionAssessment> regions,
         ComplianceSummary compliance,
         List<String> flags,

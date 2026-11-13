@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nasa.spacehealth.JsonDiff;
 import com.nasa.spacehealth.config.ContractFiles;
-import com.nasa.spacehealth.service.MeasurementStore;
+import com.nasa.spacehealth.repository.MeasurementRepository;
 import com.nasa.spacehealth.service.SchemaValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/** The HTTP surface, through the real controllers and the real Jackson configuration. "Now" is pinned. */
 @SpringBootTest
 @AutoConfigureMockMvc
 class ApiIntegrationTest {
@@ -57,7 +56,7 @@ class ApiIntegrationTest {
     @Autowired
     SchemaValidator schemas;
     @Autowired
-    MeasurementStore store;
+    MeasurementRepository store;
 
     @BeforeEach
     void freshSeed() {
@@ -87,7 +86,7 @@ class ApiIntegrationTest {
         return mapper.createObjectNode();
     }
 
-    // ------------------------------------------------------------ core API
+    // core API
 
     @Test
     void astronautsListsTheThreeSeededStories() throws Exception {
@@ -208,7 +207,7 @@ class ApiIntegrationTest {
                 .andExpect(status().isForbidden());
     }
 
-    // ------------------------------------------------------------ POST /api/measurements
+    // POST /api/measurements
 
     private ObjectNode novaDay(int day) {
         ObjectNode r = (ObjectNode) contract.tree("seed.json").get(13).deepCopy();   // ast_nova day 14
@@ -279,15 +278,10 @@ class ApiIntegrationTest {
         assertThat(getJson("/api/assessments/ast_nova").get("mission_day").asInt()).isEqualTo(14);
     }
 
-    // ------------------------------------------------------------ triage
+    // triage
 
-    /**
-     * Schema check for EmergencyTriagePayload.
-     *
-     * contract.ts types both attachment lists as NonNullable<Attachment[]>, and the schema generator turned that into
-     * allOf[{type: array}, {type: object}], which no value can satisfy. The backend follows contract.ts (an array is
-     * always present), so those two fields are checked here by hand and left out of the schema validation.
-     */
+    // The generated schema types the two attachment lists as allOf[array, object], which nothing
+    // can pass, so those fields are checked by hand and removed before validating the rest.
     private void assertValidPayload(JsonNode payload) {
         assertThat(payload.get("patient_snapshot").get("recent_attachments").isArray()).isTrue();
         ObjectNode copy = payload.deepCopy();

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Map;
 
-/** contract.ts TriageStep. `script` is spoken and shown verbatim; `next` is the only way forward. */
 public record TriageStep(
         String id,
         String type,

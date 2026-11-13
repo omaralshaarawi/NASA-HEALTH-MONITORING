@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
-/** contract.ts section 5. Every value comes from the store or the engine, never from an LLM. */
 public record EmergencyTriagePayload(
         String schemaVersion,
         String incidentId,
@@ -17,11 +16,10 @@ public record EmergencyTriagePayload(
         ProtocolRef protocol,
         State state,
         List<String> agentRules,
-        /** Built when the protocol ends (reached END, or ended manually). */
+        // only set once the incident has ended
         @JsonInclude(JsonInclude.Include.NON_NULL) StoreAndForward storeAndForward,
         String disclaimer) {
 
-    /** Pick<EnvironmentProfile, "id" | "label" | "gravity_g" | "one_way_delay_s" | "comm_mode"> */
     public record Environment(String id, String label, double gravityG, double oneWayDelayS, CommMode commMode) {
     }
 
@@ -50,7 +48,6 @@ public record EmergencyTriagePayload(
             String packetId,
             String createdAtIso,
             String delivery,
-            /** created_at + one_way_delay_s */
             String estimatedEarthReceiptIso,
             String summary,
             List<DailyMeasurementAndCompliance.Attachment> attachments) {
