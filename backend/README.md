@@ -63,13 +63,16 @@ Notes:
    `extra_kcal = (MET - 1) * mass_kg * hours`, water = 1.15 mL/kcal, CO2 = 0.34 g/kcal. The LLM never sees or writes
    these numbers.
 
-To use Gemini, set the key before starting the backend:
+To use Gemini, put the key in `backend/.env` (it is git-ignored and read at start-up, also when you run from the IDE):
 
 ```bash
-export GEMINI_API_KEY=your-key
+GEMINI_API_KEY=your-key
 ```
 
-Other settings: `planner.gemini.model` (default `gemini-2.5-flash`), `planner.gemini.timeout-seconds` (20),
+A real environment variable with the same name takes priority over the file.
+
+Other settings: `planner.gemini.model` (default `gemini-3.6-flash`; `gemini-2.5-flash` is closed to new keys and
+3.7/3.8 were overloaded when tested), `planner.gemini.timeout-seconds` (20),
 `planner.default-mass-kg` (80, override per request with `?massKg=`).
 
 The saved plans for Nova, Kai and Lin (day 14) are in `src/main/resources/fallback-plans/`. The frontend can copy them

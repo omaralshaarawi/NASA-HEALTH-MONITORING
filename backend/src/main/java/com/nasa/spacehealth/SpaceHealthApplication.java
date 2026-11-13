@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpaceHealthApplication {
 
     public static void main(String[] args) {
+        DotEnv.load();
         SpringApplication.run(SpaceHealthApplication.class, args);
     }
 }

@@ -34,7 +34,7 @@ public class GeminiDraftGenerator implements DraftGenerator {
                                 ObjectMapper mapper,
                                 ExerciseMenu menu,
                                 @Value("${planner.gemini.api-key:}") String apiKey,
-                                @Value("${planner.gemini.model:gemini-2.5-flash}") String model,
+                                @Value("${planner.gemini.model:gemini-3.6-flash}") String model,
                                 @Value("${planner.gemini.thinking-budget:0}") int thinkingBudget) {
         this.client = client;
         this.mapper = mapper;
@@ -75,6 +75,8 @@ public class GeminiDraftGenerator implements DraftGenerator {
 
         ObjectNode config = body.putObject("generationConfig");
         config.put("temperature", 0.2);
+        // a full draft is well under 1000 tokens; the cap stops a runaway answer from hitting the timeout
+        config.put("maxOutputTokens", 2048);
         config.put("responseMimeType", "application/json");
         config.set("responseSchema", responseSchema(allowedExerciseIds));
         if (thinkingBudget >= 0) {
