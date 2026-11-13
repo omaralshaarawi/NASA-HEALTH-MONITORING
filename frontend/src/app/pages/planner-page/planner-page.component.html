@@ -1,0 +1,138 @@
+<div class="mx-auto max-w-[84rem] px-4 pb-16 sm:px-6 lg:px-8">
+  <!-- top bar -->
+  <header class="flex flex-wrap items-center justify-between gap-4 border-b border-line py-4">
+    <div class="flex items-center gap-3">
+      <svg viewBox="0 0 32 32" width="32" height="32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="6" fill="#e8eef6" />
+        <ellipse cx="16" cy="16" rx="14" ry="5.5" stroke="#5ad1f5" stroke-width="1.5" transform="rotate(-24 16 16)" />
+        <circle cx="27.6" cy="10.4" r="1.8" fill="#5ad1f5" />
+      </svg>
+      <div>
+        <div class="display text-xl leading-5 text-ink">Crew Health Console</div>
+        <div class="eyebrow">Countermeasures · Training · Nutrition</div>
+      </div>
+    </div>
+
+    @if (assessment(); as a) {
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="chip">{{ a.environment.label }}</span>
+        <span class="chip num">{{ a.environment.gravity_g }} g</span>
+        <span class="chip" [class.border-signal]="a.comms.mode === 'AUTONOMOUS'" [class.text-signal]="a.comms.mode === 'AUTONOMOUS'">
+          {{ a.comms.mode === 'AUTONOMOUS' ? 'Autonomous · no live link' : 'Live link to Earth' }}
+        </span>
+      </div>
+    }
+  </header>
+
+  <!-- crew switcher -->
+  <nav class="mt-6 flex flex-wrap items-end justify-between gap-4" aria-label="Crew member">
+    <div class="flex gap-2" role="tablist">
+      @for (c of crew; track c.id) {
+        <button
+          type="button"
+          role="tab"
+          class="rounded border px-4 py-2 text-left transition-colors"
+          [class.border-signal]="c.id === selectedId()"
+          [class.bg-raised]="c.id === selectedId()"
+          [class.border-line]="c.id !== selectedId()"
+          [attr.aria-selected]="c.id === selectedId()"
+          (click)="select(c.id)"
+        >
+          <span class="display block text-lg leading-5 text-ink">{{ c.name }}</span>
+          <span class="eyebrow">{{ c.role }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <span class="eyebrow" aria-live="polite">{{ loading() ? 'Contacting the planner…' : sourceText() }}</span>
+      <button type="button" class="btn" [disabled]="loading() || source() === 'MOCK'" (click)="load(selectedId(), true)">
+        Ask the planner again
+      </button>
+    </div>
+  </nav>
+
+  @if (assessment(); as a) {
+    <!-- today's readings: each one opens its measurement guide -->
+    <section class="mt-6" aria-labelledby="readings-title">
+      <div class="flex items-baseline justify-between gap-4">
+        <h2 id="readings-title" class="eyebrow m-0">Today's readings · tap one for the 0 g measurement guide</h2>
+        <span [class]="statusClass(a.overall)">Overall {{ a.overall }}</span>
+      </div>
+      <ul class="m-0 mt-3 grid list-none grid-cols-2 gap-2 p-0 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+        @for (i of a.indicators; track i.id) {
+          <li>
+            <button
+              type="button"
+              class="panel flex h-full w-full flex-col justify-between gap-2 px-3 py-2.5 text-left transition-colors hover:border-signal"
+              (click)="guideFor.set(i.id)"
+            >
+              <span class="text-xs leading-4 text-ink-dim">{{ i.label }}</span>
+              <span class="flex items-end justify-between gap-2">
+                <span class="num text-lg leading-6 text-ink">
+                  {{ i.value ?? '—' }}<span class="ml-1 text-xs text-ink-mute">{{ i.value !== null ? i.unit : '' }}</span>
+                </span>
+                <span [class]="statusClass(i.status)"><span class="sr-only">{{ i.status }}</span></span>
+              </span>
+            </button>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <!-- crew actions -->
+    <section class="panel mt-6 flex flex-wrap items-center justify-between gap-4 px-5 py-4" aria-label="Crew actions">
+      <div class="min-w-0">
+        <div class="eyebrow">Scans and reports</div>
+        @if (todaysAttachments().length) {
+          <ul class="m-0 mt-2 flex list-none flex-wrap gap-2 p-0">
+            @for (att of todaysAttachments(); track att.ref) {
+              <li class="chip">{{ scanLabel(att.kind) }} · simulated · attached</li>
+            }
+          </ul>
+        } @else {
+          <p class="m-0 mt-1 text-sm leading-6 text-ink-dim">
+            Capture a guided eye or heart ultrasound or an ECG, or print today's report for the flight surgeon.
+          </p>
+        }
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <button type="button" class="btn" (click)="scanOpen.set('OCULAR_ULTRASOUND')">Guided scan capture</button>
+        <button type="button" class="btn btn-primary" [disabled]="!plan()" (click)="reportOpen.set(true)">
+          Flight surgeon report
+        </button>
+      </div>
+    </section>
+
+    @if (plan(); as p) {
+      <div class="mt-8" [class.opacity-50]="loading()">
+        <app-countermeasure-plan [plan]="p" [assessment]="a" (indicatorSelected)="guideFor.set($event)" />
+      </div>
+    }
+
+    @if (guideFor(); as id) {
+      <app-measurement-guide-modal [indicatorId]="id" [assessment]="a" (closed)="guideFor.set(null)" />
+    }
+
+    @if (scanOpen(); as kind) {
+      <app-ultrasound-attachment-modal
+        [assessment]="a"
+        [initialKind]="kind"
+        (attached)="addAttachment($event)"
+        (closed)="scanOpen.set(null)"
+      />
+    }
+
+    @if (reportOpen()) {
+      <app-modal-shell heading="Flight surgeon report" eyebrow="One page · A4 · print or save as PDF" (closed)="reportOpen.set(false)">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <p class="m-0 text-sm leading-6 text-ink-dim">This is the page exactly as it will print.</p>
+          <button type="button" class="btn btn-primary" (click)="report.print()">Print / save as PDF</button>
+        </div>
+        <div class="overflow-x-auto rounded bg-raised p-3 sm:p-6">
+          <app-mission-report-print #report [assessment]="a" [plan]="plan()" [crewName]="selected().name" />
+        </div>
+      </app-modal-shell>
+    }
+  }
+</div>

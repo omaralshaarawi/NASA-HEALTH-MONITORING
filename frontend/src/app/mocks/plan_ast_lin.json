@@ -1,0 +1,57 @@
+{
+  "schema_version" : "1.0.0",
+  "plan_id" : "plan_gemini-3_6-flash_ast_lin_d14",
+  "astronaut_id" : "ast_lin",
+  "generated_for_mission_day" : 14,
+  "generated_at_iso" : "2026-11-13T19:33:36Z",
+  "environment_id" : "DEEP_SPACECRAFT",
+  "triggers" : [ {
+    "indicator" : "hr_rest",
+    "status" : "RED",
+    "reasons" : [ "118 bpm above red limit 100", "Z=19.1 on a single reading: re-measure to confirm", "drifting +5.81 bpm/day (drift Z=11.6)" ]
+  }, {
+    "indicator" : "sbp",
+    "status" : "RED",
+    "reasons" : [ "168 mmHg above red limit 160", "Z=10.5 on a single reading: re-measure to confirm", "drifting +4.89 mmHg/day (drift Z=5.9)" ]
+  }, {
+    "indicator" : "dbp",
+    "status" : "RED",
+    "reasons" : [ "104 mmHg above red limit 100", "Z=6.9 on a single reading: re-measure to confirm", "drifting +3.25 mmHg/day (drift Z=4.9)" ]
+  }, {
+    "indicator" : "mood",
+    "status" : "YELLOW",
+    "reasons" : [ "Z=2.6 vs own normal 7.6" ]
+  } ],
+  "draft" : {
+    "sessions" : [ ],
+    "nutrition" : {
+      "kcal_adjustment" : 0,
+      "focus" : [ "hydration" ],
+      "notes" : "Maintain standard nutrition and hydration while following the emergency triage checklist."
+    },
+    "escalate_to_flight_surgeon" : true,
+    "escalation_reason" : "Overall health status is RED and triage is recommended due to severely elevated cardiac and blood pressure indicators.",
+    "explanation" : "Your overall health status is RED and emergency triage is recommended. Do not perform any exercise sessions right now. Please follow the emergency triage checklist first while we escalate your situation to the flight surgeon."
+  },
+  "resources" : {
+    "assumptions" : {
+      "mass_kg" : 80.0,
+      "rest_met" : 1.0,
+      "water_ml_per_kcal" : 1.15,
+      "co2_g_per_kcal" : 0.34,
+      "formula" : "extra_kcal = (MET - rest_met) * mass_kg * hours"
+    },
+    "sessions" : [ ],
+    "totals" : {
+      "extra_kcal" : 0,
+      "extra_water_ml" : 0,
+      "extra_co2_g" : 0
+    },
+    "label" : "decision-support estimate"
+  },
+  "llm" : {
+    "model" : "gemini-3.6-flash",
+    "input_hash" : "486e4c65842b7ce05dab44aefc2425a07533695f7679293bca8b5b6b1e44153a"
+  },
+  "disclaimer" : "Prototype decision-support tool using simulated data. Not a medical device and not a diagnosis. Follow flight-surgeon and onboard medical procedures."
+}

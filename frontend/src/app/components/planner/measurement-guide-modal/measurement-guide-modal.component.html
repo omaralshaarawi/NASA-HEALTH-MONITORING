@@ -1,0 +1,109 @@
+@if (indicator(); as i) {
+  <app-modal-shell [heading]="i.label" [eyebrow]="'Measurement guide · ' + region()" (closed)="closed.emit()">
+    <!-- today -->
+    <div class="grid gap-4 rounded border border-line bg-hull px-4 py-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center">
+      <div>
+        <div class="eyebrow">Today · mission day {{ assessment().mission_day }}</div>
+        <div class="mt-1 flex items-baseline gap-2">
+          <span class="num text-4xl leading-none text-ink">{{ i.value ?? '—' }}</span>
+          @if (i.value !== null) {
+            <span class="unit">{{ i.unit }}</span>
+          }
+        </div>
+        <div class="mt-2"><span [class]="statusClass(i.status)">{{ i.status }}</span></div>
+      </div>
+
+      <div class="min-w-0">
+        @if (hasTrend()) {
+          <div class="eyebrow">Last {{ i.trend.length }} days@if (i.anchor) { · dashed line is your own baseline }</div>
+          <app-sparkline class="mt-2 h-12 text-ink-dim" [values]="i.trend" [baseline]="i.anchor?.mean ?? null"
+                         [dotColor]="dotColor()" [label]="i.label + ' over the last ' + i.trend.length + ' days'" />
+        }
+        @if (i.reasons.length) {
+          <ul class="m-0 mt-2 list-none space-y-0.5 p-0">
+            @for (r of i.reasons; track r) {
+              <li class="text-sm leading-5 text-ink-dim">{{ r }}</li>
+            }
+          </ul>
+        }
+      </div>
+
+      @if (i.anchor; as anchor) {
+        <dl class="m-0 grid grid-cols-2 gap-x-5 gap-y-1 sm:grid-cols-1">
+          <div>
+            <dt class="eyebrow">Your baseline</dt>
+            <dd class="num m-0 text-lg leading-6 text-ink">{{ anchor.mean | number: '1.0-1' }} <span class="unit">{{ i.unit }}</span></dd>
+          </div>
+          @if (i.z !== null) {
+            <div>
+              <dt class="eyebrow">Distance (Z)</dt>
+              <dd class="num m-0 text-lg leading-6 text-ink">{{ i.z }}</dd>
+            </div>
+          }
+        </dl>
+      }
+    </div>
+
+    @if (i.remeasure) {
+      <p class="m-0 mt-3 rounded border border-warn px-4 py-2 text-sm leading-6 text-ink">
+        Single unusual reading. Re-measure to confirm before acting on it.
+      </p>
+    }
+
+    <!-- the three cards -->
+    <div class="mt-5 grid gap-4 lg:grid-cols-3">
+      <section class="rounded border border-line px-4 py-4" aria-labelledby="guide-how">
+        <div class="eyebrow text-signal">01</div>
+        <h3 id="guide-how" class="display m-0 mt-1 text-xl leading-6 text-ink">How to measure in 0 g</h3>
+        <p class="eyebrow m-0 mt-2">{{ guide().instrument }}</p>
+        <ol class="m-0 mt-3 list-none space-y-2.5 p-0">
+          @for (step of guide().how; track $index) {
+            <li class="flex gap-3 text-sm leading-6 text-ink">
+              <span class="num w-4 shrink-0 text-ink-mute">{{ $index + 1 }}</span>
+              <span>{{ step }}</span>
+            </li>
+          }
+        </ol>
+      </section>
+
+      <section class="rounded border border-line px-4 py-4" aria-labelledby="guide-why">
+        <div class="eyebrow text-signal">02</div>
+        <h3 id="guide-why" class="display m-0 mt-1 text-xl leading-6 text-ink">Why spaceflight affects it</h3>
+        @if (guide().fact; as fact) {
+          <div class="mt-3 border-l-2 border-signal pl-3">
+            <div class="display text-2xl leading-7 text-signal">{{ fact.value }}</div>
+            <div class="text-xs leading-5 text-ink-dim">{{ fact.caption }}</div>
+          </div>
+        }
+        @for (paragraph of guide().why; track $index) {
+          <p class="m-0 mt-3 text-sm leading-6 text-ink">{{ paragraph }}</p>
+        }
+        <p class="eyebrow m-0 mt-4">NASA HRP hazard · {{ guide().hazard }}</p>
+      </section>
+
+      <section class="rounded border border-line px-4 py-4" aria-labelledby="guide-act">
+        <div class="eyebrow text-signal">03</div>
+        <h3 id="guide-act" class="display m-0 mt-1 text-xl leading-6 text-ink">When to act</h3>
+        @if (limits().length) {
+          <ul class="m-0 mt-3 list-none space-y-2 p-0">
+            @for (limit of limits(); track $index) {
+              <li class="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-2 text-sm leading-5">
+                <span [class]="statusClass(limit.status)">{{ limit.status }}</span>
+                <span class="text-ink-dim">{{ limit.text }}</span>
+              </li>
+            }
+          </ul>
+        }
+        <ul class="m-0 mt-4 list-none space-y-2.5 border-t border-line p-0 pt-4">
+          @for (action of guide().act; track $index) {
+            <li class="text-sm leading-6 text-ink">{{ action }}</li>
+          }
+        </ul>
+      </section>
+    </div>
+
+    <p class="m-0 mt-5 text-xs leading-5 text-ink-mute">
+      Limits are prototype values from the mission rule set. {{ assessment().disclaimer }}
+    </p>
+  </app-modal-shell>
+}

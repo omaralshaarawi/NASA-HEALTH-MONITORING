@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+/* Fonts are bundled, so the app looks the same without internet. */
+@import "@fontsource/barlow-condensed/latin-500.css";
+@import "@fontsource/barlow-condensed/latin-600.css";
+@import "@fontsource/ibm-plex-sans/latin-400.css";
+@import "@fontsource/ibm-plex-sans/latin-500.css";
+@import "@fontsource/ibm-plex-sans/latin-600.css";
+@import "@fontsource/ibm-plex-mono/latin-400.css";
+@import "@fontsource/ibm-plex-mono/latin-500.css";
+
+/*
+ * Shared theme ("Mission Control").
+ * One accent (signal). Green / amber / red are reserved for health status and nothing else.
+ */
+@theme {
+  --color-void: #060a10;
+  --color-hull: #0a1019;
+  --color-panel: #0e1622;
+  --color-raised: #142031;
+  --color-line: #1e2b3c;
+  --color-line-strong: #33465d;
+
+  --color-ink: #e8eef6;
+  --color-ink-dim: #a9b8ca;
+  --color-ink-mute: #7d8ea3;
+
+  --color-signal: #5ad1f5;
+  --color-signal-dim: #1c5c73;
+
+  --color-ok: #3ddc97;
+  --color-warn: #f5b83d;
+  --color-crit: #ff6464;
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  background: var(--color-void);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  /* faint star field and horizon glow; cheap, no images */
+  background:
+    radial-gradient(1200px 500px at 50% -220px, rgb(90 209 245 / 0.07), transparent 70%),
+    radial-gradient(1px 1px at 12% 18%, rgb(255 255 255 / 0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 78% 9%, rgb(255 255 255 / 0.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 35% 6%, rgb(255 255 255 / 0.3) 50%, transparent 51%),
+    radial-gradient(1px 1px at 91% 31%, rgb(255 255 255 / 0.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 58% 14%, rgb(255 255 255 / 0.25) 50%, transparent 51%),
+    radial-gradient(1px 1px at 5% 42%, rgb(255 255 255 / 0.3) 50%, transparent 51%),
+    var(--color-void);
+  background-attachment: fixed;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+@layer components {
+  /* small uppercase caption above a value or a section */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* measurement units keep their own capitalisation (mL, mmHg, kcal) */
+  .unit {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    letter-spacing: 0.04em;
+    color: var(--color-ink-mute);
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .panel {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 120ms, border-color 120ms, color 120ms;
+  }
+  .btn:hover:not(:disabled) {
+    border-color: var(--color-signal);
+    color: var(--color-signal);
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--color-signal);
+    border-color: var(--color-signal);
+    color: var(--color-void);
+    font-weight: 500;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: #8adffa;
+    border-color: #8adffa;
+    color: var(--color-void);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.125rem 0.5rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    color: var(--color-ink-dim);
+    white-space: nowrap;
+  }
+
+  /* status = colour + shape + word, never colour alone */
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .status::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    background: currentColor;
+  }
+  .status-green { color: var(--color-ok); }
+  .status-green::before { border-radius: 50%; }
+  .status-yellow { color: var(--color-warn); }
+  .status-yellow::before { transform: rotate(45deg); }
+  .status-red { color: var(--color-crit); }
+  .status-red::before { clip-path: polygon(50% 0, 100% 100%, 0 100%); width: 0.5625rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * Printing the flight surgeon report: MissionReportPrintComponent moves its sheet to <body>
+ * and sets this class, so the page that comes out is the report and nothing else.
+ */
+@media print {
+  @page {
+    size: A4;
+    margin: 8mm;
+  }
+  html.printing-report,
+  body.printing-report {
+    background: #fff !important;
+    /* the page is declared dark; without this the paper margins print black */
+    color-scheme: light;
+  }
+  body.printing-report > :not(.report-sheet) {
+    display: none !important;
+  }
+  body.printing-report > .report-sheet {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

@@ -1,0 +1,163 @@
+<div #sheet class="sheet report-sheet">
+  <div class="head">
+    <div>
+      <div class="cap">Flight surgeon telemetry report · simulated data</div>
+      <div class="title">Crew health report</div>
+    </div>
+    <div style="text-align: right">
+      <div class="cap">Generated</div>
+      <div class="mono">{{ assessment().generated_at_iso | date: 'd MMM y, HH:mm' : 'UTC' }} UTC</div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <div><span class="cap">Crew member</span><strong>{{ crewName() || assessment().astronaut_id }}</strong></div>
+    <div><span class="cap">Mission day</span><strong class="mono">{{ assessment().mission_day }}</strong></div>
+    <div><span class="cap">Habitat</span><strong>{{ assessment().environment.label }}</strong></div>
+    <div><span class="cap">Gravity</span><strong class="mono">{{ assessment().environment.gravity_g }} g</strong></div>
+    <div><span class="cap">One-way delay</span><strong class="mono">{{ delay() }}</strong></div>
+    <div><span class="cap">Overall</span><strong><span class="st" [class]="'st st-' + assessment().overall">{{ assessment().overall }}</span></strong></div>
+  </div>
+
+  <h3>Body regions</h3>
+  <div class="regions">
+    @for (r of regions(); track r.label) {
+      <div class="region">
+        <div class="cap">{{ r.label }}</div>
+        <span class="st" [class]="'st st-' + r.status">{{ r.status }}</span>
+        @if (r.drivers) {
+          <div class="finding">{{ r.drivers }}</div>
+        }
+      </div>
+    }
+  </div>
+
+  <h3>Readings against personal baseline (mission days 1 to 7)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Indicator</th>
+        <th class="r">Today</th>
+        <th class="r">Baseline</th>
+        <th class="r">Z</th>
+        <th>14-day trend</th>
+        <th>Status</th>
+        <th>Finding</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (i of assessment().indicators; track i.id) {
+        <tr>
+          <td>{{ i.label }}</td>
+          <td class="r mono">{{ i.value ?? '—' }} {{ i.value !== null ? i.unit : '' }}</td>
+          <td class="r mono">
+            @if (i.anchor; as a) {
+              {{ a.mean | number: '1.0-1' }} ± {{ a.sd_eff | number: '1.0-1' }}
+            } @else {
+              —
+            }
+          </td>
+          <td class="r mono">{{ i.z ?? '—' }}</td>
+          <td>
+            @if (i.trend.length) {
+              <app-sparkline class="spark" [values]="i.trend" [baseline]="i.anchor?.mean ?? null" [label]="i.label + ' trend'" />
+            }
+          </td>
+          <td><span class="st" [class]="'st st-' + i.status">{{ i.status }}</span></td>
+          <td class="finding">{{ i.reasons.join('; ') }}{{ i.remeasure ? ' (re-measure to confirm)' : '' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="two" style="margin-top: 2.5mm">
+    <div>
+      <span class="cap">Flags</span>
+      <div class="mono">{{ assessment().flags.length ? assessment().flags.join(' · ') : 'None' }}</div>
+    </div>
+    <div>
+      <span class="cap">Daily routine</span>
+      <div>
+        Streak <span class="mono">{{ assessment().compliance.streak_days }}</span> d ·
+        low resistive <span class="mono">{{ assessment().compliance.bone_low_days }}</span> d ·
+        low ration <span class="mono">{{ assessment().compliance.nutrition_low_days }}</span> d
+      </div>
+    </div>
+  </div>
+
+  @if (plan(); as p) {
+    <h3>Active countermeasure plan</h3>
+    @if (p.draft.escalate_to_flight_surgeon) {
+      <div class="box alert" style="margin-bottom: 2mm">
+        <span class="cap" style="color: #b3261e">Escalated to flight surgeon</span>
+        <p>{{ p.draft.escalation_reason }}</p>
+      </div>
+    }
+    <div class="two">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Countermeasure</th>
+              <th>Target</th>
+              <th class="r">Min</th>
+              <th class="r">kcal</th>
+              <th class="r">mL H₂O</th>
+              <th class="r">g CO₂</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (s of p.draft.sessions; track s.exercise_id; let n = $index) {
+              <tr>
+                <td>{{ exerciseTitle(s.exercise_id) }}</td>
+                <td>{{ region(s.target_system) }}</td>
+                <td class="r mono">{{ s.minutes }}</td>
+                <td class="r mono">+{{ p.resources.sessions[n]?.extra_kcal }}</td>
+                <td class="r mono">+{{ p.resources.sessions[n]?.extra_water_ml }}</td>
+                <td class="r mono">+{{ p.resources.sessions[n]?.extra_co2_g }}</td>
+              </tr>
+            } @empty {
+              <tr><td colspan="6">No sessions: exercise is on hold.</td></tr>
+            }
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3">Extra load on life support ({{ p.resources.label }})</td>
+              <td class="r mono">+{{ p.resources.totals.extra_kcal }}</td>
+              <td class="r mono">+{{ p.resources.totals.extra_water_ml }}</td>
+              <td class="r mono">+{{ p.resources.totals.extra_co2_g }}</td>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="finding mono" style="margin-top: 1mm">
+          {{ p.resources.assumptions.formula }} · mass {{ p.resources.assumptions.mass_kg }} kg ·
+          {{ p.resources.assumptions.water_ml_per_kcal }} mL/kcal · {{ p.resources.assumptions.co2_g_per_kcal }} g CO₂/kcal
+        </p>
+      </div>
+      <div>
+        <div class="box">
+          <span class="cap">Briefing given to the crew member</span>
+          <p>{{ p.draft.explanation }}</p>
+        </div>
+        <div class="box" style="margin-top: 2mm">
+          <span class="cap">Nutrition</span>
+          <p>
+            <span class="mono">{{ p.draft.nutrition.kcal_adjustment > 0 ? '+' : '' }}{{ p.draft.nutrition.kcal_adjustment }} kcal</span>
+            · {{ p.draft.nutrition.focus.join(', ') }}
+          </p>
+          <p class="finding">{{ p.draft.nutrition.notes }}</p>
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="foot">
+    <p>{{ disclaimer }}</p>
+    <p class="mono">
+      Thresholds: {{ assessment().thresholds_status }} · schema {{ assessment().schema_version }}
+      @if (plan(); as p) {
+        · plan {{ p.plan_id }} · written by {{ p.llm.model }} · input {{ p.llm.input_hash.slice(0, 12) }}
+      }
+    </p>
+  </div>
+</div>

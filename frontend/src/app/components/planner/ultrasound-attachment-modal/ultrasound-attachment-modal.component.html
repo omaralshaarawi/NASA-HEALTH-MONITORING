@@ -1,0 +1,175 @@
+<app-modal-shell [heading]="guide().title" eyebrow="Guided capture · store and forward" (closed)="closed.emit()">
+  <div class="flex flex-wrap gap-2" role="tablist" aria-label="Capture type">
+    @for (g of guides; track g.kind) {
+      <button
+        type="button"
+        role="tab"
+        class="btn"
+        [class.btn-primary]="g.kind === kind()"
+        [attr.aria-selected]="g.kind === kind()"
+        (click)="choose(g.kind)"
+      >
+        {{ g.tab }}
+      </button>
+    }
+  </div>
+
+  <div class="mt-5 grid gap-5 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
+    <!-- placement diagram -->
+    <figure class="m-0 rounded border border-line bg-hull p-4">
+      <svg viewBox="0 0 240 210" class="block h-auto w-full" role="img" [attr.aria-label]="'Placement diagram: ' + guide().title">
+        @switch (kind()) {
+          @case ('OCULAR_ULTRASOUND') {
+            <!-- face, front view, eyes closed -->
+            <path class="skin" d="M120 22C84 22 66 50 66 92c0 46 22 92 54 92s54-46 54-92c0-42-18-70-54-70Z" />
+            <path class="hint" d="M84 86q12 8 24 0M132 86q12 8 24 0" />
+            <path class="hint" d="M80 74q14-8 28-2M132 72q14-6 28 2" />
+            <path class="hint" d="M120 92v26q-8 6 0 8M100 148q20 10 40 0" />
+            <ellipse class="gel" cx="144" cy="88" rx="17" ry="10" />
+            <ellipse class="target" cx="144" cy="88" rx="20" ry="13" />
+            <g transform="rotate(-32 168 66)">
+              <rect class="probe" x="150" y="50" width="38" height="22" rx="5" />
+              <rect class="probe" x="146" y="56" width="6" height="10" rx="2" />
+            </g>
+            <path class="cable" d="M190 52q24-14 40-40" />
+            <circle class="tag" cx="112" cy="106" r="9" /><text class="tag-text" x="112" y="106">1</text>
+            <circle class="tag" cx="204" cy="78" r="9" /><text class="tag-text" x="204" y="78">2</text>
+          }
+          @default {
+            <!-- torso, front view. The patient's left is on the right of the picture. -->
+            <path class="skin" d="M104 10v18q-22 6-48 18q-8 26-2 56h16q2 50 8 98h84q6-48 8-98h16q6-30-2-56q-26-12-48-18V10Z" />
+            <path class="hint" d="M120 44v76M96 58q24 10 48 0M94 78q26 10 52 0M94 98q26 10 52 0" />
+            @if (kind() === 'CARDIAC_ULTRASOUND') {
+              <path class="target" d="M124 66q22-10 34 8q8 22-12 42q-16 8-24-12Z" />
+              <g transform="rotate(28 132 76)">
+                <rect class="probe" x="122" y="48" width="18" height="30" rx="5" />
+              </g>
+              <path class="cable" d="M140 50q30-24 86-22" />
+              <circle class="probe" cx="150" cy="112" r="5" />
+              <circle class="tag" cx="100" cy="72" r="9" /><text class="tag-text" x="100" y="72">1</text>
+              <circle class="tag" cx="172" cy="124" r="9" /><text class="tag-text" x="172" y="124">2</text>
+            } @else {
+              <circle class="electrode" cx="84" cy="52" r="6" />
+              <circle class="electrode" cx="156" cy="52" r="6" />
+              <circle class="electrode" cx="94" cy="166" r="6" />
+              <circle class="electrode" cx="146" cy="166" r="6" />
+              <path class="cable" d="M84 52q-30 60-70 70M156 52q40 30 72 30M94 166q-40 10-80-10M146 166q40 14 82-16" />
+              <circle class="tag" cx="120" cy="30" r="9" /><text class="tag-text" x="120" y="30">1</text>
+              <circle class="tag" cx="120" cy="184" r="9" /><text class="tag-text" x="120" y="184">2</text>
+            }
+          }
+        }
+      </svg>
+      <figcaption class="mt-3 space-y-1">
+        @for (p of guide().points; track p; let n = $index) {
+          <div class="flex gap-2 text-xs leading-5 text-ink-dim">
+            <span class="num shrink-0 text-signal">{{ n + 1 }}</span><span>{{ p }}</span>
+          </div>
+        }
+      </figcaption>
+    </figure>
+
+    <div class="min-w-0">
+      <p class="eyebrow m-0">{{ guide().device }}</p>
+      <ol class="m-0 mt-3 list-none space-y-2.5 p-0">
+        @for (step of guide().steps; track $index) {
+          <li class="flex gap-3 text-[0.9375rem] leading-6 text-ink">
+            <span class="num w-4 shrink-0 text-ink-mute">{{ $index + 1 }}</span>
+            <span>{{ step }}</span>
+          </li>
+        }
+      </ol>
+
+      <div class="mt-5 border-l-2 border-signal-dim pl-3">
+        <div class="eyebrow">Why this scan matters in flight</div>
+        @if (guide().fact; as fact) {
+          <div class="mt-1 flex flex-wrap items-baseline gap-x-2">
+            <span class="display text-xl leading-6 text-signal">{{ fact.value }}</span>
+            <span class="text-xs leading-5 text-ink-dim">{{ fact.caption }}</span>
+          </div>
+        }
+        <p class="m-0 mt-1 text-sm leading-6 text-ink-dim">{{ guide().why }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- capture and attach -->
+  <section class="mt-5 rounded border border-line px-4 py-4" aria-labelledby="capture-title">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h3 id="capture-title" class="eyebrow m-0">Capture</h3>
+        <p class="m-0 mt-1 text-sm leading-6 text-ink-dim">
+          This prototype has no real probe, so the frame is generated and marked as simulated.
+        </p>
+      </div>
+      <button type="button" class="btn" (click)="takeCapture()">
+        {{ capture() ? 'Capture again' : 'Capture simulated frame' }}
+      </button>
+    </div>
+
+    @if (capture(); as c) {
+      <div class="mt-4 grid gap-4 md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
+        <div class="relative overflow-hidden rounded border border-line bg-black">
+          <svg viewBox="0 0 320 200" class="block h-auto w-full" role="img" aria-label="Simulated capture">
+            <defs>
+              <filter id="speckle" x="0" y="0" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" [attr.seed]="c.seed" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0.75  0 0 0 0 0.8  0 0 0 0 0.85  0.9 0.4 0 0 -0.35" />
+              </filter>
+              <clipPath id="sector"><path d="M160 6L300 150A190 190 0 0 1 20 150Z" /></clipPath>
+            </defs>
+            @if (kind() === 'ECG') {
+              <path d="M0 20H320M0 40H320M0 60H320M0 80H320M0 100H320M40 0V120M80 0V120M120 0V120M160 0V120M200 0V120M240 0V120M280 0V120"
+                    stroke="#12301f" stroke-width="1" transform="translate(0 40)" />
+              <path [attr.d]="ecgTrace()" fill="none" stroke="#3ddc97" stroke-width="1.75" stroke-linejoin="round" transform="translate(0 40)" />
+            } @else {
+              <g clip-path="url(#sector)">
+                <rect width="320" height="200" filter="url(#speckle)" />
+                @if (kind() === 'OCULAR_ULTRASOUND') {
+                  <ellipse cx="160" cy="92" rx="56" ry="50" fill="#000" opacity="0.92" />
+                  <path d="M150 140q10 40 10 60M170 140q-10 40-10 60" stroke="#000" stroke-width="10" opacity="0.8" />
+                } @else {
+                  <path d="M120 60q40-24 76 6q16 40-10 84q-40 20-66-30Z" fill="#000" opacity="0.9" />
+                  <path d="M156 52v110" stroke="#9fb0c3" stroke-width="3" opacity="0.5" />
+                }
+              </g>
+            }
+            <text x="160" y="190" text-anchor="middle" fill="#f5b83d"
+                  style="font: 500 11px 'IBM Plex Mono', monospace; letter-spacing: 0.14em">SIMULATED · NOT CREW DATA</text>
+          </svg>
+        </div>
+
+        <div class="min-w-0">
+          <label class="eyebrow block" for="scan-note">Note for the flight surgeon (optional)</label>
+          <textarea
+            id="scan-note"
+            rows="3"
+            maxlength="200"
+            class="mt-2 block w-full resize-none rounded border border-line-strong bg-hull px-3 py-2 text-sm leading-6 text-ink placeholder:text-ink-mute"
+            placeholder="For example: right eye, second attempt, slight blur"
+            [value]="note()"
+            (input)="note.set($any($event.target).value)"
+          ></textarea>
+          <div class="mt-3 flex flex-wrap items-center gap-3">
+            <button type="button" class="btn btn-primary" (click)="attach()">Attach to today's record</button>
+            <span class="text-xs leading-5 text-ink-mute">
+              {{ autonomous() ? 'Queued for the next uplink to Earth.' : 'Sent to the flight surgeon over the live link.' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (justAttached(); as a) {
+      <p class="m-0 mt-4 rounded border border-signal px-4 py-2 text-sm leading-6 text-ink" role="status">
+        Attached to mission day {{ assessment().mission_day }} as a simulated capture.
+        <span class="num text-ink-dim">{{ a.ref }}</span>
+      </p>
+    }
+  </section>
+
+  <p class="m-0 mt-4 text-xs leading-5 text-ink-mute">
+    Captures are stored and forwarded as they are. This app does not read, score or diagnose images.
+    {{ assessment().disclaimer }}
+  </p>
+</app-modal-shell>
