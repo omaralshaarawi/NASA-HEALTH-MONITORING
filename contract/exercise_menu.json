@@ -1,0 +1,13 @@
+{
+  "status": "PROTOTYPE. MET values are approximate Compendium of Physical Activities figures; verify before citing. The LLM may only choose exercise_id from this list; code computes all numbers.",
+  "min_minutes": 5,
+  "max_minutes_per_session": 90,
+  "items": [
+    { "exercise_id": "resistive_moderate", "label": "Resistive exercise, moderate (ARED or bands)", "met": 3.5, "target_system": "SPINE_BONE", "gravity_max_g": 0.5 },
+    { "exercise_id": "resistive_vigorous", "label": "Resistive exercise, vigorous (ARED)", "met": 6.0, "target_system": "SPINE_BONE", "gravity_max_g": 0.5 },
+    { "exercise_id": "cycle_ergometer", "label": "Cycle ergometer, moderate", "met": 6.8, "target_system": "CHEST_CARDIO", "gravity_max_g": 0.5 },
+    { "exercise_id": "treadmill_harness", "label": "Treadmill with harness, brisk walk/jog", "met": 7.0, "target_system": "CHEST_CARDIO", "gravity_max_g": 0.5 },
+    { "exercise_id": "walk_surface", "label": "Walking on surface (partial gravity)", "met": 3.5, "target_system": "CHEST_CARDIO", "gravity_min_g": 0.1 },
+    { "exercise_id": "stretch_mobility", "label": "Stretching and mobility", "met": 2.3, "target_system": "SPINE_BONE", "gravity_max_g": 1.0 }
+  ]
+}

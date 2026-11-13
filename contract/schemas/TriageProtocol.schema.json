@@ -1,0 +1,91 @@
+{
+  "$ref": "#/definitions/TriageProtocol",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "TriageProtocol": {
+      "properties": {
+        "protocol_id": {
+          "type": "string"
+        },
+        "review_status": {
+          "const": "PLACEHOLDER_REQUIRES_CLINICIAN_REVIEW",
+          "type": "string"
+        },
+        "scenario": {
+          "const": "CHEST_PAIN_COLLAPSE",
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/definitions/TriageStep"
+          },
+          "type": "array"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol_id",
+        "version",
+        "scenario",
+        "review_status",
+        "start",
+        "steps"
+      ],
+      "type": "object"
+    },
+    "TriageStep": {
+      "description": "Scripted protocol the voice agent walks through. The agent speaks `script` verbatim and only follows `next`.",
+      "properties": {
+        "checklist_label": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "next": {
+          "description": "ASK_YES_NO uses yes/no. SAY, CONFIRM_DONE and SYSTEM use done. Terminal steps have none.",
+          "properties": {
+            "done": {
+              "type": "string"
+            },
+            "no": {
+              "type": "string"
+            },
+            "yes": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "script": {
+          "description": "Verbatim text for the voice agent and the on-screen checklist.",
+          "type": "string"
+        },
+        "terminal": {
+          "type": "boolean"
+        },
+        "type": {
+          "enum": [
+            "SAY",
+            "ASK_YES_NO",
+            "CONFIRM_DONE",
+            "SYSTEM"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "script",
+        "checklist_label"
+      ],
+      "type": "object"
+    }
+  }
+}

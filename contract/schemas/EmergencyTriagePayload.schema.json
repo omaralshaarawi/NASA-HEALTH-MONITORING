@@ -1,0 +1,405 @@
+{
+  "$ref": "#/definitions/EmergencyTriagePayload",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "EmergencyTriagePayload": {
+      "properties": {
+        "agent_rules": {
+          "description": "Hard rules injected into the voice agent's system prompt.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "disclaimer": {
+          "const": "Prototype decision-support tool using simulated data. Not a medical device and not a diagnosis. Follow flight-surgeon and onboard medical procedures.",
+          "type": "string"
+        },
+        "environment": {
+          "properties": {
+            "comm_mode": {
+              "description": "AUTONOMOUS when one_way_delay_s > 5 (rules.json constants.autonomous_delay_s). Drives the emergency button.",
+              "enum": [
+                "LIVE",
+                "AUTONOMOUS"
+              ],
+              "type": "string"
+            },
+            "gravity_g": {
+              "description": "0 | 0.16 | 0.38",
+              "type": "number"
+            },
+            "id": {
+              "$ref": "#/definitions/EnvironmentId"
+            },
+            "label": {
+              "type": "string"
+            },
+            "one_way_delay_s": {
+              "description": "COMPUTED: distance_km / 299792.458. Never typed in.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "id",
+            "label",
+            "gravity_g",
+            "one_way_delay_s",
+            "comm_mode"
+          ],
+          "type": "object"
+        },
+        "incident_id": {
+          "type": "string"
+        },
+        "patient_id": {
+          "description": "Patient and the crew member talking to the agent (may be the same person).",
+          "type": "string"
+        },
+        "patient_snapshot": {
+          "description": "Snapshot injected into the agent's context by the n8n webhook. Values come from the database, never from the LLM.",
+          "properties": {
+            "latest_vitals": {
+              "description": "All optional: a missing value is \"not measured today\", never zero.",
+              "properties": {
+                "dbp_mmHg": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "glucose_mg_dl": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "hr_rest_bpm": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "mood_1_10": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "sbp_mmHg": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "sleep_h": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "temp_c": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": "object"
+            },
+            "mission_day": {
+              "type": "number"
+            },
+            "overall": {
+              "$ref": "#/definitions/Status"
+            },
+            "recent_attachments": {
+              "allOf": [
+                {
+                  "items": {
+                    "properties": {
+                      "captured_at_iso": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "enum": [
+                          "OCULAR_ULTRASOUND",
+                          "CARDIAC_ULTRASOUND",
+                          "ECG"
+                        ],
+                        "type": "string"
+                      },
+                      "note": {
+                        "type": "string"
+                      },
+                      "ref": {
+                        "type": "string"
+                      },
+                      "simulated": {
+                        "const": true,
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "ref",
+                      "captured_at_iso",
+                      "simulated"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                {
+                  "properties": {},
+                  "type": "object"
+                }
+              ]
+            },
+            "red_indicators": {
+              "items": {
+                "properties": {
+                  "id": {
+                    "$ref": "#/definitions/IndicatorId"
+                  },
+                  "reasons": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "value",
+                  "unit",
+                  "reasons"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "mission_day",
+            "overall",
+            "red_indicators",
+            "latest_vitals"
+          ],
+          "type": "object"
+        },
+        "protocol": {
+          "properties": {
+            "protocol_id": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "protocol_id",
+            "version"
+          ],
+          "type": "object"
+        },
+        "reporter_id": {
+          "type": "string"
+        },
+        "scenario": {
+          "const": "CHEST_PAIN_COLLAPSE",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "type": "string"
+        },
+        "started_at_iso": {
+          "type": "string"
+        },
+        "state": {
+          "properties": {
+            "current_step_id": {
+              "type": "string"
+            },
+            "status": {
+              "enum": [
+                "IN_PROGRESS",
+                "ENDED"
+              ],
+              "type": "string"
+            },
+            "step_log": {
+              "items": {
+                "properties": {
+                  "answer": {
+                    "enum": [
+                      "yes",
+                      "no",
+                      "done"
+                    ],
+                    "type": "string"
+                  },
+                  "at_iso": {
+                    "type": "string"
+                  },
+                  "step_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "step_id",
+                  "at_iso"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "current_step_id",
+            "step_log",
+            "status"
+          ],
+          "type": "object"
+        },
+        "store_and_forward": {
+          "description": "Built at the end of the protocol; queued when comm_mode is AUTONOMOUS, sent when LIVE.",
+          "properties": {
+            "attachments": {
+              "allOf": [
+                {
+                  "items": {
+                    "properties": {
+                      "captured_at_iso": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "enum": [
+                          "OCULAR_ULTRASOUND",
+                          "CARDIAC_ULTRASOUND",
+                          "ECG"
+                        ],
+                        "type": "string"
+                      },
+                      "note": {
+                        "type": "string"
+                      },
+                      "ref": {
+                        "type": "string"
+                      },
+                      "simulated": {
+                        "const": true,
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "ref",
+                      "captured_at_iso",
+                      "simulated"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                {
+                  "properties": {},
+                  "type": "object"
+                }
+              ]
+            },
+            "created_at_iso": {
+              "type": "string"
+            },
+            "delivery": {
+              "enum": [
+                "QUEUED_FOR_UPLINK",
+                "SENT_LIVE"
+              ],
+              "type": "string"
+            },
+            "estimated_earth_receipt_iso": {
+              "type": "string"
+            },
+            "packet_id": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "packet_id",
+            "created_at_iso",
+            "delivery",
+            "estimated_earth_receipt_iso",
+            "summary"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "schema_version",
+        "incident_id",
+        "started_at_iso",
+        "scenario",
+        "patient_id",
+        "reporter_id",
+        "environment",
+        "patient_snapshot",
+        "protocol",
+        "state",
+        "agent_rules",
+        "disclaimer"
+      ],
+      "type": "object"
+    },
+    "EnvironmentId": {
+      "enum": [
+        "SPACE_STATION",
+        "DEEP_SPACECRAFT",
+        "PLANETARY_BASE_MOON",
+        "PLANETARY_BASE_MARS",
+        "SURFACE_ROVER_MOON",
+        "SURFACE_ROVER_MARS"
+      ],
+      "type": "string"
+    },
+    "IndicatorId": {
+      "enum": [
+        "hr_rest",
+        "sbp",
+        "dbp",
+        "glucose",
+        "temp",
+        "sleep",
+        "mood",
+        "pvt",
+        "cabin_co2",
+        "radiation",
+        "resistive",
+        "ration",
+        "immune_risk"
+      ],
+      "type": "string"
+    },
+    "Status": {
+      "enum": [
+        "GREEN",
+        "YELLOW",
+        "RED"
+      ],
+      "type": "string"
+    }
+  }
+}

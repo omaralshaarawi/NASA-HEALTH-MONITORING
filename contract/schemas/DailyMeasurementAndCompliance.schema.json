@@ -1,0 +1,210 @@
+{
+  "$ref": "#/definitions/DailyMeasurementAndCompliance",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DailyMeasurementAndCompliance": {
+      "properties": {
+        "astronaut_id": {
+          "type": "string"
+        },
+        "attachments": {
+          "description": "Store-and-forward only. No AI image interpretation anywhere in this app.",
+          "items": {
+            "properties": {
+              "captured_at_iso": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "OCULAR_ULTRASOUND",
+                  "CARDIAC_ULTRASOUND",
+                  "ECG"
+                ],
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              },
+              "ref": {
+                "type": "string"
+              },
+              "simulated": {
+                "const": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "ref",
+              "captured_at_iso",
+              "simulated"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "compliance": {
+          "description": "Daily routine card.",
+          "properties": {
+            "ared_resistive_minutes": {
+              "description": "Minutes of resistive exercise (ARED on the station; any resistive device elsewhere). Missing log counts as 0.",
+              "type": "number"
+            },
+            "morning_vitals_logged": {
+              "type": "boolean"
+            },
+            "ration_intake_pct": {
+              "description": "0..100+ of planned ration eaten. Missing log counts as 0.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "morning_vitals_logged",
+            "ared_resistive_minutes",
+            "ration_intake_pct"
+          ],
+          "type": "object"
+        },
+        "date_iso": {
+          "description": "ISO date, e.g. \"2026-11-14\"",
+          "type": "string"
+        },
+        "environment_id": {
+          "$ref": "#/definitions/EnvironmentId"
+        },
+        "habitat": {
+          "description": "Passive habitat telemetry.",
+          "properties": {
+            "cabin_co2_mmHg": {
+              "type": "number"
+            },
+            "radiation_mSv_day": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "radiation_mSv_day",
+            "cabin_co2_mmHg"
+          ],
+          "type": "object"
+        },
+        "mission_day": {
+          "description": "1-based mission day. Days 1-7 form the personal anchor window.",
+          "type": "number"
+        },
+        "pvt": {
+          "anyOf": [
+            {
+              "properties": {
+                "lapses_gt500ms": {
+                  "type": "number"
+                },
+                "median_rt_ms": {
+                  "type": "number"
+                },
+                "n_trials": {
+                  "type": "number"
+                },
+                "source": {
+                  "const": "BROWSER_30S",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "median_rt_ms",
+                "lapses_gt500ms",
+                "n_trials",
+                "source"
+              ],
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Live 30 s browser psychomotor vigilance test. null when not done today."
+        },
+        "source": {
+          "$ref": "#/definitions/DataSource"
+        },
+        "vitals": {
+          "description": "All optional: a missing value is \"not measured today\", never zero.",
+          "properties": {
+            "dbp_mmHg": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "glucose_mg_dl": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "hr_rest_bpm": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "mood_1_10": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "sbp_mmHg": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "sleep_h": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "temp_c": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "astronaut_id",
+        "mission_day",
+        "environment_id",
+        "source",
+        "vitals",
+        "habitat",
+        "compliance"
+      ],
+      "type": "object"
+    },
+    "DataSource": {
+      "enum": [
+        "SIMULATED",
+        "MANUAL",
+        "SENSOR"
+      ],
+      "type": "string"
+    },
+    "EnvironmentId": {
+      "enum": [
+        "SPACE_STATION",
+        "DEEP_SPACECRAFT",
+        "PLANETARY_BASE_MOON",
+        "PLANETARY_BASE_MARS",
+        "SURFACE_ROVER_MOON",
+        "SURFACE_ROVER_MARS"
+      ],
+      "type": "string"
+    }
+  }
+}
