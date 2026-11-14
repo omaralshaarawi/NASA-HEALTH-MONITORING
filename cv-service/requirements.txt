@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+opencv-python
+mediapipe
+requests
+pydantic
+numpy

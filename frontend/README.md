@@ -61,6 +61,15 @@ public/assets/                    space background and body wireframe (optimised
 - Scan attachments stay `simulated: true`; images are stored and forwarded, never interpreted.
 - Backend details (model name, input hash, formulas) are not shown.
 
+## Camera coach
+
+Each session on the Training & Nutrition Plan page has **Launch camera coach**. It opens a pop-up that talks to the
+local `cv-service` (see `cv-service/README.md`, address in the environment as `cvServiceUrl`): the live camera with
+the tracked pose, reps, hold time, cadence, stage, joint angle and a form check, and **Sync workout to mission log**,
+which adds the minutes to today's record and reloads the assessment. The webcam stream is only open while the pop-up
+is; if the service is not running the pop-up says so and the rest of the page is unaffected. The button is disabled
+while triage is recommended.
+
 ## Days and the daily log
 
 "Close day N and start day N+1" on the Daily Report page saves today's assessment and plan, unchanged, to a log in

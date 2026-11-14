@@ -1,0 +1,136 @@
+@let t = telemetry();
+
+<app-modal-shell heading="Camera coach" eyebrow="Pose tracking · reps and form" (closed)="closed.emit()">
+  <div class="grid gap-5 lg:grid-cols-[minmax(0,1.45fr)_minmax(19rem,1fr)]">
+    <!-- the camera -->
+    <section aria-label="Camera">
+      <div class="feed">
+        @switch (phase()) {
+          @case ('online') {
+            @if (feedUrl(); as url) {
+              <img #feed [src]="url" alt="Live camera picture with the tracked pose drawn over it" (error)="feedFailed()" />
+            }
+            @if (feedProblem()) {
+              <p class="feed-note" role="status">The camera picture could not be loaded. Counters keep working while cv-service runs.</p>
+            }
+          }
+          @case ('connecting') {
+            <p class="feed-note" role="status">Connecting to the camera coach…</p>
+          }
+          @case ('offline') {
+            <div class="feed-note" role="alert">
+              <p class="m-0">{{ problem() }}</p>
+              <button type="button" class="btn mt-4" (click)="connect()">Try again</button>
+            </div>
+          }
+        }
+      </div>
+      <p class="m-0 mt-2 text-xs leading-5 text-ink-mute">
+        The camera picture stays on this computer. Only the rep count and minutes go to the mission log, and only when you
+        sync.
+      </p>
+    </section>
+
+    <!-- counters and controls -->
+    <div class="min-w-0 space-y-4">
+      @if (phase() === 'online' && t) {
+        <label class="block text-sm text-ink-dim">
+          Exercise
+          <select class="field mt-1" [disabled]="switching()" (change)="choose($event)">
+            @for (exercise of exercises(); track exercise.exercise_id) {
+              <option [value]="exercise.exercise_id" [selected]="exercise.exercise_id === t.exercise_id">{{ exercise.name }}</option>
+            }
+          </select>
+        </label>
+        @if (t.profile_fallback) {
+          <p class="m-0 text-xs leading-5 text-ink-mute">This session has no camera profile of its own, so the default exercise is tracked.</p>
+        }
+        @if (problem()) {
+          <p class="m-0 text-sm text-crit" role="alert">{{ problem() }}</p>
+        }
+
+        <!-- the form check from the camera: shape, colour and word -->
+        <div class="banner" [class]="'banner banner-' + t.severity.toLowerCase()" role="status" aria-live="polite">
+          <span [class]="'status status-' + t.severity.toLowerCase()">Form {{ t.severity }}</span>
+          <span class="text-sm text-ink">{{ t.hud_warning }}</span>
+        </div>
+
+        <dl class="stats m-0">
+          <div>
+            <dt class="eyebrow">Reps</dt>
+            <dd class="num">{{ t.reps }}<span class="unit ml-1">/ {{ t.target_reps }}</span></dd>
+          </div>
+          <div>
+            <dt class="eyebrow">Hold</dt>
+            <dd class="num">
+              {{ t.hold_seconds }}<span class="unit ml-1">{{ holdMode() ? '/ ' + t.target_hold_seconds + ' s' : 's' }}</span>
+            </dd>
+          </div>
+          <div>
+            <dt class="eyebrow">Cadence</dt>
+            <dd class="num">{{ t.cadence_rpm }}<span class="unit ml-1">rpm</span></dd>
+          </div>
+          <div>
+            <dt class="eyebrow">Stage</dt>
+            <dd>{{ t.stage }}</dd>
+          </div>
+          <div>
+            <dt class="eyebrow">Joint angle</dt>
+            <dd class="num">{{ t.primary_angle }}<span class="unit ml-1">deg</span></dd>
+          </div>
+          <div>
+            <dt class="eyebrow">Tracking</dt>
+            <dd class="text-sm">{{ t.visibility_ok ? t.tracked_side + ' side' : 'Not in view' }}</dd>
+          </div>
+        </dl>
+
+        <div class="rounded-xl border border-line bg-white/[0.03] px-4 py-3">
+          <div class="eyebrow">Set up in 0 g · {{ regionLabels[t.target_system] }}</div>
+          <p class="m-0 mt-1 text-sm leading-6 text-ink-dim">{{ t.setup_instruction_0g }}</p>
+        </div>
+
+        <!-- add the workout to today's record -->
+        <section class="rounded-xl border border-line px-4 py-4" aria-label="Sync workout">
+          <label class="block text-sm text-ink-dim">
+            Minutes to credit <span class="unit">optional</span>
+            <input
+              class="field mt-1"
+              type="number"
+              min="1"
+              max="240"
+              step="1"
+              placeholder="Leave empty: 5 min per rep, at least 15"
+              [value]="minutes()"
+              (input)="setMinutes($event)"
+            />
+          </label>
+          <button type="button" class="btn btn-primary mt-3 w-full" [disabled]="!canSync()" (click)="sync()">
+            {{ syncing() ? 'Syncing…' : 'Sync workout to mission log' }}
+          </button>
+          @if (!store.assessment()) {
+            <p class="m-0 mt-2 text-xs leading-5 text-ink-mute">There is no assessment for today yet, so there is nothing to add to.</p>
+          } @else if (!canSync() && !syncing()) {
+            <p class="m-0 mt-2 text-xs leading-5 text-ink-mute">Do at least one rep, or enter the minutes to credit.</p>
+          }
+          @if (synced(); as result) {
+            <p class="m-0 mt-2 text-sm leading-6 text-signal" role="status">
+              Synced to day {{ result.updated_assessment.mission_day }}: resistive exercise
+              <span class="num">{{ result.previous_ared_minutes }}</span> →
+              <span class="num">{{ result.new_ared_minutes }}</span> min. Every page now shows the updated assessment.
+            </p>
+          }
+          @if (syncProblem()) {
+            <p class="m-0 mt-2 text-sm leading-6 text-crit" role="alert">{{ syncProblem() }}</p>
+          }
+        </section>
+      } @else if (phase() === 'connecting') {
+        <p class="m-0 text-sm text-ink-dim" role="status">Loading the exercise profiles…</p>
+      } @else {
+        <p class="m-0 text-sm leading-6 text-ink-dim">
+          The camera coach is a separate local service. Start it from the <code>cv-service</code> folder with
+          <code>uvicorn main:app --port 5001</code>, then try again. The rest of the plan works without it.
+        </p>
+      }
+    </div>
+  </div>
+</app-modal-shell>

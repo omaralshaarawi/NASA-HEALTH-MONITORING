@@ -33,7 +33,11 @@
     </section>
   }
 
-  <app-countermeasure-plan class="mt-4" [plan]="p" />
+  <app-countermeasure-plan class="mt-4" [plan]="p" (coachRequested)="coachFor.set($event)" />
+
+  @if (coachFor(); as exerciseId) {
+    <app-cv-coach-modal [exerciseId]="exerciseId" (closed)="coachFor.set(null)" />
+  }
 } @else if (a) {
   <section class="panel mt-6 p-6" role="status">
     <div class="display text-lg text-ink">Preparing today's plan…</div>

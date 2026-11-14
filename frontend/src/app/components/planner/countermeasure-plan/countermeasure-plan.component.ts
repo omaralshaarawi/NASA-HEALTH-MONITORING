@@ -1,6 +1,7 @@
 import { DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 
+import { TrainingService } from '../../../core/training.service';
 import { CountermeasurePlan } from '../../../models/contract';
 import { PlainWordsPipe } from '../../../ui/plain-words.pipe';
 import { exerciseTitle, menuItem } from '../planner-labels';
@@ -18,6 +19,10 @@ import { SessionTimerComponent } from '../session-timer/session-timer.component'
 })
 export class CountermeasurePlanComponent {
   readonly plan = input.required<CountermeasurePlan>();
+  // "Launch camera coach" on a session: the host opens the coach for that exercise
+  readonly coachRequested = output<string>();
+
+  protected readonly training = inject(TrainingService);
 
   protected readonly draft = computed(() => this.plan().draft);
   protected readonly resources = computed(() => this.plan().resources);

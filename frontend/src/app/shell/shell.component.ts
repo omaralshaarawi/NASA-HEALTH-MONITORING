@@ -4,14 +4,13 @@ import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/ro
 import { filter, map } from 'rxjs';
 
 import { AlertStripComponent } from './alert-strip.component';
-import { DisclaimerFooterComponent } from './disclaimer-footer.component';
 import { StatusStripComponent } from './status-strip.component';
 import { TopNavComponent } from './top-nav.component';
 
-// The frame around every page: space backdrop, top bar, alert strip, status strip, footer.
+// The frame around every page: space backdrop, top bar, alert strip, status strip.
 @Component({
   selector: 'app-shell',
-  imports: [RouterOutlet, TopNavComponent, AlertStripComponent, StatusStripComponent, DisclaimerFooterComponent],
+  imports: [RouterOutlet, TopNavComponent, AlertStripComponent, StatusStripComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     .backdrop {
@@ -55,8 +54,7 @@ import { TopNavComponent } from './top-nav.component';
       @if (!hero()) {
         <app-status-strip />
       }
-      <main id="main" class="flex-1" tabindex="-1"><router-outlet /></main>
-      <app-disclaimer-footer />
+      <main id="main" class="flex-1 pb-12" tabindex="-1"><router-outlet /></main>
     </div>
   `,
 })
