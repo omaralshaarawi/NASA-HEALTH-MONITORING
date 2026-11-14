@@ -4,3 +4,7 @@ node_modules/
 *.pyc
 .DS_Store
 .claude/
+
+# cv-service
+cv-service/.venv/
+cv-service/pose_landmarker_lite.task

@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
 import { CountermeasurePlanComponent } from '../../components/planner/countermeasure-plan/countermeasure-plan.component';
+import { CvCoachModalComponent } from '../../components/planner/cv-coach-modal/cv-coach-modal.component';
 import { REGION_LABELS, exerciseTitle } from '../../components/planner/planner-labels';
 import { MissionStore } from '../../core/mission-store.service';
 import { TrainingService } from '../../core/training.service';
@@ -10,13 +11,16 @@ import { SectionHeaderComponent } from '../../ui/section-header.component';
 // Today's training sessions with their timers, the nutrition change and the life-support cost.
 @Component({
   selector: 'app-analysis-plan-page',
-  imports: [AwaitingPanelComponent, CountermeasurePlanComponent, SectionHeaderComponent],
+  imports: [AwaitingPanelComponent, CountermeasurePlanComponent, CvCoachModalComponent, SectionHeaderComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './analysis-plan-page.component.html',
 })
 export class AnalysisPlanPageComponent {
   protected readonly store = inject(MissionStore);
   protected readonly training = inject(TrainingService);
+
+  // the exercise the camera coach is open for, if any
+  protected readonly coachFor = signal<string | null>(null);
 
   // the plan in one sentence, put together from its own fields
   protected readonly summary = computed(() => {

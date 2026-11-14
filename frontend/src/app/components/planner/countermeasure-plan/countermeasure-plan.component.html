@@ -5,6 +5,21 @@
     @for (s of draft().sessions; track s.exercise_id; let i = $index) {
       <app-session-card [session]="s" [index]="i" [resources]="sessionResources(i)">
         <app-session-timer [exerciseId]="s.exercise_id" [minutes]="s.minutes" [needsDirection]="needsDirection(s.exercise_id)" />
+        <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-4">
+          <button
+            type="button"
+            class="btn"
+            [disabled]="training.locked()"
+            [attr.title]="training.locked() ? 'Emergency active: follow the triage' : null"
+            (click)="coachRequested.emit(s.exercise_id)"
+          >
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1.5 5h2.2l1.2-1.8h6.2L12.3 5h2.2v8h-13Z" /><circle cx="8" cy="8.8" r="2.4" />
+            </svg>
+            Launch camera coach
+          </button>
+          <span class="text-xs leading-5 text-ink-mute">Counts reps and checks form with your webcam.</span>
+        </div>
       </app-session-card>
     } @empty {
       <div class="panel px-5 py-8 text-center">
