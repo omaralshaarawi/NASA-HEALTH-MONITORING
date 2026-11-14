@@ -87,6 +87,15 @@ export interface TriageIncident {
   disclaimer: string;
 }
 
+// The backend explains a refused request in its body; use that when it is there.
+export function apiErrorMessage(error: unknown, fallback: string): string {
+  if (typeof error === 'object' && error !== null && 'error' in error) {
+    const body = (error as { error?: { message?: string; error?: string } }).error;
+    return body?.message ?? body?.error ?? fallback;
+  }
+  return fallback;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);

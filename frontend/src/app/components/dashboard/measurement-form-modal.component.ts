@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ModalShellComponent } from '../planner/modal-shell/modal-shell.component';
-import { Attachment } from '../planner/ultrasound-attachment-modal/scan-guides';
+import { Attachment, SCAN_GUIDES, ScanKind } from '../planner/ultrasound-attachment-modal/scan-guides';
 import { UltrasoundAttachmentModalComponent } from '../planner/ultrasound-attachment-modal/ultrasound-attachment-modal.component';
 import { AssessmentResponse, DailyMeasurementAndCompliance, EnvironmentProfile } from '../../models/contract';
 import { PvtResult, PvtTestComponent } from './pvt-test.component';
@@ -12,7 +12,7 @@ import { PvtResult, PvtTestComponent } from './pvt-test.component';
   imports: [FormsModule, ModalShellComponent, PvtTestComponent, UltrasoundAttachmentModalComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <app-modal-shell heading="Daily measurement" eyebrow="Manual entry · backend validated" (closed)="closed.emit()">
+    <app-modal-shell heading="Today's readings" eyebrow="Manual entry" (closed)="closed.emit()">
       <form class="space-y-5" (ngSubmit)="submit()">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <p class="m-0 text-sm leading-6 text-ink-dim">Mission day {{ nextMissionDay() }} · values not entered remain unmeasured, not zero.</p>
@@ -51,10 +51,10 @@ import { PvtResult, PvtTestComponent } from './pvt-test.component';
             </div>
             <button type="button" class="btn" (click)="scanOpen.set(true)">Capture guided scan / ECG</button>
           </div>
-          @if (attachments().length) {
+          @if (allAttachments().length) {
             <ul class="mt-3 flex list-none flex-wrap gap-2 p-0">
-              @for (attachment of attachments(); track attachment.ref) {
-                <li class="chip">{{ attachment.kind }} · attached</li>
+              @for (attachment of allAttachments(); track attachment.ref) {
+                <li class="chip">{{ scanName(attachment.kind) }} · attached</li>
               }
             </ul>
           }
@@ -79,6 +79,8 @@ export class MeasurementFormModalComponent {
   readonly assessment = input.required<AssessmentResponse>();
   readonly nextMissionDay = input.required<number>();
   readonly environment = input.required<EnvironmentProfile>();
+  // scans already captured today, sent along with these readings
+  readonly scans = input<Attachment[]>([]);
   readonly submitting = input(false);
   readonly error = input('');
   readonly closed = output<void>();
@@ -86,6 +88,7 @@ export class MeasurementFormModalComponent {
 
   protected readonly scanOpen = signal(false);
   protected readonly attachments = signal<Attachment[]>([]);
+  protected readonly allAttachments = computed(() => [...this.scans(), ...this.attachments()]);
   protected readonly pvtResult = signal<PvtResult | null>(null);
   protected morningVitalsLogged = false;
   protected exerciseMinutes = 0;
@@ -99,6 +102,10 @@ export class MeasurementFormModalComponent {
     sleep: number | null;
     mood: number | null;
   } = { hr: null, sbp: null, dbp: null, glucose: null, temp: null, sleep: null, mood: null };
+
+  protected scanName(kind: ScanKind): string {
+    return SCAN_GUIDES.find((guide) => guide.kind === kind)?.tab ?? kind;
+  }
 
   protected addAttachment(attachment: Attachment): void {
     this.attachments.update((all) => [...all, attachment]);
@@ -133,7 +140,7 @@ export class MeasurementFormModalComponent {
         ared_resistive_minutes: this.exerciseMinutes,
         ration_intake_pct: this.rationPct,
       },
-      ...(this.attachments().length ? { attachments: this.attachments() } : {}),
+      ...(this.allAttachments().length ? { attachments: this.allAttachments() } : {}),
     };
     this.saveMeasurement.emit(measurement);
   }

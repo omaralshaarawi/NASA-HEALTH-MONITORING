@@ -10,7 +10,11 @@ export const routes: Routes = [
     data: { hero: true },
     loadComponent: () => import('./pages/home-page/home-page.component').then((m) => m.HomePageComponent),
   },
-  { path: 'health', title: 'Health', data: { eyebrow: 'Body dashboard' }, loadComponent: placeholder },
+  {
+    path: 'health',
+    title: 'Health',
+    loadComponent: () => import('./pages/health-page/health-page.component').then((m) => m.HealthPageComponent),
+  },
   { path: 'analysis', pathMatch: 'full', redirectTo: 'analysis/readings' },
   {
     path: 'analysis/readings',

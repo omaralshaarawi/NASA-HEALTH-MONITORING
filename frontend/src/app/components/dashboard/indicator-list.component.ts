@@ -1,78 +1,128 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
-import { SparklineComponent } from '../planner/sparkline/sparkline.component';
-import { REGION_LABELS, statusClass } from '../planner/planner-labels';
 import { AssessmentResponse, IndicatorAssessment, IndicatorId, RegionId } from '../../models/contract';
+import { REGION_LABELS } from '../planner/planner-labels';
+import { SparklineComponent } from '../planner/sparkline/sparkline.component';
 
+// One glass card per indicator: today's value, its status and reasons exactly as the engine
+// gave them, the 14-day trend, and a way into the 0 g measurement guide.
 @Component({
   selector: 'app-indicator-list',
   imports: [SparklineComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'block' },
+  styles: `
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+      gap: 0.75rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .vital {
+      display: flex;
+      flex-direction: column;
+      min-height: 15.5rem;
+      padding: 1rem 1.125rem 0.875rem;
+    }
+    .label {
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      line-height: 1.3;
+      text-transform: uppercase;
+      color: var(--color-ink);
+    }
+    .value {
+      margin-top: 1rem;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--color-ink);
+    }
+    .value .unit { margin-left: 0.3125rem; font-size: 0.8125rem; }
+    .reasons {
+      margin: 0.625rem 0 0;
+      font-size: 0.75rem;
+      line-height: 1.45;
+      color: var(--color-ink-dim);
+    }
+    .again {
+      margin-top: 0.375rem;
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-warn);
+    }
+    .guide {
+      align-self: flex-start;
+      margin-top: 0.625rem;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--color-ink-mute);
+      font: inherit;
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-decoration-color: var(--color-line-strong);
+      text-underline-offset: 0.25rem;
+      cursor: pointer;
+    }
+    .guide:hover { color: var(--color-signal); }
+    .green { color: var(--color-ok); }
+    .yellow { color: var(--color-warn); }
+    .red { color: var(--color-crit); }
+  `,
   template: `
-    <section aria-labelledby="indicator-title">
-      <div class="flex flex-wrap items-baseline justify-between gap-3">
-        <div>
-          <div class="eyebrow">Assessment detail</div>
-          <h2 id="indicator-title" class="display m-0 mt-1 text-2xl text-ink">Today's indicators</h2>
-        </div>
-        <span class="eyebrow">Tap a reading for its measurement guide</span>
-      </div>
-      <div class="mt-4 grid gap-4 xl:grid-cols-2">
-        @for (region of visibleRegions(); track region) {
-          <section class="panel p-4" [attr.aria-label]="regionLabel(region) + ' indicators'">
-            <h3 class="eyebrow m-0">{{ regionLabel(region) }}</h3>
-            <ul class="m-0 mt-3 grid list-none gap-2 p-0 sm:grid-cols-2">
-              @for (indicator of inRegion(region); track indicator.id) {
-                <li>
-                  <button type="button" class="w-full rounded border border-line bg-hull p-3 text-left hover:border-signal" (click)="indicatorSelected.emit(indicator.id)">
-                    <span class="flex items-start justify-between gap-2">
-                      <span class="min-w-0">
-                        <span class="block text-sm text-ink-dim">{{ indicator.label }}</span>
-                        <span class="num mt-1 block text-xl text-ink">
-                          {{ indicator.value ?? '—' }}<span class="unit ml-1">{{ indicator.value !== null ? indicator.unit : '' }}</span>
-                        </span>
-                      </span>
-                      <span [class]="statusClass(indicator.status)">{{ indicator.status }}</span>
-                    </span>
-                    @if (indicator.reasons.length) {
-                      <span class="mt-2 block text-xs leading-5 text-ink-dim">{{ indicator.reasons.join(' · ') }}</span>
-                    }
-                    @if (indicator.remeasure) {
-                      <span class="mt-2 block text-xs text-signal">Re-measure to confirm</span>
-                    }
-                    @if (hasTrend(indicator)) {
-                      <app-sparkline class="mt-3 h-8 text-signal" [values]="indicator.trend" [baseline]="indicator.anchor?.mean ?? null"
-                                     [label]="indicator.label + ' trend'" />
-                    }
-                  </button>
-                </li>
-              }
-            </ul>
-          </section>
-        }
-      </div>
-    </section>
+    <ul class="grid-cards">
+      @for (indicator of visible(); track indicator.id) {
+        <li class="panel vital">
+          <div class="eyebrow">{{ regionLabels[indicator.region] }}</div>
+          <div class="label mt-1">{{ indicator.label }}</div>
+
+          <div class="num value">
+            {{ indicator.value ?? '—' }}@if (indicator.value !== null) {<span class="unit">{{ indicator.unit }}</span>}
+          </div>
+          <div class="mt-3">
+            <span [class]="'status status-pill status-' + indicator.status.toLowerCase()">{{ indicator.status }}</span>
+          </div>
+
+          @if (indicator.reasons.length) {
+            <p class="reasons">{{ indicator.reasons.join(' · ') }}</p>
+          }
+          @if (indicator.remeasure) {
+            <div class="again">Re-measure to confirm</div>
+          }
+
+          <div class="mt-auto pt-3">
+            @if (hasTrend(indicator)) {
+              <app-sparkline
+                [class]="'h-9 ' + indicator.status.toLowerCase()"
+                [values]="indicator.trend"
+                [baseline]="indicator.anchor?.mean ?? null"
+                [label]="indicator.label + ', last ' + indicator.trend.length + ' days'"
+              />
+            }
+          </div>
+          <button type="button" class="guide" (click)="indicatorSelected.emit(indicator.id)">How to measure in 0 g</button>
+        </li>
+      }
+    </ul>
   `,
 })
 export class IndicatorListComponent {
   readonly assessment = input.required<AssessmentResponse>();
   readonly onlyRegion = input<RegionId | null>(null);
   readonly indicatorSelected = output<IndicatorId>();
-  protected readonly regionIds: RegionId[] = ['HEAD_NEURO', 'CHEST_CARDIO', 'SPINE_BONE', 'SYSTEMIC_IMMUNE_METABOLIC'];
 
-  protected visibleRegions(): RegionId[] {
-    return this.onlyRegion() ? [this.onlyRegion() as RegionId] : this.regionIds;
-  }
+  protected readonly regionLabels = REGION_LABELS;
 
-  protected regionLabel(region: RegionId): string {
-    return REGION_LABELS[region];
-  }
-
-  protected inRegion(region: RegionId): IndicatorAssessment[] {
-    return this.assessment().indicators.filter((indicator) => indicator.region === region);
-  }
-
-  protected statusClass = statusClass;
+  protected readonly visible = computed(() => {
+    const region = this.onlyRegion();
+    const all = this.assessment().indicators;
+    return region ? all.filter((indicator) => indicator.region === region) : all;
+  });
 
   protected hasTrend(indicator: IndicatorAssessment): boolean {
     return indicator.trend.some((value) => value !== null);

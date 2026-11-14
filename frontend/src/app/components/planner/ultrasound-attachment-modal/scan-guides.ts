@@ -1,7 +1,7 @@
-import { DailyMeasurementAndCompliance } from '../../../models/contract';
+import { AttachmentKind, AttachmentRef } from '../../../models-local/attachments';
 
-export type Attachment = NonNullable<DailyMeasurementAndCompliance['attachments']>[number];
-export type ScanKind = Attachment['kind'];
+export type Attachment = AttachmentRef;
+export type ScanKind = AttachmentKind;
 
 export interface ScanGuide {
   kind: ScanKind;

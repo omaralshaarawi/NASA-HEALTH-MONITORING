@@ -3,7 +3,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, Observable, Subject, catchError, forkJoin, map, of, switchMap, tap } from 'rxjs';
 
 import { MOCK_ASSESSMENTS, MOCK_PLANS } from '../mocks/mock-data';
-import { AssessmentResponse, CountermeasurePlan, EnvironmentProfile, Status } from '../models/contract';
+import { AttachmentRef } from '../models-local/attachments';
+import {
+  AssessmentResponse,
+  CountermeasurePlan,
+  DailyMeasurementAndCompliance,
+  EnvironmentProfile,
+  Status,
+} from '../models/contract';
 import { ApiService } from './api.service';
 import { CREW, CrewMember } from './crew';
 
@@ -30,10 +37,13 @@ export class MissionStore {
   private readonly overall = signal<Record<string, Status>>({});
   // a habitat picked on the Mission page; null means the crew member's own
   private readonly habitat = signal<Habitat | null>(null);
+  // scans captured in this session; they travel to the backend with the next readings
+  private readonly capturedScans = signal<Record<string, AttachmentRef[]>>({});
 
   // null until the first answer arrives, and whenever today has no assessment yet
   readonly assessment = computed(() => this.assessments()[this.crewId()] ?? null);
   readonly plan = computed(() => this.plans()[this.crewId()] ?? null);
+  readonly scans = computed(() => this.capturedScans()[this.crewId()] ?? []);
   readonly environments = signal<EnvironmentProfile[]>([]);
   readonly loading = signal(true);
   readonly planLoading = signal(false);
@@ -72,6 +82,21 @@ export class MissionStore {
   refresh(): void {
     this.fetchCrewList();
     this.reload.next();
+  }
+
+  addScan(scan: AttachmentRef): void {
+    const id = this.crewId();
+    this.capturedScans.update((all) => ({ ...all, [id]: [...(all[id] ?? []), scan] }));
+  }
+
+  // Sends one day's readings. The answer is that day's assessment, computed by the backend.
+  logReadings(measurement: DailyMeasurementAndCompliance): Observable<AssessmentResponse> {
+    return this.api.postMeasurement(measurement).pipe(
+      tap((assessment) => {
+        this.assessments.update((all) => ({ ...all, [assessment.astronaut_id]: assessment }));
+        this.refresh();
+      }),
+    );
   }
 
   // overall status of any crew member, for the switcher

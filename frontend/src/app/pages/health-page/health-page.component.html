@@ -1,0 +1,136 @@
+@let a = store.assessment();
+
+<div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+  <app-section-header eyebrow="Body dashboard" heading="Health">
+    Today's readings for Ast. {{ store.member().name }}, grouped by body region. Select a region on the figure to see
+    what it covers and what is driving its status.
+  </app-section-header>
+
+  <div class="flex flex-wrap gap-3">
+    <button type="button" class="btn btn-primary" [disabled]="!a || store.offline()" (click)="openForm()">
+      Log today's readings
+    </button>
+    <button type="button" class="btn" [disabled]="!a" (click)="scanOpen.set(true)">Guided scan capture</button>
+  </div>
+</div>
+
+@if (store.offline()) {
+  <p class="m-0 mt-4 text-sm leading-6 text-ink-dim" role="status">
+    The mission computer cannot be reached, so readings cannot be logged right now. The last bundled data is shown.
+  </p>
+}
+@if (notice()) {
+  <p class="m-0 mt-4 text-sm leading-6 text-signal" role="status">{{ notice() }}</p>
+}
+
+@if (a) {
+  <div class="mt-6 grid items-start gap-4 lg:grid-cols-[minmax(21rem,26rem)_minmax(0,1fr)]">
+    <!-- the body map -->
+    <section class="panel p-5 lg:sticky lg:top-4" aria-labelledby="map-title">
+      <h2 id="map-title" class="display m-0 text-[0.8125rem] text-ink">Crew vitals &amp; body map</h2>
+
+      <app-body-map class="mt-4" [regions]="a.regions" [selected]="region()" (regionSelected)="toggleRegion($event)" />
+
+      <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-4">
+        <span class="display text-[0.8125rem] text-ink">Ast. {{ store.member().name }}</span>
+        <span class="eyebrow">Overall status</span>
+        <app-status-chip [status]="a.overall" />
+      </div>
+      <dl class="m-0 mt-4 grid grid-cols-3 gap-3 text-center">
+        <div>
+          <dd class="num m-0 text-xl text-ink">{{ a.compliance.streak_days }}</dd>
+          <dt class="eyebrow mt-1">Routine streak, days</dt>
+        </div>
+        <div>
+          <dd class="num m-0 text-xl text-ink">{{ a.compliance.bone_low_days }}</dd>
+          <dt class="eyebrow mt-1">Low exercise days</dt>
+        </div>
+        <div>
+          <dd class="num m-0 text-xl text-ink">{{ a.compliance.nutrition_low_days }}</dd>
+          <dt class="eyebrow mt-1">Low ration days</dt>
+        </div>
+      </dl>
+    </section>
+
+    <div class="min-w-0 space-y-4">
+      <!-- the selected region, or a hint to pick one -->
+      @if (region(); as id) {
+        <section class="panel p-5" aria-live="polite" aria-labelledby="region-title">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <div class="eyebrow">Selected region</div>
+              <h2 id="region-title" class="display m-0 mt-1 text-xl text-ink">{{ regionLabels[id] }}</h2>
+            </div>
+            <div class="flex items-center gap-3">
+              <app-status-chip [status]="a.regions[id].status" />
+              <button type="button" class="btn" (click)="region.set(null)">Show all regions</button>
+            </div>
+          </div>
+          <p class="m-0 mt-3 max-w-3xl text-sm leading-6 text-ink-dim">{{ regionNotes[id] }}</p>
+          <div class="mt-4 flex flex-wrap items-center gap-2">
+            <span class="eyebrow">Driving this status</span>
+            @for (driver of drivers(); track driver) {
+              <span class="chip">{{ driver }}</span>
+            } @empty {
+              <span class="text-sm text-ink-dim">Nothing: every reading in this region is inside its limits.</span>
+            }
+          </div>
+        </section>
+      } @else {
+        <div class="flex flex-wrap items-baseline justify-between gap-3 px-1">
+          <h2 class="display m-0 text-[0.8125rem] text-ink">All readings · day {{ a.mission_day }}</h2>
+          <span class="eyebrow">{{ a.indicators.length }} indicators</span>
+        </div>
+      }
+
+      <app-indicator-list [assessment]="a" [onlyRegion]="region()" (indicatorSelected)="guideFor.set($event)" />
+
+      <!-- scans captured today -->
+      <section class="panel px-5 py-4" aria-labelledby="scans-title">
+        <div class="min-w-0">
+          <h2 id="scans-title" class="display m-0 text-[0.8125rem] text-ink">Scans</h2>
+          @if (store.scans().length) {
+            <ul class="m-0 mt-2 flex list-none flex-wrap gap-2 p-0">
+              @for (scan of store.scans(); track scan.ref) {
+                <li class="chip">{{ scanName(scan.kind) }} · simulated · attached</li>
+              }
+            </ul>
+            <p class="m-0 mt-2 text-xs leading-5 text-ink-mute">Sent to the flight surgeon with today's readings. Images are stored, never interpreted.</p>
+          } @else {
+            <p class="m-0 mt-1 text-sm leading-6 text-ink-dim">
+              No scans yet today. Use Guided scan capture for an eye or heart ultrasound, or an ECG.
+            </p>
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+
+  @if (guideFor(); as indicatorId) {
+    <app-measurement-guide-modal [indicatorId]="indicatorId" [assessment]="a" (closed)="guideFor.set(null)" />
+  }
+  @if (scanOpen()) {
+    <app-ultrasound-attachment-modal [assessment]="a" (attached)="store.addScan($event)" (closed)="scanOpen.set(false)" />
+  }
+  @if (formOpen()) {
+    <app-measurement-form-modal
+      [assessment]="a"
+      [nextMissionDay]="a.mission_day"
+      [environment]="a.environment"
+      [scans]="store.scans()"
+      [submitting]="saving()"
+      [error]="formError()"
+      (closed)="formOpen.set(false)"
+      (saveMeasurement)="save($event)"
+    />
+  }
+} @else {
+  <section class="panel mt-6 p-6" role="status">
+    <div class="display text-lg text-ink">{{ store.loading() ? 'Loading crew data…' : "Awaiting today's readings" }}</div>
+    @if (!store.loading()) {
+      <p class="m-0 mt-2 text-sm leading-6 text-ink-dim">
+        There is no assessment for today yet. It appears here once today's readings have been logged.
+      </p>
+    }
+  </section>
+}
