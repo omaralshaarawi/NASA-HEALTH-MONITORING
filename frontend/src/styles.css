@@ -162,9 +162,11 @@ body {
     color: var(--color-void);
   }
   .btn-lg {
-    min-height: 3rem;
+    min-height: 2.75rem;
     padding: 0 1.5rem;
-    font-size: 0.8125rem;
+    border-radius: 0.75rem;
+    font-size: 0.78125rem;
+    font-weight: 500;
   }
 
   .chip {

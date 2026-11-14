@@ -17,14 +17,21 @@ import { TopNavComponent } from './top-nav.component';
     .backdrop {
       position: fixed;
       inset: 0;
-      background: var(--color-void) url('/assets/space-bg.webp') 62% center / cover no-repeat;
+      /* sized from the window width so the planet sits right of centre, as in the design */
+      background: var(--color-void) url('/assets/space-bg.webp') 60% top / max(105vw, 140vh) auto no-repeat;
     }
     .backdrop::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgb(5 7 10 / 0.45), rgb(5 7 10 / 0.15) 35%, rgb(5 7 10 / 0.7));
+      background: linear-gradient(180deg, rgb(5 7 10 / 0.45), rgb(5 7 10 / 0.15) 35%, rgb(5 7 10 / 0.6) 78%, var(--color-void));
       transition: background-color 300ms;
+    }
+    /* on a phone the text runs across the planet, so it is dimmed more */
+    @media (max-width: 63.99rem) {
+      .backdrop::after {
+        background: linear-gradient(180deg, rgb(5 7 10 / 0.6), rgb(5 7 10 / 0.55) 40%, var(--color-void) 85%);
+      }
     }
     /* inner pages keep the planet but push it back so text and tables stay readable */
     .backdrop.quiet::after { background: rgb(5 7 10 / 0.74); }
@@ -42,7 +49,7 @@ import { TopNavComponent } from './top-nav.component';
   template: `
     <div class="backdrop" [class.quiet]="!hero()" aria-hidden="true"></div>
     <a class="skip btn btn-primary" href="#main">Skip to content</a>
-    <div class="relative mx-auto flex min-h-screen max-w-[92rem] flex-col px-4 sm:px-6 lg:px-10">
+    <div class="relative mx-auto flex min-h-screen max-w-[92rem] flex-col px-4 sm:px-6">
       <app-top-nav />
       <app-alert-strip />
       @if (!hero()) {

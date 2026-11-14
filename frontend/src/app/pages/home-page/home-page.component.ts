@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { REGION_LABELS, exerciseTitle } from '../../components/planner/planner-labels';
+import { exerciseTitle } from '../../components/planner/planner-labels';
 import { EmergencyService } from '../../core/emergency.service';
 import { MissionStore } from '../../core/mission-store.service';
 import { RegionId } from '../../models/contract';
@@ -20,7 +20,13 @@ export class HomePageComponent {
   protected readonly emergency = inject(EmergencyService);
 
   protected readonly regionIds: RegionId[] = ['HEAD_NEURO', 'CHEST_CARDIO', 'SPINE_BONE', 'SYSTEMIC_IMMUNE_METABOLIC'];
-  protected readonly regionLabels = REGION_LABELS;
+  // one word each: the card is narrow
+  protected readonly regionNames: Record<RegionId, string> = {
+    HEAD_NEURO: 'Head',
+    CHEST_CARDIO: 'Chest',
+    SPINE_BONE: 'Spine',
+    SYSTEMIC_IMMUNE_METABOLIC: 'Immune',
+  };
   protected readonly statusWord = STATUS_WORD;
   protected readonly exerciseTitle = exerciseTitle;
 

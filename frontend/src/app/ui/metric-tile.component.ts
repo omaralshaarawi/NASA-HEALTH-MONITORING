@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, booleanAttribute, input } from '@angular/core';
 
-// One number with its unit and a caption underneath.
+// One number with its unit and a caption underneath. An icon can be passed as content.
 @Component({
   selector: 'app-metric-tile',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block' },
   template: `
-    <div class="num text-[1.75rem] leading-none text-ink">
+    <ng-content />
+    <div class="num leading-none text-ink" [class]="compact() ? 'text-[1.375rem]' : 'text-[1.75rem]'">
       {{ value() }}@if (unit()) {<span class="unit ml-1">{{ unit() }}</span>}
     </div>
     <div class="eyebrow mt-2">{{ label() }}</div>
@@ -20,4 +21,5 @@ export class MetricTileComponent {
   readonly unit = input('');
   readonly label = input.required<string>();
   readonly note = input('');
+  readonly compact = input(false, { transform: booleanAttribute });
 }

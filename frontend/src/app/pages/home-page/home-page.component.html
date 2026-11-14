@@ -2,40 +2,39 @@
 @let p = store.plan();
 
 <section class="hero" aria-labelledby="hero-title">
-  <!-- decoration from the design: not a control -->
-  <div class="rail" aria-hidden="true">
-    <span class="rail-line"></span>
-    <span class="rail-tick"></span>
-    <span class="rail-tick"></span>
-    <span class="rail-play">
+  <div class="lead">
+    <!-- the slider and play button are decoration from the design, not controls -->
+    <span class="rail-line" aria-hidden="true"><i></i><i></i></span>
+
+    <div class="intro">
+      <p class="system" role="status">
+        <span>System status</span>
+        @if (a) {
+          <span [class]="'status status-' + a.overall.toLowerCase()">{{ a.overall }} {{ statusWord[a.overall] }}</span>
+        } @else {
+          <span class="text-ink-dim">{{ store.loading() ? 'Loading' : "Awaiting today's readings" }}</span>
+        }
+      </p>
+
+      <h1 id="hero-title" class="wide title">
+        NASA<br />
+        Health care<br />
+        <span class="text-signal">Monitoring.</span>
+      </h1>
+      <p class="lede">Crew vitals, daily analysis and emergency triage for missions far from Earth.</p>
+    </div>
+
+    <span class="rail-play" aria-hidden="true">
       <svg viewBox="0 0 12 12" width="11" height="11" fill="currentColor"><path d="M3 1.5v9l7.5-4.5Z" /></svg>
     </span>
-  </div>
 
-  <div class="copy">
-    <p class="system" role="status">
-      <span>System status</span>
-      @if (a) {
-        <span [class]="'status status-' + a.overall.toLowerCase()">{{ a.overall }} {{ statusWord[a.overall] }}</span>
-      } @else {
-        <span class="text-ink-dim">{{ store.loading() ? 'Loading' : "Awaiting today's readings" }}</span>
-      }
-    </p>
-
-    <h1 id="hero-title" class="wide title">
-      NASA<br />
-      Health care<br />
-      <span class="text-signal">Monitoring.</span>
-    </h1>
-    <p class="lede">Crew vitals, daily analysis and emergency triage for missions far from Earth.</p>
-
-    <div class="mt-7 flex flex-wrap gap-3">
+    <div class="cta">
       <a routerLink="/health" class="btn btn-primary btn-lg">Open health</a>
       <a routerLink="/analysis" class="btn btn-lg">Daily analysis</a>
     </div>
 
     @if (a && emergency.active()) {
-      <div class="emergency" role="group" aria-labelledby="home-emergency">
+      <div class="notice emergency" role="group" aria-labelledby="home-emergency">
         <div id="home-emergency" class="status status-red">Red · triage recommended</div>
         <p class="m-0 mt-2 text-sm leading-6 text-ink">
           A reading for Ast. {{ store.member().name }} is past its red limit. Nothing is dialled automatically: follow
@@ -44,7 +43,7 @@
         <button type="button" class="btn btn-danger btn-lg mt-3" (click)="emergency.open()">{{ emergency.label() }}</button>
       </div>
     } @else if (a && a.overall === 'YELLOW') {
-      <p class="caution">
+      <p class="notice caution">
         <span class="status status-yellow">Caution</span>
         Some readings have moved away from this crew member's own normal.
         <a routerLink="/analysis/readings" class="text-signal">See today's analysis</a>
@@ -54,32 +53,36 @@
 
   @if (a) {
     <div class="crew-tag">
-      <div class="display text-sm text-ink">Crew: Ast. {{ store.member().name }}</div>
+      <div class="display text-[0.8125rem] text-ink">Crew: Ast. {{ store.member().name }}</div>
       <div class="eyebrow mt-1">Mission day {{ a.mission_day }} · {{ a.environment.gravity_g }} g</div>
     </div>
 
     <aside class="stats" aria-label="Today at a glance">
-      <app-metric-tile [value]="measured()" label="Readings today" />
-      <app-metric-tile [value]="a.mission_day" label="Mission day" />
+      <app-metric-tile compact [value]="a.mission_day" label="Mission day">
+        <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="8" cy="8" r="2.5" /><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M12.6 3.4l-1.4 1.4M4.8 11.2l-1.4 1.4" />
+        </svg>
+      </app-metric-tile>
       @if (delay(); as d) {
-        <app-metric-tile [value]="d.value" [unit]="d.unit" [label]="d.unit ? 'One-way delay' : 'Link to Earth'" />
+        <app-metric-tile compact [value]="d.value" [unit]="d.unit" [label]="d.unit ? 'One-way delay' : 'Link to Earth'">
+          <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="11.5" r="1.25" /><path d="M5 8.8a4.2 4.2 0 0 1 6 0M2.6 6.2a7.6 7.6 0 0 1 10.8 0" />
+          </svg>
+        </app-metric-tile>
       }
       @if (p) {
         <app-metric-tile
+          compact
           [value]="'+' + p.resources.totals.extra_kcal"
           unit="kcal"
           label="Life-support load"
           [note]="p.resources.label"
-        />
-      }
-      <button type="button" class="explore" (click)="overview.scrollIntoView()">
-        <span>Scroll to explore</span>
-        <span class="explore-arrow" aria-hidden="true">
-          <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M6 1.5v9M2.5 7 6 10.5 9.5 7" stroke-linecap="round" stroke-linejoin="round" />
+        >
+          <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M8 1.8c.4 2.4 3.6 4 3.6 7.4A3.6 3.6 0 0 1 8 12.8a3.6 3.6 0 0 1-3.6-3.6c0-1.5.8-2.5 1.6-3.3.3 1 .9 1.5 1.4 1.7C7 5.6 7.3 3.6 8 1.8Z" />
           </svg>
-        </span>
-      </button>
+        </app-metric-tile>
+      }
     </aside>
   }
 </section>
@@ -102,7 +105,7 @@
         <ul class="regions">
           @for (id of regionIds; track id) {
             <li [class]="'status status-' + a.regions[id].status.toLowerCase()">
-              {{ regionLabels[id] }}<span class="sr-only"> {{ a.regions[id].status }}</span>
+              {{ regionNames[id] }}<span class="sr-only"> {{ a.regions[id].status }}</span>
             </li>
           }
         </ul>
@@ -134,6 +137,11 @@
         <div class="num text-lg text-ink">+{{ p.resources.totals.extra_kcal }} <span class="unit">kcal</span></div>
         <div class="eyebrow">{{ p.resources.label }}</div>
       </div>
+      <span class="go" aria-hidden="true">
+        <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.25">
+          <path d="M3.5 8.5 8.5 3.5M4.5 3.5h4v4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
     } @else {
       <div class="card-foot">
         <div class="eyebrow">{{ store.planLoading() || store.loading() ? "Preparing today's plan" : "Awaiting today's readings" }}</div>
@@ -168,6 +176,11 @@
         <div class="eyebrow">Awaiting today's readings</div>
       }
     </div>
+    <span class="go" aria-hidden="true">
+      <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.25">
+        <path d="M3.5 8.5 8.5 3.5M4.5 3.5h4v4" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
   </a>
 
   <a routerLink="/report" class="panel card">
@@ -192,4 +205,13 @@
       </li>
     </ol>
   </a>
+
+  <button type="button" class="explore" (click)="overview.scrollIntoView()">
+    <span>Scroll to explore</span>
+    <span class="explore-arrow" aria-hidden="true">
+      <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 1.5v9M2.5 7 6 10.5 9.5 7" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+  </button>
 </section>
