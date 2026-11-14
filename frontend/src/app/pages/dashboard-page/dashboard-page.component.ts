@@ -121,6 +121,7 @@ export class DashboardPageComponent {
         env: assessment.environment.id,
         distanceKm: assessment.environment.distance_km,
         day: assessment.mission_day,
+        autostart: 1,
       },
     });
   }

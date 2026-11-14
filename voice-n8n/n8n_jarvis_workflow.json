@@ -1,0 +1,387 @@
+{
+  "name": "JARVIS emergency voice operator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "jarvis-start",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "jarvis-start",
+      "name": "Jarvis start",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.BACKEND_URL || 'http://localhost:8080') + '/api/triage/start' }}",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ patient_id: $json.body.patient_id || $json.body.astronaut_id, reporter_id: $json.body.reporter_id, environment_id: $json.body.environment_id, distance_km: $json.body.distance_km }) }}"
+      },
+      "id": "start-triage",
+      "name": "Start triage",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.BACKEND_URL || 'http://localhost:8080') + '/api/triage/protocol' }}",
+        "options": {}
+      },
+      "id": "get-protocol",
+      "name": "Get protocol",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const p = $('Start triage').first().json;            // EmergencyTriagePayload\nconst protocol = $('Get protocol').first().json;\nconst step = protocol.steps.find(s => s.id === p.state.current_step_id);\nconst base = ($env.WEBHOOK_URL || '').replace(/\\/$/, '');\nconst body = JSON.parse(JSON.stringify({\"systemPrompt\": \"You are JARVIS, the Autonomous Deep-Space Medical Emergency Operator. You guide one crew member by voice through a fixed emergency checklist for a crewmate with chest pain or collapse. All data is simulated; this is a decision-support prototype.\\n\\nINCIDENT\\n- Incident id: {{incident_id}}\\n- Patient: {{astronaut_id}}\\n- Link to Earth: {{comm_mode}} (one-way signal delay {{one_way_delay_s}} seconds)\\n- Latest resting heart rate: {{hr_rest}} bpm\\n- Latest systolic blood pressure: {{sbp}} mmHg\\n\\nFIRST THING YOU SAY\\nSay \\\"JARVIS here. I am with you.\\\" and then read this step exactly:\\n\\\"{{current_step_script}}\\\"\\n\\nHOW THE CHECKLIST WORKS\\nThe checklist lives on the ship's computer, not in your memory. You never decide the next step yourself.\\n1. Read the current step's script word for word. Do not shorten it, add to it or skip it.\\n2. Wait for the crew member's answer.\\n   - If the step is a yes/no question, the answer is \\\"yes\\\" or \\\"no\\\".\\n   - For every other step, the answer is \\\"done\\\" when they confirm it is finished.\\n3. Call the tool help_crewmate_step with that answer. It returns the next step: its script, its type and the status.\\n4. Read the returned script word for word, then go back to 2.\\nIf the answer is unclear, or is not yes, no or done, repeat the current script. Never guess an answer.\\nIf the tool returns an error, say \\\"One moment\\\", call it once more with the same answer, and if it fails again tell the crew member to continue with the on-screen checklist.\\n\\nThe checklist covers, in this order of situations: checking responsiveness; raising the alarm; breathing and pulse check; CPR with the microgravity method; attaching the defibrillator and following its shock advice; reassessing every two minutes; securing and monitoring a crewmate who recovers; for a conscious crewmate, stopping activity, checking warning signs, attaching the ECG and opening the onboard cardiac checklist; and finally preparing and sending the packet for the flight surgeon.\\nThe CPR loop repeats until the crewmate recovers or the crew decides to stop. That is expected.\\n\\nTOOLS\\n- help_crewmate_step: call it every time the crew member answers yes, no or done. Pass answer exactly as \\\"yes\\\", \\\"no\\\" or \\\"done\\\". Speak only the script it returns.\\n- alert_nasa_agency: call it when the returned step is the packet step (step id starting with P1 or P2, or status ENDED), or at any moment the crew member asks to stop, or asks to send the report to NASA or the flight surgeon now. Pass a one-sentence summary of what was done, using only facts from this call.\\n  It returns packet_id, delivery, estimated_earth_receipt_iso and one_way_delay_s. Then say: the packet id, whether it was sent live or queued for uplink, and the estimated time Earth receives it. If the link is AUTONOMOUS, say that no live answer will come and the crew continues on its own.\\n- hangUp: call it only after alert_nasa_agency has succeeded and you have read the packet id and the Earth receipt time aloud, and you have told the crew member to keep monitoring their crewmate.\\n\\nHARD RULES\\n- Speak each script verbatim. Calm, short sentences. One instruction at a time.\\n- Never give a diagnosis and never say how serious the condition is.\\n- Never name, choose or dose a medication. Refer the crew to the onboard cardiac checklist.\\n- Never state a number that is not in this prompt, in a script or in a tool result.\\n- The crew can end the protocol at any time. If they ask, stop and call alert_nasa_agency.\\n- Do not chat, do not reassure with promises, do not discuss anything outside this emergency.\\n- This does not replace onboard medical procedures or the flight surgeon.\\n\", \"model\": \"fixie-ai/ultravox\", \"voice\": \"Mark\", \"temperature\": 0.2, \"firstSpeaker\": \"FIRST_SPEAKER_AGENT\", \"maxDuration\": \"1800s\", \"recordingEnabled\": false, \"selectedTools\": [{\"temporaryTool\": {\"modelToolName\": \"help_crewmate_step\", \"description\": \"Record the crew member's answer to the current checklist step and get the next step to read aloud.\", \"dynamicParameters\": [{\"name\": \"answer\", \"location\": \"PARAMETER_LOCATION_BODY\", \"schema\": {\"type\": \"string\", \"enum\": [\"yes\", \"no\", \"done\"], \"description\": \"The crew member's answer to the current step.\"}, \"required\": true}], \"staticParameters\": [{\"name\": \"incident_id\", \"location\": \"PARAMETER_LOCATION_BODY\", \"value\": \"{{incident_id}}\"}], \"http\": {\"baseUrlPattern\": \"{{WEBHOOK_URL}}/webhook/jarvis-help-step\", \"httpMethod\": \"POST\"}}}, {\"temporaryTool\": {\"modelToolName\": \"alert_nasa_agency\", \"description\": \"End the protocol and send or queue the store-and-forward incident packet for the NASA flight surgeon.\", \"dynamicParameters\": [{\"name\": \"summary\", \"location\": \"PARAMETER_LOCATION_BODY\", \"schema\": {\"type\": \"string\", \"description\": \"One sentence on what was done, using only facts from this call.\"}, \"required\": true}], \"staticParameters\": [{\"name\": \"incident_id\", \"location\": \"PARAMETER_LOCATION_BODY\", \"value\": \"{{incident_id}}\"}], \"http\": {\"baseUrlPattern\": \"{{WEBHOOK_URL}}/webhook/jarvis-alert-nasa\", \"httpMethod\": \"POST\"}}}, {\"toolName\": \"hangUp\"}]}));\nconst v = p.patient_snapshot.latest_vitals || {};\nconst values = {\n  incident_id: p.incident_id,\n  astronaut_id: p.patient_id,\n  comm_mode: p.environment.comm_mode,\n  one_way_delay_s: p.environment.one_way_delay_s,\n  hr_rest: v.hr_rest_bpm ?? 'not measured',\n  sbp: v.sbp_mmHg ?? 'not measured',\n  current_step_script: step.script,\n  WEBHOOK_URL: base,\n};\nconst fill = (text) => text.replace(/\\{\\{(\\w+)\\}\\}/g, (m, k) => (k in values ? String(values[k]) : m));\nbody.systemPrompt = fill(body.systemPrompt);\nfor (const t of body.selectedTools) {\n  if (!t.temporaryTool) continue;\n  t.temporaryTool.http.baseUrlPattern = fill(t.temporaryTool.http.baseUrlPattern);\n  for (const sp of t.temporaryTool.staticParameters) sp.value = fill(sp.value);\n}\nreturn [{ json: { body, payload: p } }];"
+      },
+      "id": "build-ultravox-call",
+      "name": "Build Ultravox call",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ultravox.ai/api/calls",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.ULTRAVOX_API_KEY }}"
+            }
+          ]
+        }
+      },
+      "id": "create-ultravox-call",
+      "name": "Create Ultravox call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ joinUrl: $json.joinUrl, callId: $json.callId, incident_id: $('Build Ultravox call').first().json.payload.incident_id, payload: $('Build Ultravox call').first().json.payload }) }}",
+        "options": {}
+      },
+      "id": "return-join-url",
+      "name": "Return join url",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1100,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "jarvis-help-step",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "jarvis-help-step",
+      "name": "Jarvis help step",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.BACKEND_URL || 'http://localhost:8080') + '/api/triage/step' }}",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ incident_id: $json.body.incident_id, answer: $json.body.answer }) }}"
+      },
+      "id": "triage-step",
+      "name": "Triage step",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.BACKEND_URL || 'http://localhost:8080') + '/api/triage/protocol' }}",
+        "options": {}
+      },
+      "id": "get-protocol-step",
+      "name": "Get protocol (step)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const p = $('Triage step').first().json;\nconst protocol = $('Get protocol (step)').first().json;\nconst step = protocol.steps.find(s => s.id === p.state.current_step_id) || {};\nreturn [{ json: {\n  incident_id: p.incident_id,\n  status: p.state.status,\n  current_step_id: p.state.current_step_id,\n  current_step: { id: step.id, type: step.type, script: step.script, checklist_label: step.checklist_label },\n  store_and_forward: p.store_and_forward ?? null,\n} }];"
+      },
+      "id": "next-step-for-jarvis",
+      "name": "Next step for Jarvis",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "return-next-step",
+      "name": "Return next step",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "jarvis-alert-nasa",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "jarvis-alert-nasa",
+      "name": "Jarvis alert NASA",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.BACKEND_URL || 'http://localhost:8080') + '/api/triage/end' }}",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ incident_id: $json.body.incident_id, reason: $json.body.summary }) }}"
+      },
+      "id": "end-triage",
+      "name": "End triage",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const p = $json;\nconst s = p.store_and_forward || {};\nreturn [{ json: {\n  incident_id: p.incident_id,\n  status: p.state.status,\n  store_and_forward: {\n    packet_id: s.packet_id,\n    delivery: s.delivery,\n    estimated_earth_receipt_iso: s.estimated_earth_receipt_iso,\n    one_way_delay_s: p.environment.one_way_delay_s,\n  },\n} }];"
+      },
+      "id": "packet-for-jarvis",
+      "name": "Packet for Jarvis",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "return-packet",
+      "name": "Return packet",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        480
+      ]
+    }
+  ],
+  "connections": {
+    "Jarvis start": {
+      "main": [
+        [
+          {
+            "node": "Start triage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start triage": {
+      "main": [
+        [
+          {
+            "node": "Get protocol",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get protocol": {
+      "main": [
+        [
+          {
+            "node": "Build Ultravox call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Ultravox call": {
+      "main": [
+        [
+          {
+            "node": "Create Ultravox call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Ultravox call": {
+      "main": [
+        [
+          {
+            "node": "Return join url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jarvis help step": {
+      "main": [
+        [
+          {
+            "node": "Triage step",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Triage step": {
+      "main": [
+        [
+          {
+            "node": "Get protocol (step)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get protocol (step)": {
+      "main": [
+        [
+          {
+            "node": "Next step for Jarvis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Next step for Jarvis": {
+      "main": [
+        [
+          {
+            "node": "Return next step",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jarvis alert NASA": {
+      "main": [
+        [
+          {
+            "node": "End triage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "End triage": {
+      "main": [
+        [
+          {
+            "node": "Packet for Jarvis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Packet for Jarvis": {
+      "main": [
+        [
+          {
+            "node": "Return packet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

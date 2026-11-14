@@ -1,11 +1,12 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { EMPTY, Subscription, catchError, interval, map, of, switchMap } from 'rxjs';
 
 import { TopBarComponent } from '../../components/dashboard/top-bar.component';
 import { CREW } from '../../core/crew';
 import { ApiService, TriageAnswer, TriageIncident, TriageProtocol } from '../../core/api.service';
+import { VoiceOperatorService } from '../../core/voice-operator.service';
 import { MOCK_ASSESSMENTS } from '../../mocks/mock-data';
 import { AssessmentResponse, EnvironmentProfile } from '../../models/contract';
 import protocolJson from '../../models/triage_protocol.json';
@@ -22,6 +23,8 @@ export class TriagePageComponent {
   private readonly api = inject(ApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  protected readonly voice = inject(VoiceOperatorService);
+  private incidentWatch: Subscription | null = null;
 
   protected readonly crew = CREW;
   protected readonly protocol = signal<TriageProtocol>(BUNDLED_PROTOCOL);
@@ -43,11 +46,27 @@ export class TriagePageComponent {
     return incident ? this.protocol().steps.find((step) => step.id === incident.state.current_step_id) ?? null : null;
   });
   protected readonly ended = computed(() => this.incident()?.state.status === 'ENDED');
+  protected readonly callLive = computed(() => ['connecting', 'listening', 'thinking', 'speaking'].includes(this.voice.status()));
+  protected readonly callLabel = computed(() => {
+    switch (this.voice.status()) {
+      case 'connecting': return 'Connecting…';
+      case 'listening': return this.voice.muted() ? 'Microphone muted' : 'Listening';
+      case 'thinking': return 'Checking the protocol';
+      case 'speaking': return 'Speaking';
+      case 'failed': return 'Not connected';
+      default: return 'Call ended';
+    }
+  });
   protected readonly environment = computed(
     () => this.environments().find((environment) => environment.id === this.environmentId()) ?? this.assessment()?.environment ?? null,
   );
 
   constructor() {
+    inject(DestroyRef).onDestroy(() => {
+      this.incidentWatch?.unsubscribe();
+      void this.voice.hangUp();
+    });
+
     const query = this.route.snapshot.queryParamMap;
     const patient = query.get('patient');
     if (patient && this.crew.some((member) => member.id === patient)) this.patientId.set(patient);
@@ -99,6 +118,25 @@ export class TriagePageComponent {
       this.useLocalIncident();
       return;
     }
+    // JARVIS opens the incident and joins by voice; if that fails the checklist still starts on screen
+    this.voice.start({
+      astronaut_id: this.patientId(),
+      environment_id: this.environmentId(),
+      distance_km: this.distanceKm(),
+    }).then(
+      (incidentId) => this.followVoiceIncident(incidentId),
+      () => {
+        this.notice.set('Voice operator could not be reached · continue with the on-screen checklist.');
+        this.startOnScreen();
+      },
+    );
+  }
+
+  protected hangUp(): void {
+    void this.voice.hangUp();
+  }
+
+  private startOnScreen(): void {
     this.api.startTriage({
       patient_id: this.patientId(),
       reporter_id: this.patientId(),
@@ -234,6 +272,39 @@ export class TriagePageComponent {
       this.missionDay.set(assessment.mission_day);
       this.loading.set(false);
       if (incidentId) this.loadExistingIncident(incidentId);
+      else if (this.route.snapshot.queryParamMap.has('autostart')) this.start();
+    });
+  }
+
+  // The call's incident lives on the backend; show it and keep the screen in step with the voice.
+  private followVoiceIncident(incidentId: string): void {
+    this.api.triageIncident(incidentId).subscribe({
+      next: (incident) => {
+        this.setIncident(incident);
+        this.busy.set(false);
+        this.writeIncidentToUrl(incident.incident_id);
+        this.watchIncident(incident.incident_id);
+      },
+      error: () => {
+        this.notice.set('JARVIS is on the call, but its incident is on another backend, so this screen runs its own checklist.');
+        this.startOnScreen();
+      },
+    });
+  }
+
+  private watchIncident(incidentId: string): void {
+    this.incidentWatch?.unsubscribe();
+    this.incidentWatch = interval(2000).pipe(
+      switchMap(() => this.api.triageIncident(incidentId).pipe(catchError(() => EMPTY))),
+    ).subscribe((latest) => {
+      const shown = this.incident();
+      if (!shown || shown.incident_id !== incidentId || this.offline()) {
+        this.incidentWatch?.unsubscribe();
+        return;
+      }
+      const moved = latest.state.step_log.length !== shown.state.step_log.length || latest.state.status !== shown.state.status;
+      if (moved && !this.busy()) this.setIncident(latest);
+      if (latest.state.status === 'ENDED') this.incidentWatch?.unsubscribe();
     });
   }
 
@@ -400,7 +471,7 @@ export class TriagePageComponent {
   private writeIncidentToUrl(id: string): void {
     void this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { incident: id },
+      queryParams: { incident: id, autostart: null },
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
