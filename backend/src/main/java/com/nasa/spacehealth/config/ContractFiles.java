@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 
-import java.io.File;
+import java.io.InputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
@@ -16,6 +16,9 @@ import java.util.List;
 // Reads the shared files in /contract (rules, seed data, protocol, schemas).
 public class ContractFiles {
 
+    private static final String CLASSPATH_DIR = "contract/";
+
+    // null when the files are read from the jar's classpath instead of a folder on disk.
     private final Path dir;
     private final ObjectMapper mapper;
 
@@ -32,8 +35,12 @@ public class ContractFiles {
                 return p;
             }
         }
+        // Deployed builds may ship only the jar, so the build also bundles the contract inside it.
+        if (ContractFiles.class.getClassLoader().getResource(CLASSPATH_DIR + "rules.json") != null) {
+            return null;
+        }
         throw new IllegalStateException("Could not find the contract folder (looked for rules.json in '"
-                + configuredDir + "', '../contract' and 'contract'). Set contract.dir or CONTRACT_DIR.");
+                + configuredDir + "', '../contract', 'contract' and the classpath). Set contract.dir or CONTRACT_DIR.");
     }
 
     public Path dir() {
@@ -58,9 +65,16 @@ public class ContractFiles {
     }
 
     private <T> T parse(String name, ObjectReader reader) {
-        File file = dir.resolve(name).toFile();
         try {
-            return reader.readValue(file);
+            if (dir == null) {
+                try (InputStream in = ContractFiles.class.getClassLoader().getResourceAsStream(CLASSPATH_DIR + name)) {
+                    if (in == null) {
+                        throw new IOException("not found on the classpath");
+                    }
+                    return reader.readValue(in);
+                }
+            }
+            return reader.readValue(dir.resolve(name).toFile());
         } catch (IOException e) {
             throw new UncheckedIOException("Cannot read " + name + ": " + e.getMessage(), e);
         }
