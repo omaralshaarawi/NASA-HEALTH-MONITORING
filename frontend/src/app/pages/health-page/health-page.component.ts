@@ -11,6 +11,7 @@ import { apiErrorMessage } from '../../core/api.service';
 import { MissionStore } from '../../core/mission-store.service';
 import { AttachmentKind } from '../../models-local/attachments';
 import { DailyMeasurementAndCompliance, IndicatorId, RegionId } from '../../models/contract';
+import { AwaitingPanelComponent } from '../../ui/awaiting-panel.component';
 import { SectionHeaderComponent } from '../../ui/section-header.component';
 import { StatusChipComponent } from '../../ui/status-chip.component';
 
@@ -29,6 +30,7 @@ const REGION_NOTES: Record<RegionId, string> = {
 @Component({
   selector: 'app-health-page',
   imports: [
+    AwaitingPanelComponent,
     BodyMapComponent,
     IndicatorListComponent,
     MeasurementFormModalComponent,

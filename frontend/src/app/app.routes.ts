@@ -19,14 +19,14 @@ export const routes: Routes = [
   {
     path: 'analysis/readings',
     title: "Today's Readings & Triggers",
-    data: { eyebrow: 'Daily analysis' },
-    loadComponent: placeholder,
+    loadComponent: () =>
+      import('./pages/analysis-readings-page/analysis-readings-page.component').then((m) => m.AnalysisReadingsPageComponent),
   },
   {
     path: 'analysis/plan',
     title: 'Training & Nutrition Plan',
-    data: { eyebrow: 'Daily analysis' },
-    loadComponent: placeholder,
+    loadComponent: () =>
+      import('./pages/analysis-plan-page/analysis-plan-page.component').then((m) => m.AnalysisPlanPageComponent),
   },
   { path: 'mission', title: 'Mission', data: { eyebrow: 'Mission context' }, loadComponent: placeholder },
   { path: 'report', title: 'Daily Report', data: { eyebrow: 'Flight surgeon report' }, loadComponent: placeholder },

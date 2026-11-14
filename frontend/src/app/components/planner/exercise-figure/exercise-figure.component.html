@@ -3,7 +3,7 @@
     <svg viewBox="0 0 240 160" role="img" [attr.aria-label]="f.caption" class="block w-full h-auto">
       <defs>
         <marker id="arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M1 1 L7 4 L1 7" fill="none" stroke="#5ad1f5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M1 1 L7 4 L1 7" fill="none" stroke="var(--color-signal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </marker>
       </defs>
 
@@ -103,10 +103,10 @@
       <!-- parts worn on the body, drawn over it -->
       @switch (f.scene) {
         @case ('cuff') {
-          <path d="M132.5 75.5L138.5 87" stroke="#5ad1f5" stroke-width="6" fill="none" />
+          <path d="M132.5 75.5L138.5 87" stroke="var(--color-signal)" stroke-width="6" fill="none" />
         }
         @case ('compression') {
-          <g fill="none" stroke="#5ad1f5" stroke-linejoin="round" stroke-dasharray="2 3.5">
+          <g fill="none" stroke="var(--color-signal)" stroke-linejoin="round" stroke-dasharray="2 3.5">
             <polyline stroke-width="8.5" [attr.points]="line(f.pose.hip, f.pose.nearLeg[0], f.pose.nearLeg[1])" />
             <polyline stroke-width="13" points="119,72 119,92" />
           </g>

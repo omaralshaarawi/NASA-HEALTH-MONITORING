@@ -86,7 +86,7 @@
   </div>
 
   @if (plan(); as p) {
-    <h3>Active countermeasure plan</h3>
+    <h3>Today's analysis plan</h3>
     @if (p.draft.escalate_to_flight_surgeon) {
       <div class="box alert" style="margin-bottom: 2mm">
         <span class="cap" style="color: #b3261e">Escalated to flight surgeon</span>
@@ -98,7 +98,7 @@
         <table>
           <thead>
             <tr>
-              <th>Countermeasure</th>
+              <th>Session</th>
               <th>Target</th>
               <th class="r">Min</th>
               <th class="r">kcal</th>
@@ -129,10 +129,6 @@
             </tr>
           </tfoot>
         </table>
-        <p class="finding mono" style="margin-top: 1mm">
-          {{ p.resources.assumptions.formula }} · mass {{ p.resources.assumptions.mass_kg }} kg ·
-          {{ p.resources.assumptions.water_ml_per_kcal }} mL/kcal · {{ p.resources.assumptions.co2_g_per_kcal }} g CO₂/kcal
-        </p>
       </div>
       <div>
         <div class="box">
@@ -154,10 +150,7 @@
   <div class="foot">
     <p>{{ disclaimer }}</p>
     <p class="mono">
-      Thresholds: {{ assessment().thresholds_status }} · schema {{ assessment().schema_version }}
-      @if (plan(); as p) {
-        · plan {{ p.plan_id }} · written by {{ p.llm.model }} · input {{ p.llm.input_hash.slice(0, 12) }}
-      }
+      Thresholds: {{ assessment().thresholds_status }}
     </p>
   </div>
 </div>

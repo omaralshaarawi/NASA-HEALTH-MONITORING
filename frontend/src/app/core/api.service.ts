@@ -153,7 +153,7 @@ export class ApiService {
     return this.http.get<TriageIncident>(`${API_BASE}/api/triage/${incidentId}`);
   }
 
-  // fresh = true asks the LLM again instead of reusing a saved plan (free tier: 20 calls a day)
+  // fresh = true asks for a newly written plan instead of the saved one
   generatePlan(assessment: AssessmentResponse, fresh = false): Observable<GeneratedPlan> {
     return this.http
       .post<CountermeasurePlan>(`${API_BASE}/api/plans/generate`, assessment, {

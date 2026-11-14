@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { exerciseTitle } from '../../components/planner/planner-labels';
 import { EmergencyService } from '../../core/emergency.service';
 import { MissionStore } from '../../core/mission-store.service';
+import { TrainingService } from '../../core/training.service';
 import { RegionId } from '../../models/contract';
 import { STATUS_WORD, delayText } from '../../ui/format';
 import { MetricTileComponent } from '../../ui/metric-tile.component';
@@ -18,6 +19,7 @@ import { MetricTileComponent } from '../../ui/metric-tile.component';
 export class HomePageComponent {
   protected readonly store = inject(MissionStore);
   protected readonly emergency = inject(EmergencyService);
+  protected readonly training = inject(TrainingService);
 
   protected readonly regionIds: RegionId[] = ['HEAD_NEURO', 'CHEST_CARDIO', 'SPINE_BONE', 'SYSTEMIC_IMMUNE_METABOLIC'];
   // one word each: the card is narrow

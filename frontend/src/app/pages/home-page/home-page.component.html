@@ -134,6 +134,9 @@
         }
       </ul>
       <div class="card-foot">
+        @if (training.summary().total) {
+          <div class="eyebrow mb-2 text-ink-dim">{{ training.summary().completed }} of {{ training.summary().total }} sessions done</div>
+        }
         <div class="num text-lg text-ink">+{{ p.resources.totals.extra_kcal }} <span class="unit">kcal</span></div>
         <div class="eyebrow">{{ p.resources.label }}</div>
       </div>

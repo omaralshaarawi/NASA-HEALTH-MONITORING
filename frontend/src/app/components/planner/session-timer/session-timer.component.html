@@ -1,0 +1,74 @@
+<div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+  <div class="min-w-36">
+    <div class="eyebrow flex items-center gap-1.5" [class.text-signal]="state() === 'done'">
+      @if (state() === 'done') {
+        <svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+          <path d="M2 6.5 5 9l5-6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      }
+      {{ stateWord() }}
+    </div>
+    <div class="num mt-1 text-2xl leading-none text-ink">
+      {{ clock() }} <span class="unit">{{ state() === 'done' ? 'trained' : 'left' }}</span>
+    </div>
+  </div>
+
+  <div class="min-w-40 flex-1">
+    <div
+      class="track"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [attr.aria-valuenow]="percent()"
+      aria-label="Session progress"
+    >
+      <div class="fill" [style.width.%]="percent()"></div>
+    </div>
+    <div class="unit mt-1.5">{{ percent() }}% of {{ minutes() }} min</div>
+  </div>
+
+  <div class="flex flex-wrap gap-2">
+    @switch (state()) {
+      @case ('idle') {
+        @if (!confirming()) {
+          <button type="button" class="btn btn-primary" [disabled]="!!blocked()" [attr.title]="blocked() || null" (click)="start()">
+            Start
+          </button>
+        }
+      }
+      @case ('running') {
+        <button type="button" class="btn btn-primary" (click)="training.pause(exerciseId())">Pause</button>
+        <button type="button" class="btn" (click)="training.complete(exerciseId())">Complete early</button>
+        <button type="button" class="btn" (click)="training.reset(exerciseId())">Reset</button>
+      }
+      @case ('paused') {
+        <button type="button" class="btn btn-primary" [disabled]="training.locked()" (click)="training.resume(exerciseId())">
+          Resume
+        </button>
+        <button type="button" class="btn" (click)="training.complete(exerciseId())">Complete early</button>
+        <button type="button" class="btn" (click)="training.reset(exerciseId())">Reset</button>
+      }
+      @case ('done') {
+        <button type="button" class="btn" (click)="training.reset(exerciseId())">Reset</button>
+      }
+    }
+  </div>
+</div>
+
+@if (state() === 'idle' && blocked()) {
+  <p class="m-0 mt-3 text-xs leading-5 text-ink-mute">{{ blocked() }}.</p>
+}
+
+@if (state() === 'idle' && needsDirection() && !blocked()) {
+  @if (confirming()) {
+    <div class="mt-3 flex flex-wrap items-center gap-3 rounded-xl border border-line-strong bg-white/5 px-4 py-3" role="alertdialog" aria-label="Confirm start">
+      <p class="m-0 min-w-0 flex-1 basis-64 text-sm leading-6 text-ink">
+        The flight surgeon sets and times this protocol. Start only if you have been directed to.
+      </p>
+      <button type="button" class="btn btn-primary" (click)="start()">Confirm and start</button>
+      <button type="button" class="btn" (click)="confirming.set(false)">Cancel</button>
+    </div>
+  } @else {
+    <p class="m-0 mt-3 text-xs leading-5 text-ink-mute">The flight surgeon directs this protocol. You will be asked to confirm before it starts.</p>
+  }
+}
