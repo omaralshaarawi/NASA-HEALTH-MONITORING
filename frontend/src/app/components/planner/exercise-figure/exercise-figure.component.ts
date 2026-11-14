@@ -21,7 +21,13 @@ import { FIGURES, Point } from './figures';
   `,
 })
 export class ExerciseFigureComponent {
+  private static count = 0;
+
   readonly exerciseId = input.required<string>();
+
+  // several figures share a page, so each needs its own arrowhead id
+  protected readonly arrowId = 'figure-arrow-' + ExerciseFigureComponent.count++;
+  protected readonly arrowRef = `url(#${this.arrowId})`;
 
   protected readonly figure = computed(() => FIGURES[this.exerciseId()] ?? null);
 

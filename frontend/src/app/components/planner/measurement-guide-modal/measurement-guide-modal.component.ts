@@ -7,7 +7,7 @@ import { REGION_LABELS, statusClass } from '../planner-labels';
 import { SparklineComponent } from '../sparkline/sparkline.component';
 import { GUIDES, limitsFor } from './measurement-guides';
 
-const STATUS_COLOR = { GREEN: '#3ddc97', YELLOW: '#f5b83d', RED: '#ff6464' } as const;
+const STATUS_COLOR = { GREEN: 'var(--color-ok)', YELLOW: 'var(--color-warn)', RED: 'var(--color-crit)' } as const;
 
 // Opens from any indicator card: how to take the measurement in 0 g, why spaceflight changes it,
 // and when to act. Today's value and the limits come from the assessment and rules.json.

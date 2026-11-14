@@ -2,7 +2,7 @@
   <figure class="m-0">
     <svg viewBox="0 0 240 160" role="img" [attr.aria-label]="f.caption" class="block w-full h-auto">
       <defs>
-        <marker id="arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <marker [attr.id]="arrowId" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M1 1 L7 4 L1 7" fill="none" stroke="var(--color-signal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </marker>
       </defs>
@@ -20,7 +20,7 @@
           <path class="gear" d="M73 70V56M73 60L131 60" />
           <circle class="accent" cx="131" cy="60" r="4" />
           <path class="gear" d="M98 140V134H160V140" />
-          <path class="motion" d="M168 62V100" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+          <path class="motion" d="M168 62V100" [attr.marker-start]="arrowRef" [attr.marker-end]="arrowRef" />
         }
         @case ('cycle') {
           <path class="gear" d="M40 142H204" />
@@ -29,14 +29,14 @@
           <circle class="gear" cx="150" cy="112" r="14" />
           <path class="gear" d="M141 123L160 101" />
           <path class="gear" d="M132 60L132 96L146 110" />
-          <path class="motion" d="M172 96A26 26 0 0 1 166 132" marker-end="url(#arrow)" />
+          <path class="motion" d="M172 96A26 26 0 0 1 166 132" [attr.marker-end]="arrowRef" />
         }
         @case ('treadmill') {
           <rect class="gear-fill" x="52" y="132" width="140" height="10" rx="5" />
           <path class="gear" d="M64 137H180" stroke-dasharray="2 6" />
           <path class="accent" d="M112 90L98 132M124 90L142 132" />
           <path class="accent" d="M110 88H126" stroke-width="4" />
-          <path class="motion" d="M176 124H206" marker-end="url(#arrow)" />
+          <path class="motion" d="M176 124H206" [attr.marker-end]="arrowRef" />
         }
         @case ('compact') {
           <path class="gear" d="M40 142H210" />
@@ -44,7 +44,7 @@
           <path class="gear" d="M170 106V134" stroke-width="4" />
           <path class="accent" d="M148 84L172 104" />
           <circle class="gear" cx="187" cy="110" r="6" />
-          <path class="motion" d="M112 56H150" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+          <path class="motion" d="M112 56H150" [attr.marker-start]="arrowRef" [attr.marker-end]="arrowRef" />
         }
         @case ('surface') {
           <path class="gear" d="M16 142Q120 126 224 142" />
@@ -52,7 +52,7 @@
           <ellipse class="gear" cx="188" cy="143" rx="8" ry="2" />
           <rect class="gear-fill" x="102" y="54" width="12" height="28" rx="3" />
           <circle class="gear" cx="122" cy="40" r="13" />
-          <path class="motion" d="M150 100V124" marker-end="url(#arrow)" />
+          <path class="motion" d="M150 100V124" [attr.marker-end]="arrowRef" />
           <circle class="gear" cx="204" cy="30" r="9" />
           <path class="gear" d="M198 27Q204 31 210 28" />
         }
@@ -60,10 +60,10 @@
           <path class="gear" d="M52 140H196" />
           <path class="accent" d="M102 128H136" stroke-width="3" />
           <path class="gear" d="M104 128V140M134 128V140" />
-          <path class="motion" d="M158 70A44 44 0 0 0 176 46" marker-end="url(#arrow)" />
+          <path class="motion" d="M158 70A44 44 0 0 0 176 46" [attr.marker-end]="arrowRef" />
         }
         @case ('cuff') {
-          <path class="motion" d="M176 60Q130 26 88 40" marker-end="url(#arrow)" />
+          <path class="motion" d="M176 60Q130 26 88 40" [attr.marker-end]="arrowRef" />
         }
         @case ('compression') {
           <path class="gear" d="M52 140H196" />
@@ -76,7 +76,7 @@
           <rect class="gear-fill" x="146" y="66" width="20" height="24" rx="2" transform="rotate(14 156 78)" />
           <circle class="accent" cx="204" cy="44" r="6" />
           <path class="accent" d="M204 32V34M204 54V56M192 44H194M214 44H216" />
-          <path class="motion" d="M204 62V100" marker-end="url(#arrow)" />
+          <path class="motion" d="M204 62V100" [attr.marker-end]="arrowRef" />
           <path class="gear" d="M208 110A8 8 0 1 1 200 118A6 6 0 0 0 208 110Z" />
         }
         @case ('swab') {

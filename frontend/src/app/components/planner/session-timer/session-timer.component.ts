@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Injector, afterNextRender, computed, inject, input, signal, viewChild } from '@angular/core';
 
 import { TrainingService } from '../../../core/training.service';
 
@@ -27,6 +27,9 @@ const STATE_WORDS = { idle: 'Not started', running: 'Running', paused: 'Paused',
 })
 export class SessionTimerComponent {
   protected readonly training = inject(TrainingService);
+  private readonly injector = inject(Injector);
+  // the first button of whatever state the timer is in
+  private readonly main = viewChild<ElementRef<HTMLButtonElement>>('main');
 
   readonly exerciseId = input.required<string>();
   readonly minutes = input.required<number>();
@@ -55,9 +58,25 @@ export class SessionTimerComponent {
   protected start(): void {
     if (this.needsDirection() && !this.confirming()) {
       this.confirming.set(true);
-      return;
+    } else {
+      this.confirming.set(false);
+      this.training.start(this.exerciseId());
     }
+    this.keepFocus();
+  }
+
+  protected cancelStart(): void {
     this.confirming.set(false);
-    this.training.start(this.exerciseId());
+    this.keepFocus();
+  }
+
+  protected act(action: (exerciseId: string) => void): void {
+    action.call(this.training, this.exerciseId());
+    this.keepFocus();
+  }
+
+  // the pressed button is replaced by the next state's buttons; keep the keyboard on the timer
+  private keepFocus(): void {
+    afterNextRender(() => this.main()?.nativeElement.focus(), { injector: this.injector });
   }
 }

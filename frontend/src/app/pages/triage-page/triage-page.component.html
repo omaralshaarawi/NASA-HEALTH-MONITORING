@@ -9,12 +9,12 @@
   </section>
 
   @if (offline()) {
-    <div class="mt-5 rounded border border-signal bg-panel p-4 text-sm leading-6 text-ink" role="alert">
+    <div class="mt-5 rounded-xl border border-signal bg-panel p-4 text-sm leading-6 text-ink" role="alert">
       <strong>Local protocol mode.</strong> The displayed checklist is the bundled protocol. Responses stay in this browser; the incident packet cannot be sent or queued.
     </div>
   }
-  @if (notice()) { <div class="mt-4 rounded border border-line bg-panel p-3 text-sm text-ink-dim" role="status">{{ notice() }}</div> }
-  @if (error()) { <div class="mt-4 rounded border border-signal bg-raised p-3 text-sm text-ink" role="alert">{{ error() }}</div> }
+  @if (notice()) { <div class="mt-4 rounded-xl border border-line bg-panel p-3 text-sm text-ink-dim" role="status">{{ notice() }}</div> }
+  @if (error()) { <div class="mt-4 rounded-xl border border-signal bg-raised p-3 text-sm text-ink" role="alert">{{ error() }}</div> }
 
   @if (!incident()) {
     <section class="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)]">
@@ -23,12 +23,12 @@
         <h2 class="display m-0 mt-1 text-2xl text-ink">Patient and mission context</h2>
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           <label class="text-sm text-ink-dim">Patient
-            <select class="mt-1 w-full rounded border border-line bg-hull px-3 py-2 text-ink" [value]="patientId()" [disabled]="loading()" (change)="patientChanged($event)">
+            <select class="mt-1 w-full rounded-lg border border-line bg-hull px-3 py-2 text-ink" [value]="patientId()" [disabled]="loading()" (change)="patientChanged($event)">
               @for (member of crew; track member.id) { <option [value]="member.id" [selected]="member.id === patientId()">{{ member.name }} · {{ member.role }}</option> }
             </select>
           </label>
           <label class="text-sm text-ink-dim">Habitat
-            <select class="mt-1 w-full rounded border border-line bg-hull px-3 py-2 text-ink" [value]="environmentId()" [disabled]="loading() || offline()" (change)="environmentChanged($event)">
+            <select class="mt-1 w-full rounded-lg border border-line bg-hull px-3 py-2 text-ink" [value]="environmentId()" [disabled]="loading() || offline()" (change)="environmentChanged($event)">
               @for (habitat of environments(); track habitat.id) { <option [value]="habitat.id" [selected]="habitat.id === environmentId()">{{ habitat.label }}</option> }
             </select>
           </label>
@@ -53,7 +53,7 @@
           <p class="mt-3 text-sm leading-6 text-ink-dim">Starting the protocol calls JARVIS, the voice operator, which reads each step aloud and listens for yes, no or done. The buttons stay available as a backup.</p>
         }
         <p class="mt-3 text-sm leading-6 text-ink-dim">{{ protocol().steps.length }} deterministic steps · version {{ protocol().version }}</p>
-        <p class="m-0 rounded border border-line bg-hull p-3 text-xs leading-5 text-ink-mute">{{ protocol().review_status.replaceAll('_', ' ') }}. Use the onboard checklist and trained crew procedures; this prototype content requires clinician review.</p>
+        <p class="m-0 rounded-xl border border-line bg-hull p-3 text-xs leading-5 text-ink-mute">{{ protocol().review_status.replaceAll('_', ' ') }}. Use the onboard checklist and trained crew procedures; this prototype content requires clinician review.</p>
       </aside>
     </section>
   }
@@ -84,7 +84,7 @@
               <div class="mt-5"><button type="button" class="btn btn-primary min-w-36" [disabled]="busy()" (click)="answer('done')">Done</button></div>
             }
             @if (ended()) {
-              <div class="mt-5 rounded border border-line bg-hull p-3 text-sm text-ink-dim">Protocol ended · {{ offline() ? 'local state only' : 'incident recorded by the backend' }}.</div>
+              <div class="mt-5 rounded-xl border border-line bg-hull p-3 text-sm text-ink-dim">Protocol ended · {{ offline() ? 'local state only' : 'incident recorded by the backend' }}.</div>
             }
           </section>
         } @else if (!ended()) {
@@ -133,13 +133,13 @@
       </aside>
     </section>
 
-    <section class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded border border-line bg-panel p-4">
+    <section class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-panel p-4">
       <p class="m-0 text-sm text-ink-dim">You can stop at any point, including during the CPR loop.</p>
       <button type="button" class="btn" [disabled]="busy() || ended()" (click)="endProtocol()">End protocol</button>
     </section>
 
     @if (ended() && active.store_and_forward; as packet) {
-      <section class="mt-5 rounded border border-signal bg-panel p-5" aria-labelledby="packet-title">
+      <section class="mt-5 rounded-xl border border-signal bg-panel p-5" aria-labelledby="packet-title">
         <div class="eyebrow">Store-and-forward packet</div>
         <h2 id="packet-title" class="display m-0 mt-1 text-2xl text-ink">{{ packet.delivery.replaceAll('_', ' ') }}</h2>
         <div class="mt-4 grid gap-3 sm:grid-cols-3">
@@ -150,7 +150,7 @@
         <p class="mb-0 mt-4 border-t border-line pt-4 text-sm leading-6 text-ink-dim">{{ packet.summary }}</p>
       </section>
     } @else if (ended() && offline()) {
-      <section class="mt-5 rounded border border-signal bg-panel p-5">
+      <section class="mt-5 rounded-xl border border-signal bg-panel p-5">
         <div class="eyebrow">No packet queued</div>
         <p class="m-0 mt-2 text-sm leading-6 text-ink-dim">This incident ended locally because the server connection was unavailable. The checklist remains visible here, but the store-and-forward packet was not created.</p>
       </section>

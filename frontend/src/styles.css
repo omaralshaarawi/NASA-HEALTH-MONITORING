@@ -31,6 +31,8 @@
 
   --color-signal: #a9cdb5;
   --color-signal-dim: #3c5245;
+  /* solid ground for dialogs, where glass over glass would be hard to read */
+  --color-dialog: #11161d;
 
   --color-ok: #7fd9a4;
   --color-warn: #f0b955;

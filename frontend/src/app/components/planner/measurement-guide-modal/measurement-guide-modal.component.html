@@ -1,7 +1,7 @@
 @if (indicator(); as i) {
   <app-modal-shell [heading]="i.label" [eyebrow]="'Measurement guide · ' + region()" (closed)="closed.emit()">
     <!-- today -->
-    <div class="grid gap-4 rounded border border-line bg-hull px-4 py-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center">
+    <div class="grid gap-4 rounded-xl border border-line bg-hull px-4 py-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center">
       <div>
         <div class="eyebrow">Today · mission day {{ assessment().mission_day }}</div>
         <div class="mt-1 flex items-baseline gap-2">
@@ -45,14 +45,14 @@
     </div>
 
     @if (i.remeasure) {
-      <p class="m-0 mt-3 rounded border border-warn px-4 py-2 text-sm leading-6 text-ink">
+      <p class="m-0 mt-3 rounded-xl border border-warn px-4 py-2 text-sm leading-6 text-ink">
         Single unusual reading. Re-measure to confirm before acting on it.
       </p>
     }
 
     <!-- the three cards -->
     <div class="mt-5 grid gap-4 lg:grid-cols-3">
-      <section class="rounded border border-line px-4 py-4" aria-labelledby="guide-how">
+      <section class="rounded-xl border border-line px-4 py-4" aria-labelledby="guide-how">
         <div class="eyebrow text-signal">01</div>
         <h3 id="guide-how" class="display m-0 mt-1 text-xl leading-6 text-ink">How to measure in 0 g</h3>
         <p class="eyebrow m-0 mt-2">{{ guide().instrument }}</p>
@@ -66,7 +66,7 @@
         </ol>
       </section>
 
-      <section class="rounded border border-line px-4 py-4" aria-labelledby="guide-why">
+      <section class="rounded-xl border border-line px-4 py-4" aria-labelledby="guide-why">
         <div class="eyebrow text-signal">02</div>
         <h3 id="guide-why" class="display m-0 mt-1 text-xl leading-6 text-ink">Why spaceflight affects it</h3>
         @if (guide().fact; as fact) {
@@ -81,7 +81,7 @@
         <p class="eyebrow m-0 mt-4">NASA HRP hazard · {{ guide().hazard }}</p>
       </section>
 
-      <section class="rounded border border-line px-4 py-4" aria-labelledby="guide-act">
+      <section class="rounded-xl border border-line px-4 py-4" aria-labelledby="guide-act">
         <div class="eyebrow text-signal">03</div>
         <h3 id="guide-act" class="display m-0 mt-1 text-xl leading-6 text-ink">When to act</h3>
         @if (limits().length) {

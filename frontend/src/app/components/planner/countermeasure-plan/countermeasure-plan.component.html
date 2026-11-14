@@ -1,6 +1,7 @@
 <div class="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]">
   <!-- sessions -->
   <div class="space-y-4">
+    <h2 class="sr-only">Today's sessions</h2>
     @for (s of draft().sessions; track s.exercise_id; let i = $index) {
       <app-session-card [session]="s" [index]="i" [resources]="sessionResources(i)">
         <app-session-timer [exerciseId]="s.exercise_id" [minutes]="s.minutes" [needsDirection]="needsDirection(s.exercise_id)" />

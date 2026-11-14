@@ -8,7 +8,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, booleanA
   template: `
     <dialog
       #dialog
-      class="m-auto max-h-[calc(100dvh-2rem)] overflow-hidden rounded-[var(--radius-card)] border border-line-strong bg-[#11161d] p-0 text-ink shadow-2xl backdrop:bg-void/80 backdrop:backdrop-blur-sm"
+      class="m-auto max-h-[calc(100dvh-2rem)] overflow-hidden rounded-[var(--radius-card)] border border-line-strong bg-dialog p-0 text-ink shadow-2xl backdrop:bg-void/80 backdrop:backdrop-blur-sm"
       [class]="narrow() ? 'w-[min(32rem,calc(100vw-2rem))]' : 'w-[min(72rem,calc(100vw-2rem))]'"
       [attr.aria-labelledby]="titleId"
       (close)="closed.emit()"

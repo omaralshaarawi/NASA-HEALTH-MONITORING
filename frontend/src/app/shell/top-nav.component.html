@@ -9,13 +9,14 @@
 
   <nav class="hidden lg:block" aria-label="Main">
     <ul class="pill">
-      <li><a routerLink="/home" routerLinkActive="on" class="link">Home</a></li>
-      <li><a routerLink="/health" routerLinkActive="on" class="link">Health</a></li>
+      <li><a routerLink="/home" routerLinkActive="on" ariaCurrentWhenActive="page" class="link">Home</a></li>
+      <li><a routerLink="/health" routerLinkActive="on" ariaCurrentWhenActive="page" class="link">Health</a></li>
       <li appDropdown #analysis="dropdown" class="relative">
         <button
           type="button"
           class="link"
           [class.on]="inAnalysis()"
+          [attr.aria-current]="inAnalysis() ? 'true' : null"
           aria-controls="analysis-menu"
           [attr.aria-expanded]="analysis.open()"
           (click)="analysis.toggle()"
@@ -29,14 +30,14 @@
           <ul id="analysis-menu" class="submenu">
             @for (page of analysisPages; track page.path) {
               <li>
-                <a [routerLink]="page.path" routerLinkActive="on" class="sublink" data-item (click)="analysis.close()">{{ page.label }}</a>
+                <a [routerLink]="page.path" routerLinkActive="on" ariaCurrentWhenActive="page" class="sublink" data-item (click)="analysis.close()">{{ page.label }}</a>
               </li>
             }
           </ul>
         }
       </li>
-      <li><a routerLink="/mission" routerLinkActive="on" class="link">Mission</a></li>
-      <li><a routerLink="/report" routerLinkActive="on" class="link">Daily Report</a></li>
+      <li><a routerLink="/mission" routerLinkActive="on" ariaCurrentWhenActive="page" class="link">Mission</a></li>
+      <li><a routerLink="/report" routerLinkActive="on" ariaCurrentWhenActive="page" class="link">Daily Report</a></li>
     </ul>
   </nav>
 
@@ -59,8 +60,8 @@
 
 @if (mobileOpen()) {
   <nav id="mobile-nav" class="panel mobile grid lg:hidden" aria-label="Main">
-    <a routerLink="/home" routerLinkActive="on" class="sublink" (click)="closeMobile()">Home</a>
-    <a routerLink="/health" routerLinkActive="on" class="sublink" (click)="closeMobile()">Health</a>
+    <a routerLink="/home" routerLinkActive="on" ariaCurrentWhenActive="page" class="sublink" (click)="closeMobile()">Home</a>
+    <a routerLink="/health" routerLinkActive="on" ariaCurrentWhenActive="page" class="sublink" (click)="closeMobile()">Health</a>
     <button
       type="button"
       class="sublink"
@@ -77,11 +78,11 @@
     @if (mobileAnalysisOpen()) {
       <div id="mobile-analysis" class="pl-4">
         @for (page of analysisPages; track page.path) {
-          <a [routerLink]="page.path" routerLinkActive="on" class="sublink" (click)="closeMobile()">{{ page.label }}</a>
+          <a [routerLink]="page.path" routerLinkActive="on" ariaCurrentWhenActive="page" class="sublink" (click)="closeMobile()">{{ page.label }}</a>
         }
       </div>
     }
-    <a routerLink="/mission" routerLinkActive="on" class="sublink" (click)="closeMobile()">Mission</a>
-    <a routerLink="/report" routerLinkActive="on" class="sublink" (click)="closeMobile()">Daily Report</a>
+    <a routerLink="/mission" routerLinkActive="on" ariaCurrentWhenActive="page" class="sublink" (click)="closeMobile()">Mission</a>
+    <a routerLink="/report" routerLinkActive="on" ariaCurrentWhenActive="page" class="sublink" (click)="closeMobile()">Daily Report</a>
   </nav>
 }

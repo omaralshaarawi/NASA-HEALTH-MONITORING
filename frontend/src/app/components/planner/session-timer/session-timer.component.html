@@ -31,25 +31,25 @@
     @switch (state()) {
       @case ('idle') {
         @if (!confirming()) {
-          <button type="button" class="btn btn-primary" [disabled]="!!blocked()" [attr.title]="blocked() || null" (click)="start()">
+          <button #main type="button" class="btn btn-primary" [disabled]="!!blocked()" [attr.title]="blocked() || null" (click)="start()">
             Start
           </button>
         }
       }
       @case ('running') {
-        <button type="button" class="btn btn-primary" (click)="training.pause(exerciseId())">Pause</button>
-        <button type="button" class="btn" (click)="training.complete(exerciseId())">Complete early</button>
-        <button type="button" class="btn" (click)="training.reset(exerciseId())">Reset</button>
+        <button #main type="button" class="btn btn-primary" (click)="act(training.pause)">Pause</button>
+        <button type="button" class="btn" (click)="act(training.complete)">Complete early</button>
+        <button type="button" class="btn" (click)="act(training.reset)">Reset</button>
       }
       @case ('paused') {
-        <button type="button" class="btn btn-primary" [disabled]="training.locked()" (click)="training.resume(exerciseId())">
+        <button #main type="button" class="btn btn-primary" [disabled]="training.locked()" (click)="act(training.resume)">
           Resume
         </button>
-        <button type="button" class="btn" (click)="training.complete(exerciseId())">Complete early</button>
-        <button type="button" class="btn" (click)="training.reset(exerciseId())">Reset</button>
+        <button type="button" class="btn" (click)="act(training.complete)">Complete early</button>
+        <button type="button" class="btn" (click)="act(training.reset)">Reset</button>
       }
       @case ('done') {
-        <button type="button" class="btn" (click)="training.reset(exerciseId())">Reset</button>
+        <button #main type="button" class="btn" (click)="act(training.reset)">Reset</button>
       }
     }
   </div>
@@ -65,8 +65,8 @@
       <p class="m-0 min-w-0 flex-1 basis-64 text-sm leading-6 text-ink">
         The flight surgeon sets and times this protocol. Start only if you have been directed to.
       </p>
-      <button type="button" class="btn btn-primary" (click)="start()">Confirm and start</button>
-      <button type="button" class="btn" (click)="confirming.set(false)">Cancel</button>
+      <button #main type="button" class="btn btn-primary" (click)="start()">Confirm and start</button>
+      <button type="button" class="btn" (click)="cancelStart()">Cancel</button>
     </div>
   } @else {
     <p class="m-0 mt-3 text-xs leading-5 text-ink-mute">The flight surgeon directs this protocol. You will be asked to confirm before it starts.</p>
