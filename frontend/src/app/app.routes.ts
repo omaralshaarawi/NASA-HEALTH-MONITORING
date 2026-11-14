@@ -28,7 +28,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/analysis-plan-page/analysis-plan-page.component').then((m) => m.AnalysisPlanPageComponent),
   },
-  { path: 'mission', title: 'Mission', data: { eyebrow: 'Mission context' }, loadComponent: placeholder },
+  {
+    path: 'mission',
+    title: 'Mission',
+    loadComponent: () => import('./pages/mission-page/mission-page.component').then((m) => m.MissionPageComponent),
+  },
   { path: 'report', title: 'Daily Report', data: { eyebrow: 'Flight surgeon report' }, loadComponent: placeholder },
   {
     path: 'triage',

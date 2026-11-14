@@ -44,6 +44,8 @@ export class MissionStore {
   readonly assessment = computed(() => this.assessments()[this.crewId()] ?? null);
   readonly plan = computed(() => this.plans()[this.crewId()] ?? null);
   readonly scans = computed(() => this.capturedScans()[this.crewId()] ?? []);
+  // true while another habitat is being simulated on the Mission page
+  readonly habitatChosen = computed(() => this.habitat() !== null);
   readonly environments = signal<EnvironmentProfile[]>([]);
   readonly loading = signal(true);
   readonly planLoading = signal(false);
@@ -76,6 +78,13 @@ export class MissionStore {
 
   selectHabitat(envId: string, distanceKm: number): void {
     this.habitat.set({ envId, distanceKm });
+    this.reload.next();
+  }
+
+  // back to the crew member's own habitat
+  resetHabitat(): void {
+    if (!this.habitat()) return;
+    this.habitat.set(null);
     this.reload.next();
   }
 

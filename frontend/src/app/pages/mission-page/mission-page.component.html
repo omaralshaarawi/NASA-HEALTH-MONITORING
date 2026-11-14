@@ -1,0 +1,172 @@
+@let a = store.assessment();
+
+<app-section-header eyebrow="Mission context" heading="Mission">
+  Where Ast. {{ store.member().name }} is, how far the signal to Earth has to travel, and what the habitat itself is
+  reading today.
+</app-section-header>
+
+@if (a) {
+  @let env = a.environment;
+
+  @if (store.habitatChosen()) {
+    <div class="mt-6 flex flex-wrap items-center gap-3 rounded-2xl border border-signal/50 bg-signal/10 px-5 py-3 backdrop-blur-xl" role="status">
+      <p class="m-0 min-w-0 flex-1 basis-64 text-sm leading-6 text-ink">
+        Simulating <strong class="font-medium">{{ env.label }}</strong>. Every page now shows today's assessment as it
+        would be there.
+      </p>
+      <button type="button" class="btn" (click)="store.resetHabitat()">Back to own habitat</button>
+    </div>
+  }
+
+  <div class="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+    <!-- where -->
+    <section class="panel p-5" aria-labelledby="where-title">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 id="where-title" class="display m-0 text-[0.8125rem] text-ink">Where</h2>
+          <div class="mt-3 text-2xl leading-tight text-ink">{{ env.label }}</div>
+          <div class="eyebrow mt-1">{{ kind[env.environment] }} · {{ body[env.body] }}</div>
+        </div>
+        <span class="chip">{{ store.member().name }} · day {{ a.mission_day }}</span>
+      </div>
+
+      <dl class="m-0 mt-6 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
+        <div>
+          <dt class="eyebrow">Gravity</dt>
+          <dd class="num m-0 mt-1 text-[1.75rem] leading-none text-ink">{{ env.gravity_g }}<span class="unit ml-1">g</span></dd>
+          <dd class="m-0 mt-1 text-xs text-ink-mute">{{ env.gravity_g === 0 ? 'Weightless' : 'Partial gravity' }}</dd>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <dt class="eyebrow">Distance to Earth</dt>
+          <dd class="num m-0 mt-1 break-words text-[1.375rem] leading-tight text-ink sm:text-[1.75rem] sm:leading-none">{{ env.distance_km | number: '1.0-0' }}<span class="unit ml-1">km</span></dd>
+        </div>
+        <div>
+          <dt class="eyebrow">Exercise target</dt>
+          <dd class="num m-0 mt-1 text-[1.75rem] leading-none text-ink">{{ env.resistive_target_min }}<span class="unit ml-1">min/day</span></dd>
+          <dd class="m-0 mt-1 text-xs text-ink-mute">Resistive, to protect bone and muscle</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- link to Earth -->
+    <section class="panel p-5" aria-labelledby="link-title">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <h2 id="link-title" class="display m-0 text-[0.8125rem] text-ink">Link to Earth</h2>
+        <span class="chip" [class.border-signal]="a.comms.mode === 'AUTONOMOUS'" [class.text-signal]="a.comms.mode === 'AUTONOMOUS'">
+          {{ a.comms.mode }}
+        </span>
+      </div>
+
+      <!-- the signal path: Earth on the left, the crew on the right -->
+      <div class="path mt-5" aria-hidden="true">
+        <span class="node earth"></span>
+        <span class="wire"><span class="pulse" [class.slow]="a.comms.mode === 'AUTONOMOUS'"></span></span>
+        <span class="node craft"></span>
+      </div>
+      <div class="mt-2 flex justify-between text-xs text-ink-mute" aria-hidden="true">
+        <span>Earth</span><span>{{ env.label }}</span>
+      </div>
+
+      @if (delay(); as d) {
+        <div class="mt-4">
+          <span class="num text-[1.75rem] leading-none text-ink">{{ d.value }}</span>
+          @if (d.unit) {
+            <span class="unit ml-1">{{ d.unit }} one way</span>
+          }
+          <div class="eyebrow mt-1">{{ env.comm_label }}</div>
+        </div>
+      }
+
+      <p class="m-0 mt-4 text-sm leading-6 text-ink-dim">
+        @if (a.comms.mode === 'LIVE') {
+          Live: a message reaches Earth in {{ autonomousAfterS }} seconds or less, so the crew can talk to a flight
+          surgeon in real time. In an emergency the button calls the flight surgeon.
+        } @else {
+          Autonomous: each message takes longer than {{ autonomousAfterS }} seconds to arrive, too long for a real-time
+          conversation. The crew follows the onboard checklist with JARVIS, and the report is queued for Earth.
+        }
+      </p>
+    </section>
+  </div>
+
+  @if (store.environments().length) {
+    <section class="panel mt-4 p-5" aria-labelledby="habitat-title">
+      <div class="flex flex-wrap items-baseline justify-between gap-3">
+        <h2 id="habitat-title" class="display m-0 text-[0.8125rem] text-ink">Simulate another habitat</h2>
+        <span class="eyebrow" aria-live="polite">{{ store.loading() ? 'Recomputing…' : 'Assessed by the mission computer' }}</span>
+      </div>
+      <p class="m-0 mt-2 max-w-3xl text-sm leading-6 text-ink-dim">
+        See how gravity, distance and the signal delay change today's assessment. The choice applies to every page until
+        you go back or switch crew member.
+      </p>
+      <app-habitat-switcher
+        class="mt-4"
+        [environments]="store.environments()"
+        [selectedEnvironmentId]="env.id"
+        [distanceKm]="env.distance_km"
+        [disabled]="store.loading() || store.offline()"
+        (environmentSelected)="chooseHabitat($event)"
+        (distanceSelected)="chooseDistance($event)"
+      />
+    </section>
+  } @else {
+    <p class="m-0 mt-4 text-sm leading-6 text-ink-dim" role="status">
+      The habitat list comes from the mission computer, which cannot be reached right now, so another habitat cannot be
+      simulated.
+    </p>
+  }
+
+  <h2 class="display m-0 mt-8 px-1 text-[0.8125rem] text-ink">Habitat readings today</h2>
+  <div class="mt-3 grid gap-4 md:grid-cols-3">
+    <section class="panel reading p-5" aria-labelledby="radiation-title">
+      <div class="flex items-start justify-between gap-3">
+        <h3 id="radiation-title" class="eyebrow m-0">Radiation</h3>
+        @if (radiation(); as r) {
+          <app-status-chip [status]="r.status" />
+        }
+      </div>
+      <div class="num mt-4 text-[2rem] leading-none text-ink">{{ env.radiation_mSv_day }}<span class="unit ml-1">mSv/day</span></div>
+      <div class="mt-2 text-sm text-ink-dim">
+        Expected here <span class="num text-ink">{{ env.radiation_expected_mSv_day }}</span><span class="unit ml-1">mSv/day</span>
+        @if (radiation()?.ratio; as ratio) {
+          · <span class="num text-ink">{{ ratio }}×</span> expected
+        }
+      </div>
+      @if (radiation()?.reasons?.length) {
+        <p class="m-0 mt-3 text-xs leading-5 text-ink-dim">{{ radiation()!.reasons.join(' · ') }}</p>
+      }
+    </section>
+
+    <section class="panel reading p-5" aria-labelledby="co2-title">
+      <div class="flex items-start justify-between gap-3">
+        <h3 id="co2-title" class="eyebrow m-0">Cabin CO₂</h3>
+        @if (co2(); as c) {
+          <app-status-chip [status]="c.status" />
+        }
+      </div>
+      <div class="num mt-4 text-[2rem] leading-none text-ink">{{ env.cabin_co2_mmHg }}<span class="unit ml-1">mmHg</span></div>
+      <div class="mt-2 text-sm text-ink-dim">Carbon dioxide in the cabin air, scrubbed by life support.</div>
+      @if (co2()?.reasons?.length) {
+        <p class="m-0 mt-3 text-xs leading-5 text-ink-dim">{{ co2()!.reasons.join(' · ') }}</p>
+      }
+    </section>
+
+    <section class="panel reading p-5" aria-labelledby="exercise-title">
+      <div class="flex items-start justify-between gap-3">
+        <h3 id="exercise-title" class="eyebrow m-0">Resistive exercise</h3>
+        @if (resistive(); as r) {
+          <app-status-chip [status]="r.status" />
+        }
+      </div>
+      <div class="num mt-4 text-[2rem] leading-none text-ink">
+        {{ resistive()?.value ?? '—' }}<span class="unit ml-1">of {{ env.resistive_target_min }} min</span>
+      </div>
+      <div class="mt-2 text-sm text-ink-dim">Today, against the target for this gravity.</div>
+      @if (resistive()?.reasons?.length) {
+        <p class="m-0 mt-3 text-xs leading-5 text-ink-dim">{{ resistive()!.reasons.join(' · ') }}</p>
+      }
+    </section>
+  </div>
+} @else {
+  <app-awaiting-panel />
+}

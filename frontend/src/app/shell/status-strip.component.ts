@@ -17,11 +17,12 @@ import { StatusChipComponent } from '../ui/status-chip.component';
         <span class="chip num">Day {{ a.mission_day }}</span>
         <span class="chip">{{ a.environment.label }}</span>
         <span class="chip num">{{ a.environment.gravity_g }} g</span>
-        <span class="chip num">
-          @if (delay(); as d) {
-            {{ d.value }}@if (d.unit) { {{ d.unit }} one way }
+        <!-- near Earth the comm mode chip already says LIVE -->
+        @if (delay(); as d) {
+          @if (d.unit) {
+            <span class="chip num">{{ d.value }} {{ d.unit }} one way</span>
           }
-        </span>
+        }
         <span class="chip" [class.text-signal]="a.comms.mode === 'AUTONOMOUS'" [class.border-signal]="a.comms.mode === 'AUTONOMOUS'">
           {{ a.comms.mode }}
         </span>

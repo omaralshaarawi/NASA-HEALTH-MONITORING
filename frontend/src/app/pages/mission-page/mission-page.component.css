@@ -1,0 +1,48 @@
+:host { display: block; }
+
+.path {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.node {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+}
+.earth {
+  background: radial-gradient(circle at 35% 35%, #9bc9a8, #2f5b6e 70%);
+  box-shadow: 0 0 14px rgb(155 201 168 / 0.35);
+}
+.craft {
+  border: 1px solid var(--color-ink-dim);
+  background: radial-gradient(circle, var(--color-ink) 0 25%, transparent 30%);
+}
+.wire {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--color-line-strong) 0 6px, transparent 6px 11px);
+}
+.pulse {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-signal);
+  box-shadow: 0 0 10px var(--color-signal);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pulse { animation: travel 1.6s linear infinite; }
+  /* slower when the link is autonomous; the speed is a hint, not to scale */
+  .pulse.slow { animation-duration: 5s; }
+  @keyframes travel {
+    from { left: 0; }
+    to { left: calc(100% - 7px); }
+  }
+}
+
+.reading { display: flex; flex-direction: column; }
