@@ -13,6 +13,7 @@ import {
 } from '../models/contract';
 import { ApiService } from './api.service';
 import { CREW, CrewMember } from './crew';
+import { DailyLogService } from './daily-log.service';
 
 const SAVED_CREW = 'crew-health.crew';
 
@@ -26,6 +27,7 @@ interface Habitat {
 @Injectable({ providedIn: 'root' })
 export class MissionStore {
   private readonly api = inject(ApiService);
+  private readonly log = inject(DailyLogService);
   private readonly reload = new Subject<void>();
 
   readonly crew = CREW;
@@ -40,9 +42,23 @@ export class MissionStore {
   // scans captured in this session; they travel to the backend with the next readings
   private readonly capturedScans = signal<Record<string, AttachmentRef[]>>({});
 
+  // After a day is closed, the next day has no assessment until the backend has one for it.
+  // Null means exactly that: nothing is filled in on this side.
+  readonly pendingDay = computed(() => {
+    const next = this.log.nextDay(this.crewId());
+    const latest = this.assessments()[this.crewId()];
+    return next !== null && latest && latest.mission_day < next ? next : null;
+  });
+
   // null until the first answer arrives, and whenever today has no assessment yet
-  readonly assessment = computed(() => this.assessments()[this.crewId()] ?? null);
-  readonly plan = computed(() => this.plans()[this.crewId()] ?? null);
+  readonly assessment = computed(() => (this.pendingDay() ? null : (this.assessments()[this.crewId()] ?? null)));
+  readonly plan = computed(() => {
+    const assessment = this.assessment();
+    const plan = this.plans()[this.crewId()];
+    return assessment && plan?.generated_for_mission_day === assessment.mission_day ? plan : null;
+  });
+  // the most recent closed day, for context while the next one is awaited
+  readonly lastClosed = computed(() => this.log.of(this.crewId())[0] ?? null);
   readonly scans = computed(() => this.capturedScans()[this.crewId()] ?? []);
   // true while another habitat is being simulated on the Mission page
   readonly habitatChosen = computed(() => this.habitat() !== null);
@@ -105,6 +121,26 @@ export class MissionStore {
         this.assessments.update((all) => ({ ...all, [assessment.astronaut_id]: assessment }));
         this.refresh();
       }),
+    );
+  }
+
+  // Closes today: its assessment and plan go into the log unchanged, and the next day waits for
+  // readings. This is the one place to swap for a backend call when the server learns about days.
+  startNextDay(): void {
+    const assessment = this.assessment();
+    if (!assessment) return;
+    this.log.close(assessment, this.plan());
+    this.capturedScans.update((all) => ({ ...all, [assessment.astronaut_id]: [] }));
+  }
+
+  // Demo reset: forgets the log and the captured scans, and asks the backend to reload its seed data.
+  resetDemo(): Observable<unknown> {
+    this.log.clear();
+    this.capturedScans.set({});
+    this.habitat.set(null);
+    return this.api.reset().pipe(
+      catchError(() => of(null)),
+      tap(() => this.refresh()),
     );
   }
 

@@ -1,0 +1,169 @@
+@let a = store.assessment();
+@let closed = selectedClosed();
+
+<app-section-header eyebrow="Flight surgeon report" heading="Daily report">
+  One page for the flight surgeon, ready to print or save as PDF. Closing the day saves it to the log and starts the
+  next mission day.
+</app-section-header>
+
+<!-- today, and what can be done with it -->
+<section class="panel mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 px-5 py-4" aria-label="Today">
+  <div class="flex min-w-0 flex-1 basis-64 flex-wrap items-center gap-3">
+    <span class="display text-lg text-ink">Day {{ currentDay() ?? '…' }}</span>
+    @if (a) {
+      <app-status-chip [status]="a.overall" />
+    } @else if (store.pendingDay()) {
+      <span class="chip">Awaiting today's readings</span>
+    }
+  </div>
+  <div class="flex flex-wrap items-center gap-3">
+    @if (view().kind !== 'earlier' && (closed || (view().kind === 'today' && a))) {
+      <button type="button" class="btn" (click)="print()">Print / save as PDF</button>
+    }
+    <button type="button" class="btn btn-primary" [disabled]="!a" (click)="confirming.set('close')">
+      @if (a) {
+        Close day {{ a.mission_day }} and start day {{ a.mission_day + 1 }}
+      } @else {
+        Close day
+      }
+    </button>
+  </div>
+</section>
+
+<div class="mt-4 grid items-start gap-4 lg:grid-cols-[17rem_minmax(0,1fr)]">
+  <!-- the log -->
+  <nav class="panel p-3 lg:sticky lg:top-4" aria-label="Daily log">
+    <h2 class="eyebrow m-0 px-2 pt-1">Daily log</h2>
+    <!-- on a phone the list scrolls on its own, so the report stays close to the top -->
+    <ul class="m-0 mt-2 grid list-none gap-1 overflow-y-auto p-0 max-lg:max-h-64 lg:max-h-[calc(100dvh-12rem)]">
+      <li>
+        <button type="button" class="row" [attr.aria-current]="isOpen('today') ? 'page' : null" (click)="view.set({ kind: 'today' })">
+          <span>Day {{ currentDay() ?? '…' }} · today</span>
+          @if (a) {
+            <span [class]="'status status-' + a.overall.toLowerCase()">{{ a.overall }}</span>
+          } @else {
+            <span class="eyebrow">Awaiting</span>
+          }
+        </button>
+      </li>
+      @for (entry of closedDays(); track entry.day) {
+        <li>
+          <button type="button" class="row" [attr.aria-current]="isOpen('closed', entry.day) ? 'page' : null" (click)="view.set({ kind: 'closed', day: entry.day })">
+            <span>Day {{ entry.day }}</span>
+            <span [class]="'status status-' + entry.assessment.overall.toLowerCase()">{{ entry.assessment.overall }}</span>
+          </button>
+        </li>
+      }
+      @if (earlierDays().length) {
+        <li class="eyebrow px-2 pb-1 pt-3">Recorded values only</li>
+        @for (day of earlierDays(); track day) {
+          <li>
+            <button type="button" class="row" [attr.aria-current]="isOpen('earlier', day) ? 'page' : null" (click)="view.set({ kind: 'earlier', day })">
+              <span>Day {{ day }}</span>
+              <span class="eyebrow">No status</span>
+            </button>
+          </li>
+        }
+      }
+    </ul>
+    <button type="button" class="reset" (click)="confirming.set('reset')">Reset demo data</button>
+  </nav>
+
+  <!-- the selected day -->
+  <div class="min-w-0">
+    @switch (view().kind) {
+      @case ('today') {
+        @if (a) {
+          <div class="paper">
+            <app-mission-report-print [assessment]="a" [plan]="store.plan()" [crewName]="crewName()" />
+          </div>
+        } @else if (store.pendingDay(); as day) {
+          <section class="panel p-6" role="status">
+            <div class="display text-lg text-ink">Awaiting day {{ day }} readings</div>
+            <p class="m-0 mt-2 max-w-2xl text-sm leading-6 text-ink-dim">
+              Day {{ day - 1 }} is closed and saved in the log. Day {{ day }} has no assessment until its readings are
+              logged; the report appears here once the mission computer has assessed them.
+            </p>
+            <a routerLink="/health" class="btn btn-primary mt-4">Log day {{ day }} readings</a>
+          </section>
+        } @else {
+          <section class="panel p-6" role="status">
+            <div class="display text-lg text-ink">{{ store.loading() ? 'Loading crew data…' : "Awaiting today's readings" }}</div>
+          </section>
+        }
+      }
+      @case ('closed') {
+        @if (closed) {
+          <p class="m-0 mb-3 text-sm leading-6 text-ink-dim" role="status">
+            Saved report for day {{ closed.day }}, closed {{ closed.closedAtIso | date: 'd MMM, HH:mm' }}. It is shown exactly
+            as it was then, status included.
+          </p>
+          <div class="paper">
+            <app-mission-report-print [assessment]="closed.assessment" [plan]="closed.plan" [crewName]="crewName()" />
+          </div>
+        }
+      }
+      @case ('earlier') {
+        <section class="panel p-5" aria-labelledby="earlier-title">
+          <h2 id="earlier-title" class="display m-0 text-[0.8125rem] text-ink">Day {{ $any(view()).day }} · recorded values</h2>
+          <p class="m-0 mt-2 max-w-2xl text-sm leading-6 text-ink-dim">
+            This day was before the first closed day, so no report was saved for it. These are the values recorded that
+            day; no status is shown because none was saved.
+          </p>
+          <table class="mt-4 w-full border-collapse text-sm">
+            <tbody>
+              @for (row of earlierValues(); track row.label) {
+                <tr class="border-t border-line">
+                  <td class="py-2 pr-4 text-ink-dim">{{ row.label }}</td>
+                  <td class="num py-2 text-right text-ink">
+                    @if (row.value !== null) {
+                      {{ row.value }}<span class="unit ml-1">{{ row.unit }}</span>
+                    } @else {
+                      <span class="text-ink-mute">Not measured</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </section>
+      }
+    }
+  </div>
+</div>
+
+@switch (confirming()) {
+  @case ('close') {
+    @if (a) {
+      <app-modal-shell narrow heading="Close day {{ a.mission_day }}?" eyebrow="Daily report" (closed)="confirming.set(null)">
+        <p class="m-0 text-sm leading-6 text-ink">
+          Today's report will be saved to the log, and day {{ a.mission_day + 1 }} starts waiting for readings.
+        </p>
+        @if (a.triage_recommended) {
+          <p class="m-0 mt-3 rounded-xl border border-crit/50 bg-crit/10 px-4 py-3 text-sm leading-6 text-ink" role="alert">
+            <span class="status status-red mr-1">Emergency</span>
+            An emergency is still active for Ast. {{ crewName() }}. Closing the day does not end it.
+          </p>
+        }
+        <div class="mt-5 flex flex-wrap justify-end gap-3">
+          <button type="button" class="btn" (click)="confirming.set(null)">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="closeDay()">Close day {{ a.mission_day }}</button>
+        </div>
+      </app-modal-shell>
+    }
+  }
+  @case ('reset') {
+    <app-modal-shell narrow heading="Reset demo data?" eyebrow="Demo" (closed)="confirming.set(null)">
+      <p class="m-0 text-sm leading-6 text-ink">
+        This clears the daily log, the training timers and today's scans in this browser, and asks the mission computer
+        to reload its day 14 demo data. Readings logged during the demo are lost.
+      </p>
+      <div class="mt-5 flex flex-wrap justify-end gap-3">
+        <button type="button" class="btn" [disabled]="resetting()" (click)="confirming.set(null)">Cancel</button>
+        <button type="button" class="btn btn-danger" [disabled]="resetting()" (click)="resetDemo()">
+          {{ resetting() ? 'Resetting…' : 'Reset demo data' }}
+        </button>
+      </div>
+    </app-modal-shell>
+  }
+}

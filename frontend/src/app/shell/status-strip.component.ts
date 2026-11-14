@@ -29,6 +29,9 @@ import { StatusChipComponent } from '../ui/status-chip.component';
         @if (store.offline()) {
           <span class="chip">Offline · bundled day {{ a.mission_day }} data</span>
         }
+      } @else if (store.pendingDay(); as day) {
+        <span class="chip num">Day {{ day }}</span>
+        <span class="chip" role="status">Awaiting today's readings</span>
       } @else {
         <span class="chip" role="status">{{ store.loading() ? 'Loading crew data…' : "Awaiting today's readings" }}</span>
       }

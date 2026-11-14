@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 
-const placeholder = () => import('./pages/placeholder-page/placeholder-page.component').then((m) => m.PlaceholderPageComponent);
-
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   {
@@ -33,7 +31,11 @@ export const routes: Routes = [
     title: 'Mission',
     loadComponent: () => import('./pages/mission-page/mission-page.component').then((m) => m.MissionPageComponent),
   },
-  { path: 'report', title: 'Daily Report', data: { eyebrow: 'Flight surgeon report' }, loadComponent: placeholder },
+  {
+    path: 'report',
+    title: 'Daily Report',
+    loadComponent: () => import('./pages/report-page/report-page.component').then((m) => m.ReportPageComponent),
+  },
   {
     path: 'triage',
     title: 'Emergency triage',

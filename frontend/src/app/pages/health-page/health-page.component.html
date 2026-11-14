@@ -7,7 +7,7 @@
   </app-section-header>
 
   <div class="flex flex-wrap gap-3">
-    <button type="button" class="btn btn-primary" [disabled]="!a || store.offline()" (click)="openForm()">
+    <button type="button" class="btn btn-primary" [disabled]="!formContext() || store.offline()" (click)="openForm()">
       Log today's readings
     </button>
     <button type="button" class="btn" [disabled]="!a" (click)="scanOpen.set(true)">Guided scan capture</button>
@@ -112,18 +112,23 @@
   @if (scanOpen()) {
     <app-ultrasound-attachment-modal [assessment]="a" (attached)="store.addScan($event)" (closed)="scanOpen.set(false)" />
   }
-  @if (formOpen()) {
-    <app-measurement-form-modal
-      [assessment]="a"
-      [nextMissionDay]="a.mission_day"
-      [environment]="a.environment"
-      [scans]="store.scans()"
-      [submitting]="saving()"
-      [error]="formError()"
-      (closed)="formOpen.set(false)"
-      (saveMeasurement)="save($event)"
-    />
-  }
 } @else {
-  <app-awaiting-panel hint="There is no assessment for today yet. It appears here once today's readings have been logged." />
+  <app-awaiting-panel hint="There is no assessment for this day yet. It appears here once the day's readings have been logged and assessed.">
+    @if (formContext() && !store.offline()) {
+      <button type="button" class="btn btn-primary mt-4" (click)="openForm()">Log day {{ formDay() }} readings</button>
+    }
+  </app-awaiting-panel>
+}
+
+@if (formOpen() && formContext(); as context) {
+  <app-measurement-form-modal
+    [assessment]="context"
+    [nextMissionDay]="formDay()"
+    [environment]="context.environment"
+    [scans]="store.scans()"
+    [submitting]="saving()"
+    [error]="formError()"
+    (closed)="formOpen.set(false)"
+    (saveMeasurement)="save($event)"
+  />
 }

@@ -9,9 +9,15 @@ import { MissionStore } from '../core/mission-store.service';
   host: { class: 'block' },
   template: `
     <section class="panel mt-6 p-6" role="status">
-      <div class="display text-lg text-ink">{{ store.loading() ? 'Loading crew data…' : "Awaiting today's readings" }}</div>
-      @if (!store.loading()) {
+      @if (store.pendingDay(); as day) {
+        <div class="display text-lg text-ink">Awaiting day {{ day }} readings</div>
         <p class="m-0 mt-2 text-sm leading-6 text-ink-dim">{{ hint() }}</p>
+        <ng-content />
+      } @else {
+        <div class="display text-lg text-ink">{{ store.loading() ? 'Loading crew data…' : "Awaiting today's readings" }}</div>
+        @if (!store.loading()) {
+          <p class="m-0 mt-2 text-sm leading-6 text-ink-dim">{{ hint() }}</p>
+        }
       }
     </section>
   `,

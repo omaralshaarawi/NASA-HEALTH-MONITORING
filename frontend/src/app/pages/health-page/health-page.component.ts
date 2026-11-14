@@ -56,6 +56,13 @@ export class HealthPageComponent {
   protected readonly formError = signal('');
   protected readonly notice = signal('');
 
+  // The readings form needs who and where. On a day still waiting for readings that comes from
+  // the day just closed; nothing about the new day is filled in.
+  protected readonly formContext = computed(
+    () => this.store.assessment() ?? (this.store.pendingDay() ? (this.store.lastClosed()?.assessment ?? null) : null),
+  );
+  protected readonly formDay = computed(() => this.store.assessment()?.mission_day ?? this.store.pendingDay() ?? 0);
+
   // labels of the indicators that set the selected region's status
   protected readonly drivers = computed(() => {
     const assessment = this.store.assessment();
