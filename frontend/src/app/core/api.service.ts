@@ -32,6 +32,15 @@ export interface AstronautSummary {
 
 export type TriageAnswer = 'yes' | 'no' | 'done';
 
+// what opens a triage incident; the voice workflow takes the same fields
+export interface TriageStartRequest {
+  patient_id: string;
+  reporter_id?: string;
+  environment_id?: string;
+  distance_km?: number;
+  mission_day?: number;
+}
+
 export interface TriageProtocol {
   protocol_id: string;
   version: string;
@@ -131,13 +140,7 @@ export class ApiService {
     return this.http.get<TriageProtocol>(`${API_BASE}/api/triage/protocol`);
   }
 
-  startTriage(request: {
-    patient_id: string;
-    reporter_id?: string;
-    environment_id?: string;
-    distance_km?: number;
-    mission_day?: number;
-  }): Observable<TriageIncident> {
+  startTriage(request: TriageStartRequest): Observable<TriageIncident> {
     return this.http.post<TriageIncident>(`${API_BASE}/api/triage/start`, request);
   }
 

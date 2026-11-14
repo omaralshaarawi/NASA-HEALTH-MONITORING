@@ -1,0 +1,88 @@
+<section class="panel p-5" [class.border-signal]="call.active()" aria-label="Voice call with JARVIS">
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+    <div class="min-w-0 flex-1 basis-56">
+      <div class="eyebrow">JARVIS · voice operator</div>
+      <div class="mt-1.5 flex items-center gap-2.5 text-ink" role="status">
+        <svg
+          class="shrink-0"
+          [class.live]="look() === 'connecting' || look() === 'speaking'"
+          [class.text-signal]="call.active() && look() !== 'muted'"
+          [class.text-warn]="look() === 'muted'"
+          [class.text-crit]="look() === 'error'"
+          viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+        >
+          @switch (look()) {
+            @case ('connecting') {
+              <path d="M10 3v3M10 14v3M3 10h3M14 10h3M5 5l2 2M13 13l2 2M15 5l-2 2M7 13l-2 2" />
+            }
+            @case ('listening') {
+              <rect x="7.5" y="2.5" width="5" height="9" rx="2.5" /><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v2.5" />
+            }
+            @case ('thinking') {
+              <circle cx="5" cy="10" r="1" /><circle cx="10" cy="10" r="1" /><circle cx="15" cy="10" r="1" />
+            }
+            @case ('speaking') {
+              <path d="M3 8v4M6.5 5.5v9M10 3v14M13.5 5.5v9M17 8v4" />
+            }
+            @case ('muted') {
+              <rect x="7.5" y="2.5" width="5" height="9" rx="2.5" /><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v2.5M3 3l14 14" />
+            }
+            @case ('error') {
+              <path d="M10 2.5 18.5 17h-17Z" /><path d="M10 8v4.25M10 14.5v.25" />
+            }
+            @default {
+              <path d="M3 12.5c4.5-3.5 9.5-3.5 14 0l-1.5 2-3-1v-2c-1.7-.5-3.3-.5-5 0v2l-3 1Z" />
+            }
+          }
+        </svg>
+        <span class="display text-lg leading-none">{{ label() }}</span>
+        @if (look() === 'muted') {
+          <span class="chip border-warn text-warn">JARVIS cannot hear you</span>
+        }
+      </div>
+    </div>
+
+    @if (call.active()) {
+      <div class="flex flex-wrap gap-2">
+        <button type="button" class="btn" [attr.aria-pressed]="call.muted()" (click)="call.toggleMute()">
+          {{ call.muted() ? 'Unmute mic' : 'Mute mic' }}
+        </button>
+        <button type="button" class="btn btn-danger" (click)="end()">{{ confirmingEnd() ? 'Tap again to end' : 'End call' }}</button>
+        @if (confirmingEnd()) {
+          <button type="button" class="btn" (click)="confirmingEnd.set(false)">Keep call</button>
+        }
+      </div>
+    } @else if (call.phase() === 'ended') {
+      <button type="button" class="btn" (click)="callAgain.emit()">Call again</button>
+    }
+  </div>
+
+  @if (call.phase() === 'error') {
+    <div class="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-crit/50 bg-crit/10 px-4 py-3" role="alert">
+      <p class="m-0 min-w-0 flex-1 basis-64 text-sm leading-6 text-ink">{{ problem() }} The checklist below still works without the call.</p>
+      <button type="button" class="btn" (click)="callAgain.emit()">Try again</button>
+    </div>
+  }
+
+  <!-- subtitles: the line being spoken now, large -->
+  <p class="caption m-0 mt-4" aria-live="polite">
+    @if (current(); as line) {
+      <span class="who">{{ line.speaker }}</span><span [class.interim]="!line.final">{{ line.text }}</span>
+    } @else if (call.active()) {
+      <span class="text-base text-ink-dim">Allow the microphone if the browser asks. Answer out loud with yes, no or done.</span>
+    } @else {
+      <span class="text-base text-ink-dim">Continue with the buttons on the checklist.</span>
+    }
+  </p>
+
+  @if (call.lines().length > 1) {
+    <div #log class="log mt-3 border-t border-line pt-3" tabindex="0" aria-label="Conversation so far" (scroll)="scrolled(log)">
+      @for (line of call.lines(); track $index) {
+        <p class="m-0 py-0.5 text-sm leading-6 text-ink-dim">
+          <span class="who">{{ line.speaker }}</span><span [class.interim]="!line.final">{{ line.text }}</span>
+        </p>
+      }
+    </div>
+  }
+</section>
