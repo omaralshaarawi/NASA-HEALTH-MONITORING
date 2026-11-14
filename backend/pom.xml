@@ -40,6 +40,19 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <!-- Bundle the shared contract files in the jar so the app runs without the folder on disk. -->
+            <resource>
+                <directory>contract</directory>
+                <targetPath>contract</targetPath>
+                <includes>
+                    <include>*.json</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
