@@ -1,12 +1,14 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { EMPTY, Subscription, catchError, interval, map, of, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { EMPTY, Subscription, catchError, interval, map, of, skip, switchMap } from 'rxjs';
 
-import { TopBarComponent } from '../../components/dashboard/top-bar.component';
 import { CREW } from '../../core/crew';
 import { ApiService, TriageAnswer, TriageIncident, TriageProtocol } from '../../core/api.service';
-import { VoiceOperatorService } from '../../core/voice-operator.service';
+import { MissionStore } from '../../core/mission-store.service';
+import { VoiceCallService } from '../../core/voice/voice-call.service';
+import { VoiceCallPanelComponent } from '../../components/triage/voice-call-panel.component';
 import { MOCK_ASSESSMENTS } from '../../mocks/mock-data';
 import { AssessmentResponse, EnvironmentProfile } from '../../models/contract';
 import protocolJson from '../../models/triage_protocol.json';
@@ -15,7 +17,7 @@ const BUNDLED_PROTOCOL = protocolJson as TriageProtocol;
 
 @Component({
   selector: 'app-triage-page',
-  imports: [DatePipe, DecimalPipe, RouterLink, TopBarComponent],
+  imports: [DatePipe, DecimalPipe, RouterLink, VoiceCallPanelComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './triage-page.component.html',
 })
@@ -23,7 +25,7 @@ export class TriagePageComponent {
   private readonly api = inject(ApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  protected readonly voice = inject(VoiceOperatorService);
+  protected readonly voice = inject(VoiceCallService);
   private incidentWatch: Subscription | null = null;
 
   protected readonly crew = CREW;
@@ -31,7 +33,7 @@ export class TriagePageComponent {
   protected readonly environments = signal<EnvironmentProfile[]>([]);
   protected readonly assessment = signal<AssessmentResponse | null>(null);
   protected readonly incident = signal<TriageIncident | null>(null);
-  protected readonly patientId = signal('ast_lin');
+  protected readonly patientId = signal(inject(MissionStore).crewId());
   protected readonly environmentId = signal('SPACE_STATION');
   protected readonly distanceKm = signal(400);
   protected readonly missionDay = signal(14);
@@ -46,25 +48,20 @@ export class TriagePageComponent {
     return incident ? this.protocol().steps.find((step) => step.id === incident.state.current_step_id) ?? null : null;
   });
   protected readonly ended = computed(() => this.incident()?.state.status === 'ENDED');
-  protected readonly callLive = computed(() => ['connecting', 'listening', 'thinking', 'speaking'].includes(this.voice.status()));
-  protected readonly callLabel = computed(() => {
-    switch (this.voice.status()) {
-      case 'connecting': return 'Connecting…';
-      case 'listening': return this.voice.muted() ? 'Microphone muted' : 'Listening';
-      case 'thinking': return 'Checking the protocol';
-      case 'speaking': return 'Speaking';
-      case 'failed': return 'Not connected';
-      default: return 'Call ended';
-    }
-  });
   protected readonly environment = computed(
     () => this.environments().find((environment) => environment.id === this.environmentId()) ?? this.assessment()?.environment ?? null,
   );
 
   constructor() {
-    inject(DestroyRef).onDestroy(() => {
-      this.incidentWatch?.unsubscribe();
-      void this.voice.hangUp();
+    // the call itself belongs to the app and carries on after this page is left
+    inject(DestroyRef).onDestroy(() => this.incidentWatch?.unsubscribe());
+
+    // the emergency button pressed while this page is already open
+    this.route.queryParamMap.pipe(skip(1), takeUntilDestroyed()).subscribe((params) => {
+      if (!params.has('autostart') || this.busy() || this.loading()) return;
+      if (this.incident() && !this.ended()) return;
+      this.incident.set(null);
+      this.start();
     });
 
     const query = this.route.snapshot.queryParamMap;
@@ -118,22 +115,28 @@ export class TriagePageComponent {
       this.useLocalIncident();
       return;
     }
-    // JARVIS opens the incident and joins by voice; if that fails the checklist still starts on screen
-    this.voice.start({
-      astronaut_id: this.patientId(),
-      environment_id: this.environmentId(),
-      distance_km: this.distanceKm(),
-    }).then(
-      (incidentId) => this.followVoiceIncident(incidentId),
-      () => {
-        this.notice.set('Voice operator could not be reached · continue with the on-screen checklist.');
-        this.startOnScreen();
-      },
-    );
+    // the voice call is for emergencies only; otherwise the checklist runs on screen
+    if (this.assessment()!.triage_recommended) this.startWithVoice();
+    else this.startOnScreen();
   }
 
-  protected hangUp(): void {
-    void this.voice.hangUp();
+  // "Call again" on the voice panel: a new call, which opens its own incident
+  protected callAgain(): void {
+    if (this.busy() || !this.assessment()) return;
+    this.busy.set(true);
+    this.error.set('');
+    this.startWithVoice();
+  }
+
+  // JARVIS opens the incident and joins by voice; if that fails the checklist still starts on screen
+  private startWithVoice(): void {
+    void this.voice
+      .start({ patient_id: this.patientId(), environment_id: this.environmentId(), distance_km: this.distanceKm() })
+      .then((incidentId) => {
+        if (incidentId) this.followVoiceIncident(incidentId);
+        else if (this.incident()) this.busy.set(false);
+        else this.startOnScreen();
+      });
   }
 
   private startOnScreen(): void {
@@ -287,7 +290,8 @@ export class TriagePageComponent {
       },
       error: () => {
         this.notice.set('JARVIS is on the call, but its incident is on another backend, so this screen runs its own checklist.');
-        this.startOnScreen();
+        if (this.incident()) this.busy.set(false);
+        else this.startOnScreen();
       },
     });
   }
@@ -346,6 +350,8 @@ export class TriagePageComponent {
           this.notice.set('Restored local progress that was not synced to the server. No packet can be queued.');
         } else {
           this.setIncident(incident);
+          // coming back to the page while JARVIS is still working through this incident
+          if (this.voice.active() && this.voice.incidentId() === incidentId) this.watchIncident(incidentId);
         }
       },
       error: () => {

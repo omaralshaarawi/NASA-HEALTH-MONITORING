@@ -1,22 +1,20 @@
-<main class="mx-auto max-w-[84rem] px-4 pb-16 sm:px-6 lg:px-8">
-  <app-top-bar [assessment]="assessment()" />
-
-  <section class="mt-6 flex flex-wrap items-end justify-between gap-4">
+<div class="pb-8">
+  <section class="flex flex-wrap items-end justify-between gap-4">
     <div>
       <div class="eyebrow">Emergency checklist · deterministic protocol</div>
       <h1 class="display m-0 mt-1 text-4xl leading-none text-ink">Crew triage</h1>
       <p class="m-0 mt-2 max-w-3xl text-sm leading-6 text-ink-dim">Follow the onboard medical procedures. This checklist is decision support only and never diagnoses or selects medication.</p>
     </div>
-    <a routerLink="/" class="btn">Back to dashboard</a>
+    <a routerLink="/home" class="btn">Back to home</a>
   </section>
 
   @if (offline()) {
-    <div class="mt-5 rounded border border-signal bg-panel p-4 text-sm leading-6 text-ink" role="alert">
+    <div class="mt-5 rounded-xl border border-signal bg-panel p-4 text-sm leading-6 text-ink" role="alert">
       <strong>Local protocol mode.</strong> The displayed checklist is the bundled protocol. Responses stay in this browser; the incident packet cannot be sent or queued.
     </div>
   }
-  @if (notice()) { <div class="mt-4 rounded border border-line bg-panel p-3 text-sm text-ink-dim" role="status">{{ notice() }}</div> }
-  @if (error()) { <div class="mt-4 rounded border border-signal bg-raised p-3 text-sm text-ink" role="alert">{{ error() }}</div> }
+  @if (notice()) { <div class="mt-4 rounded-xl border border-line bg-panel p-3 text-sm text-ink-dim" role="status">{{ notice() }}</div> }
+  @if (error()) { <div class="mt-4 rounded-xl border border-signal bg-raised p-3 text-sm text-ink" role="alert">{{ error() }}</div> }
 
   @if (!incident()) {
     <section class="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)]">
@@ -25,12 +23,12 @@
         <h2 class="display m-0 mt-1 text-2xl text-ink">Patient and mission context</h2>
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           <label class="text-sm text-ink-dim">Patient
-            <select class="mt-1 w-full rounded border border-line bg-hull px-3 py-2 text-ink" [value]="patientId()" [disabled]="loading()" (change)="patientChanged($event)">
+            <select class="mt-1 w-full rounded-lg border border-line bg-hull px-3 py-2 text-ink" [value]="patientId()" [disabled]="loading()" (change)="patientChanged($event)">
               @for (member of crew; track member.id) { <option [value]="member.id" [selected]="member.id === patientId()">{{ member.name }} · {{ member.role }}</option> }
             </select>
           </label>
           <label class="text-sm text-ink-dim">Habitat
-            <select class="mt-1 w-full rounded border border-line bg-hull px-3 py-2 text-ink" [value]="environmentId()" [disabled]="loading() || offline()" (change)="environmentChanged($event)">
+            <select class="mt-1 w-full rounded-lg border border-line bg-hull px-3 py-2 text-ink" [value]="environmentId()" [disabled]="loading() || offline()" (change)="environmentChanged($event)">
               @for (habitat of environments(); track habitat.id) { <option [value]="habitat.id" [selected]="habitat.id === environmentId()">{{ habitat.label }}</option> }
             </select>
           </label>
@@ -51,39 +49,18 @@
       <aside class="panel p-5">
         <div class="eyebrow">Protocol reference</div>
         <h2 class="display m-0 mt-1 text-xl text-ink">{{ protocol().scenario.replaceAll('_', ' ') }}</h2>
-        <p class="mt-3 text-sm leading-6 text-ink-dim">Starting the protocol calls JARVIS, the voice operator, which reads each step aloud and listens for yes, no or done. The buttons stay available as a backup.</p>
+        @if (assessment()?.triage_recommended) {
+          <p class="mt-3 text-sm leading-6 text-ink-dim">Starting the protocol calls JARVIS, the voice operator, which reads each step aloud and listens for yes, no or done. The buttons stay available as a backup.</p>
+        }
         <p class="mt-3 text-sm leading-6 text-ink-dim">{{ protocol().steps.length }} deterministic steps · version {{ protocol().version }}</p>
-        <p class="m-0 rounded border border-line bg-hull p-3 text-xs leading-5 text-ink-mute">{{ protocol().review_status.replaceAll('_', ' ') }}. Use the onboard checklist and trained crew procedures; this prototype content requires clinician review.</p>
+        <p class="m-0 rounded-xl border border-line bg-hull p-3 text-xs leading-5 text-ink-mute">{{ protocol().review_status.replaceAll('_', ' ') }}. Use the onboard checklist and trained crew procedures; this prototype content requires clinician review.</p>
       </aside>
     </section>
   }
 
   @if (incident(); as active) {
-    @if (voice.status() !== 'off') {
-      <section class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 rounded border bg-panel p-4" [class.border-signal]="callLive()" [class.border-line]="!callLive()" aria-label="Voice operator call">
-        <div class="flex items-center gap-3">
-          <span class="h-2.5 w-2.5 shrink-0 rounded-full" [class.bg-signal]="callLive()" [class.bg-line-strong]="!callLive()" [class.animate-pulse]="callLive()"></span>
-          <div>
-            <div class="eyebrow">JARVIS · voice operator</div>
-            <div class="display mt-0.5 text-lg leading-none text-ink" role="status">{{ callLabel() }}</div>
-          </div>
-        </div>
-        <p class="m-0 min-w-0 flex-1 basis-64 text-sm leading-6 text-ink-dim">
-          @if (voice.lastLine(); as line) {
-            <span class="eyebrow mr-2">{{ line.speaker }}</span>{{ line.text }}
-          } @else if (callLive()) {
-            Allow the microphone if the browser asks. Answer out loud with yes, no or done.
-          } @else {
-            Continue with the buttons below.
-          }
-        </p>
-        @if (callLive()) {
-          <div class="flex gap-2">
-            <button type="button" class="btn" [attr.aria-pressed]="voice.muted()" (click)="voice.toggleMute()">{{ voice.muted() ? 'Unmute' : 'Mute' }}</button>
-            <button type="button" class="btn" (click)="hangUp()">Hang up</button>
-          </div>
-        }
-      </section>
+    @if (voice.phase() !== 'idle' && voice.patientId() === active.patient_id) {
+      <app-voice-call-panel class="mt-6" (callAgain)="callAgain()" />
     }
 
     <section class="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
@@ -107,7 +84,7 @@
               <div class="mt-5"><button type="button" class="btn btn-primary min-w-36" [disabled]="busy()" (click)="answer('done')">Done</button></div>
             }
             @if (ended()) {
-              <div class="mt-5 rounded border border-line bg-hull p-3 text-sm text-ink-dim">Protocol ended · {{ offline() ? 'local state only' : 'incident recorded by the backend' }}.</div>
+              <div class="mt-5 rounded-xl border border-line bg-hull p-3 text-sm text-ink-dim">Protocol ended · {{ offline() ? 'local state only' : 'incident recorded by the backend' }}.</div>
             }
           </section>
         } @else if (!ended()) {
@@ -156,13 +133,13 @@
       </aside>
     </section>
 
-    <section class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded border border-line bg-panel p-4">
+    <section class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-panel p-4">
       <p class="m-0 text-sm text-ink-dim">You can stop at any point, including during the CPR loop.</p>
       <button type="button" class="btn" [disabled]="busy() || ended()" (click)="endProtocol()">End protocol</button>
     </section>
 
     @if (ended() && active.store_and_forward; as packet) {
-      <section class="mt-5 rounded border border-signal bg-panel p-5" aria-labelledby="packet-title">
+      <section class="mt-5 rounded-xl border border-signal bg-panel p-5" aria-labelledby="packet-title">
         <div class="eyebrow">Store-and-forward packet</div>
         <h2 id="packet-title" class="display m-0 mt-1 text-2xl text-ink">{{ packet.delivery.replaceAll('_', ' ') }}</h2>
         <div class="mt-4 grid gap-3 sm:grid-cols-3">
@@ -173,12 +150,11 @@
         <p class="mb-0 mt-4 border-t border-line pt-4 text-sm leading-6 text-ink-dim">{{ packet.summary }}</p>
       </section>
     } @else if (ended() && offline()) {
-      <section class="mt-5 rounded border border-signal bg-panel p-5">
+      <section class="mt-5 rounded-xl border border-signal bg-panel p-5">
         <div class="eyebrow">No packet queued</div>
         <p class="m-0 mt-2 text-sm leading-6 text-ink-dim">This incident ended locally because the server connection was unavailable. The checklist remains visible here, but the store-and-forward packet was not created.</p>
       </section>
     }
   }
 
-  @if (assessment(); as a) { <p class="m-0 mt-8 border-t border-line pt-4 text-xs leading-5 text-ink-mute">{{ a.disclaimer }}</p> }
-</main>
+</div>

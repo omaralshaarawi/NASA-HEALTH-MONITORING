@@ -1,181 +1,81 @@
-<section aria-labelledby="plan-title">
-  <!-- briefing -->
-  <header class="panel px-5 py-5 md:px-6">
-    <div class="flex flex-wrap items-start justify-between gap-4">
-      <div>
-        <div class="eyebrow">
-          Mission day {{ plan().generated_for_mission_day }} · {{ assessment().environment.label }}
-        </div>
-        <h2 id="plan-title" class="display m-0 mt-1 text-3xl leading-8 text-ink">Countermeasure plan</h2>
-      </div>
-      <div class="flex flex-wrap items-center gap-2">
-        <span class="chip" [class.border-signal]="writtenByAi()" [class.text-signal]="writtenByAi()">
-          {{ writtenByAi() ? 'Written by ' + plan().llm.model : 'Offline rule-based plan' }}
-        </span>
-        <span class="chip num">{{ plan().generated_at_iso | date: 'd MMM y, HH:mm' : 'UTC' }} UTC</span>
-      </div>
-    </div>
-
-    <p class="m-0 mt-4 max-w-[70ch] text-base leading-7 text-ink">{{ draft().explanation }}</p>
-
-    @if (draft().escalate_to_flight_surgeon) {
-      <div
-        class="mt-5 flex gap-3 rounded border px-4 py-3"
-        [class.border-crit]="emergency()"
-        [class.border-warn]="!emergency()"
-        role="status"
-      >
-        <svg viewBox="0 0 20 20" width="20" height="20" class="mt-0.5 shrink-0" [class.text-crit]="emergency()"
-             [class.text-warn]="!emergency()" fill="none" stroke="currentColor" stroke-width="1.6"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M10 2.5l8 14.5H2z" /><path d="M10 8v4.5M10 14.6v.2" />
-        </svg>
-        <div>
-          <div class="eyebrow" [class.text-crit]="emergency()" [class.text-warn]="!emergency()">
-            {{ emergency() ? 'Emergency: follow the triage checklist' : 'Flight surgeon review requested' }}
-          </div>
-          <p class="m-0 mt-1 text-sm leading-6 text-ink">{{ draft().escalation_reason }}</p>
-          @if (assessment().comms.mode === 'AUTONOMOUS') {
-            <p class="m-0 mt-1 text-sm leading-6 text-ink-dim">
-              One-way signal delay is
-              <span class="num text-ink">{{ assessment().comms.one_way_delay_s / 60 | number: '1.1-1' }} min</span>,
-              so the report is queued for uplink and the crew acts on the checklist first.
-            </p>
-          }
-        </div>
-      </div>
-    }
-
-    @if (triggers().length) {
-      <div class="mt-5">
-        <div class="eyebrow">What triggered this plan</div>
-        <ul class="m-0 mt-2 grid list-none gap-2 p-0 sm:grid-cols-2 xl:grid-cols-3">
-          @for (t of triggers(); track t.id) {
-            <li>
-              <button
-                type="button"
-                class="group flex w-full items-start justify-between gap-3 rounded border border-line bg-hull px-3 py-2 text-left transition-colors hover:border-signal"
-                (click)="indicatorSelected.emit(t.id)"
-                [attr.aria-label]="'Open the measurement guide for ' + t.label"
-              >
-                <span class="min-w-0">
-                  <span class="block text-sm leading-5 text-ink">{{ t.label }}</span>
-                  <span class="block truncate text-xs leading-5 text-ink-mute">{{ t.reason }}</span>
-                </span>
-                <span class="shrink-0 text-right">
-                  @if (t.value !== null) {
-                    <span class="num block text-sm leading-5 text-ink">{{ t.value }} <span class="text-ink-mute">{{ t.unit }}</span></span>
-                  }
-                  <span [class]="statusClass(t.status)">{{ t.status }}</span>
-                </span>
-              </button>
-            </li>
-          }
-        </ul>
-      </div>
-    }
-  </header>
-
-  <div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
-    <!-- sessions -->
-    <div class="space-y-6">
-      @for (s of draft().sessions; track s.exercise_id; let i = $index) {
-        <app-session-card [session]="s" [index]="i" [resources]="sessionResources(i)" />
-      } @empty {
-        <div class="panel px-5 py-8 text-center">
-          <div class="display text-2xl text-ink">Exercise on hold</div>
-          <p class="mx-auto mb-0 mt-2 max-w-[52ch] text-sm leading-6 text-ink-dim">
-            No sessions are planned today. Work through the emergency triage checklist first. Training
-            restarts after the readings are re-measured and the status is cleared.
-          </p>
-        </div>
-      }
-    </div>
-
-    <!-- side rail -->
-    <aside class="space-y-6">
-      <section class="panel px-5 py-5" aria-labelledby="nutrition-title">
-        <div class="eyebrow" id="nutrition-title">Nutrition today</div>
-        <div class="mt-2 flex items-baseline gap-2">
-          <span class="num text-4xl leading-none text-ink">{{ signed(draft().nutrition.kcal_adjustment) }}</span>
-          <span class="unit">kcal vs planned ration</span>
-        </div>
-        @if (draft().nutrition.focus.length) {
-          <ul class="m-0 mt-4 flex list-none flex-wrap gap-2 p-0">
-            @for (f of draft().nutrition.focus; track f) {
-              <li class="chip">{{ f }}</li>
-            }
-          </ul>
-        }
-        <p class="m-0 mt-4 text-sm leading-6 text-ink-dim">{{ draft().nutrition.notes }}</p>
-      </section>
-
-      <section class="panel px-5 py-5" aria-labelledby="loop-title">
-        <div class="eyebrow" id="loop-title">Close the loop · habitat cost</div>
-        <p class="m-0 mt-2 text-sm leading-6 text-ink-dim">
-          What this plan adds for life support to supply and recycle.
+<div class="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]">
+  <!-- sessions -->
+  <div class="space-y-4">
+    <h2 class="sr-only">Today's sessions</h2>
+    @for (s of draft().sessions; track s.exercise_id; let i = $index) {
+      <app-session-card [session]="s" [index]="i" [resources]="sessionResources(i)">
+        <app-session-timer [exerciseId]="s.exercise_id" [minutes]="s.minutes" [needsDirection]="needsDirection(s.exercise_id)" />
+      </app-session-card>
+    } @empty {
+      <div class="panel px-5 py-8 text-center">
+        <div class="display text-xl text-ink">Exercise on hold</div>
+        <p class="mx-auto mb-0 mt-2 max-w-[52ch] text-sm leading-6 text-ink-dim">
+          No sessions are planned today. Work through the emergency triage checklist first. Training restarts after
+          the readings are re-measured and the status is cleared.
         </p>
-
-        <div class="mt-4 grid grid-cols-3 gap-3">
-          <div>
-            <div class="num text-2xl leading-7 text-ink">+{{ resources().totals.extra_kcal | number }}</div>
-            <div class="unit">kcal food</div>
-          </div>
-          <div>
-            <div class="num text-2xl leading-7 text-ink">+{{ resources().totals.extra_water_ml | number }}</div>
-            <div class="unit">mL H₂O</div>
-          </div>
-          <div>
-            <div class="num text-2xl leading-7 text-ink">+{{ resources().totals.extra_co2_g | number }}</div>
-            <div class="unit">g CO₂</div>
-          </div>
-        </div>
-
-        @if (resources().totals.extra_kcal > 0) {
-          <div class="mt-5">
-            <div class="flex h-2 gap-0.5 overflow-hidden rounded-sm" aria-hidden="true">
-              @for (s of shares(); track $index) {
-                <div class="bg-signal" [style.width.%]="s.percent" [style.opacity]="1 - $index * 0.22"></div>
-              }
-            </div>
-            <ul class="m-0 mt-3 list-none space-y-1.5 p-0">
-              @for (s of shares(); track $index) {
-                <li class="flex items-baseline justify-between gap-3 text-sm leading-5">
-                  <span class="flex min-w-0 items-baseline gap-2 text-ink-dim">
-                    <span class="inline-block h-2 w-2 shrink-0 bg-signal" [style.opacity]="1 - $index * 0.22"></span>
-                    <span class="truncate">{{ s.title }}</span>
-                  </span>
-                  <span class="num shrink-0 text-ink">+{{ s.kcal | number }} kcal</span>
-                </li>
-              }
-            </ul>
-          </div>
-        }
-
-        <dl class="m-0 mt-5 space-y-1 border-t border-line pt-4 text-xs leading-5 text-ink-mute">
-          <div class="flex justify-between gap-3">
-            <dt>Body mass assumed</dt>
-            <dd class="num m-0 text-ink-dim">{{ resources().assumptions.mass_kg }} kg</dd>
-          </div>
-          <div class="flex justify-between gap-3">
-            <dt>Water per kcal</dt>
-            <dd class="num m-0 text-ink-dim">{{ resources().assumptions.water_ml_per_kcal }} mL</dd>
-          </div>
-          <div class="flex justify-between gap-3">
-            <dt>CO₂ per kcal</dt>
-            <dd class="num m-0 text-ink-dim">{{ resources().assumptions.co2_g_per_kcal }} g</dd>
-          </div>
-        </dl>
-        <p class="num m-0 mt-3 text-[0.6875rem] leading-5 text-ink-mute">{{ resources().assumptions.formula }}</p>
-        <p class="eyebrow m-0 mt-3 text-signal">Simulated closed-loop ECLSS · {{ resources().label }}</p>
-      </section>
-    </aside>
+      </div>
+    }
   </div>
 
-  <footer class="mt-6 border-t border-line pt-4">
-    <p class="m-0 max-w-[90ch] text-xs leading-5 text-ink-mute">{{ plan().disclaimer }}</p>
-    <p class="num m-0 mt-1 text-[0.6875rem] leading-5 text-ink-mute">
-      {{ plan().plan_id }} · input {{ plan().llm.input_hash.slice(0, 12) }}
-    </p>
-  </footer>
-</section>
+  <!-- side rail -->
+  <aside class="space-y-4">
+    <section class="panel px-5 py-5" aria-labelledby="nutrition-title">
+      <h2 class="display m-0 text-[0.8125rem] text-ink" id="nutrition-title">Nutrition today</h2>
+      <div class="mt-4 flex items-baseline gap-2">
+        <span class="num text-4xl leading-none text-ink">{{ signed(draft().nutrition.kcal_adjustment) }}</span>
+        <span class="unit">kcal vs planned ration</span>
+      </div>
+      @if (draft().nutrition.focus.length) {
+        <ul class="m-0 mt-4 flex list-none flex-wrap gap-2 p-0">
+          @for (f of draft().nutrition.focus; track f) {
+            <li class="chip whitespace-normal">{{ f }}</li>
+          }
+        </ul>
+      }
+      <p class="m-0 mt-4 text-sm leading-6 text-ink-dim">{{ draft().nutrition.notes | plainWords }}</p>
+    </section>
+
+    <section class="panel px-5 py-5" aria-labelledby="loop-title">
+      <h2 class="display m-0 text-[0.8125rem] text-ink" id="loop-title">Life-support impact</h2>
+      <p class="m-0 mt-2 text-sm leading-6 text-ink-dim">What this plan adds for life support to supply and recycle.</p>
+
+      <div class="mt-4 grid grid-cols-3 gap-3">
+        <div>
+          <div class="num text-2xl leading-7 text-ink">+{{ resources().totals.extra_kcal | number }}</div>
+          <div class="unit">kcal food</div>
+        </div>
+        <div>
+          <div class="num text-2xl leading-7 text-ink">+{{ resources().totals.extra_water_ml | number }}</div>
+          <div class="unit">mL H₂O</div>
+        </div>
+        <div>
+          <div class="num text-2xl leading-7 text-ink">+{{ resources().totals.extra_co2_g | number }}</div>
+          <div class="unit">g CO₂</div>
+        </div>
+      </div>
+
+      @if (resources().totals.extra_kcal > 0) {
+        <div class="mt-5">
+          <div class="flex h-2 gap-0.5 overflow-hidden rounded-full" aria-hidden="true">
+            @for (s of shares(); track $index) {
+              <div class="bg-signal" [style.width.%]="s.percent" [style.opacity]="1 - $index * 0.22"></div>
+            }
+          </div>
+          <ul class="m-0 mt-3 list-none space-y-1.5 p-0">
+            @for (s of shares(); track $index) {
+              <li class="flex items-baseline justify-between gap-3 text-sm leading-5">
+                <span class="flex min-w-0 items-baseline gap-2 text-ink-dim">
+                  <span class="inline-block h-2 w-2 shrink-0 rounded-full bg-signal" [style.opacity]="1 - $index * 0.22"></span>
+                  <span class="truncate">{{ s.title }}</span>
+                </span>
+                <span class="num shrink-0 text-ink">+{{ s.kcal | number }} kcal</span>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+
+      <p class="eyebrow m-0 mt-5 border-t border-line pt-4 text-signal">{{ resources().label }}</p>
+    </section>
+  </aside>
+</div>

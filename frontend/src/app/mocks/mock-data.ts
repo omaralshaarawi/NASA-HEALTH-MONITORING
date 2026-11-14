@@ -20,6 +20,3 @@ export const MOCK_PLANS: Record<string, CountermeasurePlan> = {
   ast_kai: planKai as unknown as CountermeasurePlan,
   ast_lin: planLin as unknown as CountermeasurePlan,
 };
-
-export const MOCK_ASSESSMENT_KAI = MOCK_ASSESSMENTS['ast_kai'];
-export const MOCK_PLAN_KAI = MOCK_PLANS['ast_kai'];

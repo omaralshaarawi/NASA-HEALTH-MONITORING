@@ -1,0 +1,142 @@
+@let a = store.assessment();
+@let p = store.plan();
+
+<app-section-header eyebrow="Daily analysis" heading="Today's readings & what triggered this plan">
+  Each reading for Ast. {{ store.member().name }} beside their own normal from the first week of the mission, and the
+  readings that shaped today's plan.
+</app-section-header>
+
+@if (a) {
+  @if (p && p.draft.escalate_to_flight_surgeon) {
+    <div
+      class="mt-6 flex gap-3 rounded-2xl border px-5 py-4 backdrop-blur-xl"
+      [class]="a.triage_recommended ? 'border-crit/60 bg-crit/10' : 'border-warn/60 bg-warn/10'"
+      role="status"
+    >
+      <svg
+        viewBox="0 0 20 20" width="20" height="20" class="mt-0.5 shrink-0" [class]="a.triage_recommended ? 'text-crit' : 'text-warn'"
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+      >
+        <path d="M10 2.5l8 14.5H2z" /><path d="M10 8v4.5M10 14.6v.2" />
+      </svg>
+      <div>
+        <div class="eyebrow" [class]="a.triage_recommended ? 'text-crit' : 'text-warn'">
+          {{ a.triage_recommended ? 'Emergency: follow the triage checklist' : 'Flight surgeon review requested' }}
+        </div>
+        <p class="m-0 mt-1 text-sm leading-6 text-ink">{{ p.draft.escalation_reason | plainWords }}</p>
+        @if (a.comms.mode === 'AUTONOMOUS' && delay(); as d) {
+          <p class="m-0 mt-1 text-sm leading-6 text-ink-dim">
+            The one-way signal delay is <span class="num text-ink">{{ d.value }} {{ d.unit }}</span>, so the report is
+            queued for Earth and the crew acts first.
+          </p>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="mt-6 grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_24rem]">
+    <section class="panel min-w-0 p-5" aria-labelledby="readings-title">
+      <div class="flex flex-wrap items-baseline justify-between gap-3">
+        <h2 id="readings-title" class="display m-0 text-[0.8125rem] text-ink">Readings · day {{ a.mission_day }}</h2>
+        <span class="eyebrow">Select a reading for its 0 g guide</span>
+      </div>
+      <div class="mt-4 overflow-x-auto">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Reading</th>
+              <th scope="col" class="r">Today</th>
+              <th scope="col" class="r">Own normal</th>
+              <th scope="col" class="r">Z</th>
+              <th scope="col">Status</th>
+              <th scope="col">Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (i of a.indicators; track i.id) {
+              <tr>
+                <td>
+                  <button type="button" class="name" (click)="guideFor.set(i.id)">{{ i.label }}</button>
+                  <div class="eyebrow mt-0.5">{{ regionLabels[i.region] }}</div>
+                </td>
+                <td class="r num text-ink">
+                  {{ i.value ?? '—' }}@if (i.value !== null) {<span class="unit ml-1">{{ i.unit }}</span>}
+                </td>
+                <td class="r num">
+                  @if (i.anchor; as anchor) {
+                    {{ anchor.mean | number: '1.0-2' }} ± {{ anchor.sd_eff | number: '1.0-2' }}
+                  } @else {
+                    <span aria-label="No personal baseline for this reading">—</span>
+                  }
+                </td>
+                <td class="r num">{{ i.z === null ? '—' : (i.z | number: '1.1-1') }}</td>
+                <td><span [class]="'status status-' + i.status.toLowerCase()">{{ i.status }}</span></td>
+                <td class="min-w-48">
+                  {{ i.reasons.join(' · ') }}
+                  @if (i.remeasure) {
+                    <div class="mt-0.5 text-xs uppercase tracking-wider text-warn">Re-measure to confirm</div>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="m-0 mt-4 text-xs leading-5 text-ink-mute">
+        Own normal is the average of mission days 1 to 7, with its spread. Z is how far today sits from it. A dash means
+        the reading has no personal baseline.
+      </p>
+    </section>
+
+    <div class="space-y-4">
+      <section class="panel p-5" aria-labelledby="why-title">
+        <h2 id="why-title" class="display m-0 text-[0.8125rem] text-ink">In plain words</h2>
+        @if (p) {
+          <p class="m-0 mt-3 text-[0.9375rem] leading-7 text-ink">{{ p.draft.explanation | plainWords }}</p>
+          <a routerLink="/analysis/plan" class="btn mt-4">Open training &amp; nutrition plan</a>
+        } @else {
+          <p class="m-0 mt-3 text-sm leading-6 text-ink-dim" role="status">Preparing today's plan…</p>
+        }
+      </section>
+
+      <section class="panel p-5" aria-labelledby="triggers-title">
+        <h2 id="triggers-title" class="display m-0 text-[0.8125rem] text-ink">What triggered this plan</h2>
+        @if (p) {
+          <ul class="m-0 mt-3 grid list-none gap-2 p-0">
+            @for (t of triggers(); track t.id) {
+              <li>
+                <button
+                  type="button"
+                  class="flex w-full items-start justify-between gap-3 rounded-xl border border-line bg-white/[0.03] px-3.5 py-2.5 text-left transition-colors hover:border-line-strong"
+                  [attr.aria-label]="'Open the measurement guide for ' + t.label"
+                  (click)="guideFor.set(t.id)"
+                >
+                  <span class="min-w-0">
+                    <span class="block text-sm leading-5 text-ink">{{ t.label }}</span>
+                    <span class="block text-xs leading-5 text-ink-mute">{{ t.reasons.join(' · ') }}</span>
+                  </span>
+                  <span class="shrink-0 text-right">
+                    @if (t.value !== null) {
+                      <span class="num block text-sm leading-5 text-ink">{{ t.value }} <span class="unit">{{ t.unit }}</span></span>
+                    }
+                    <span [class]="'status status-' + t.status.toLowerCase()">{{ t.status }}</span>
+                  </span>
+                </button>
+              </li>
+            } @empty {
+              <li class="text-sm leading-6 text-ink-dim">Nothing out of the ordinary: this is the routine plan.</li>
+            }
+          </ul>
+        } @else {
+          <p class="m-0 mt-3 text-sm leading-6 text-ink-dim">Preparing today's plan…</p>
+        }
+      </section>
+    </div>
+  </div>
+
+  @if (guideFor(); as id) {
+    <app-measurement-guide-modal [indicatorId]="id" [assessment]="a" (closed)="guideFor.set(null)" />
+  }
+} @else {
+  <app-awaiting-panel />
+}

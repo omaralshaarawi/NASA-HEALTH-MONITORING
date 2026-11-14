@@ -11,7 +11,7 @@ export interface PvtResult {
   selector: 'app-pvt-test',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="rounded border border-line bg-hull p-4">
+    <div class="rounded-xl border border-line bg-hull p-4">
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div class="eyebrow">Optional · browser reaction test</div>
@@ -20,7 +20,7 @@ export interface PvtResult {
         @if (running()) { <span class="chip num">{{ remaining() }} s</span> }
         @else if (result(); as done) { <span class="chip num">{{ done.n_trials }} trials · median {{ done.median_rt_ms }} ms</span> }
       </div>
-      <div class="mt-3 flex min-h-28 items-center justify-center rounded border border-line bg-panel">
+      <div class="mt-3 flex min-h-28 items-center justify-center rounded-xl border border-line bg-panel">
         @if (running() && targetVisible()) {
           <button type="button" class="h-16 w-16 rounded-full border-4 border-signal bg-signal text-void" aria-label="Tap now" (click)="respond()">
             <span class="sr-only">Tap now</span>

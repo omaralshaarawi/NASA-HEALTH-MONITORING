@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { CountermeasurePlanDraft, ResourceBlock } from '../../../models/contract';
+import { PlainWordsPipe } from '../../../ui/plain-words.pipe';
 import { ExerciseFigureComponent } from '../exercise-figure/exercise-figure.component';
 import { exerciseTitle, menuItem } from '../planner-labels';
 import { RegionBadgeComponent } from '../region-badge/region-badge.component';
@@ -11,7 +12,7 @@ type SessionResources = ResourceBlock['sessions'][number];
 
 @Component({
   selector: 'app-session-card',
-  imports: [ExerciseFigureComponent, RegionBadgeComponent, ResourceChipsComponent],
+  imports: [ExerciseFigureComponent, PlainWordsPipe, RegionBadgeComponent, ResourceChipsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block' },
   templateUrl: './session-card.component.html',

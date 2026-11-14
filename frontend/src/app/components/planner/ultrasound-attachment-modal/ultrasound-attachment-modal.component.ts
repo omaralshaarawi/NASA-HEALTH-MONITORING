@@ -14,13 +14,13 @@ import { Attachment, SCAN_GUIDES, ScanKind } from './scan-guides';
   styles: `
     .skin { fill: #16212f; stroke: #7d8ea3; stroke-width: 2; stroke-linejoin: round; }
     .hint { fill: none; stroke: #4f6682; stroke-width: 1.5; stroke-linecap: round; }
-    .target { fill: none; stroke: #5ad1f5; stroke-width: 1.5; stroke-dasharray: 3 4; }
+    .target { fill: none; stroke: var(--color-signal); stroke-width: 1.5; stroke-dasharray: 3 4; }
     .probe { fill: #dfe8f2; stroke: #060a10; stroke-width: 1.5; stroke-linejoin: round; }
     .cable { fill: none; stroke: #7d8ea3; stroke-width: 2; stroke-linecap: round; }
-    .gel { fill: #5ad1f5; opacity: 0.35; }
-    .tag { fill: #060a10; stroke: #5ad1f5; stroke-width: 1.25; }
-    .tag-text { fill: #5ad1f5; font: 500 10px "IBM Plex Mono", monospace; text-anchor: middle; dominant-baseline: central; }
-    .electrode { fill: #5ad1f5; stroke: #060a10; stroke-width: 1.5; }
+    .gel { fill: var(--color-signal); opacity: 0.35; }
+    .tag { fill: #060a10; stroke: var(--color-signal); stroke-width: 1.25; }
+    .tag-text { fill: var(--color-signal); font: 500 10px "IBM Plex Mono", monospace; text-anchor: middle; dominant-baseline: central; }
+    .electrode { fill: var(--color-signal); stroke: #060a10; stroke-width: 1.5; }
   `,
 })
 export class UltrasoundAttachmentModalComponent {

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, input, output, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, booleanAttribute, input, output, viewChild } from '@angular/core';
 
 // Shared dialog frame. Uses the native <dialog>, which gives focus trapping, Esc to close
 // and a backdrop for free. Render it with @if and listen to (closed).
@@ -8,7 +8,8 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, input, o
   template: `
     <dialog
       #dialog
-      class="m-auto max-h-[calc(100dvh-2rem)] w-[min(72rem,calc(100vw-2rem))] overflow-hidden rounded-md border border-line-strong bg-panel p-0 text-ink shadow-2xl backdrop:bg-void/80 backdrop:backdrop-blur-sm"
+      class="m-auto max-h-[calc(100dvh-2rem)] overflow-hidden rounded-[var(--radius-card)] border border-line-strong bg-dialog p-0 text-ink shadow-2xl backdrop:bg-void/80 backdrop:backdrop-blur-sm"
+      [class]="narrow() ? 'w-[min(32rem,calc(100vw-2rem))]' : 'w-[min(72rem,calc(100vw-2rem))]'"
       [attr.aria-labelledby]="titleId"
       (close)="closed.emit()"
       (click)="onBackdrop($event)"
@@ -33,6 +34,8 @@ export class ModalShellComponent implements AfterViewInit {
 
   readonly heading = input.required<string>();
   readonly eyebrow = input('');
+  // a short question rather than a full page of content
+  readonly narrow = input(false, { transform: booleanAttribute });
   readonly closed = output<void>();
 
   protected readonly titleId = 'modal-title-' + ModalShellComponent.nextId++;

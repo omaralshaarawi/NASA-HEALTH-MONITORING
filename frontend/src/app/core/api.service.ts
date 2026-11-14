@@ -8,8 +8,9 @@ import {
   DailyMeasurementAndCompliance,
   EnvironmentProfile,
 } from '../models/contract';
+import { environment } from '../../environments/environment';
 
-export const API_BASE = 'http://localhost:8080';
+export const API_BASE = environment.apiBase;
 
 // where the backend got the plan from (X-Plan-Source header); MOCK means the backend was not reachable
 export type PlanSource = 'LIVE' | 'SAVED' | 'OFFLINE' | 'MOCK';
@@ -30,6 +31,15 @@ export interface AstronautSummary {
 }
 
 export type TriageAnswer = 'yes' | 'no' | 'done';
+
+// what opens a triage incident; the voice workflow takes the same fields
+export interface TriageStartRequest {
+  patient_id: string;
+  reporter_id?: string;
+  environment_id?: string;
+  distance_km?: number;
+  mission_day?: number;
+}
 
 export interface TriageProtocol {
   protocol_id: string;
@@ -86,6 +96,15 @@ export interface TriageIncident {
   disclaimer: string;
 }
 
+// The backend explains a refused request in its body; use that when it is there.
+export function apiErrorMessage(error: unknown, fallback: string): string {
+  if (typeof error === 'object' && error !== null && 'error' in error) {
+    const body = (error as { error?: { message?: string; error?: string } }).error;
+    return body?.message ?? body?.error ?? fallback;
+  }
+  return fallback;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);
@@ -121,13 +140,7 @@ export class ApiService {
     return this.http.get<TriageProtocol>(`${API_BASE}/api/triage/protocol`);
   }
 
-  startTriage(request: {
-    patient_id: string;
-    reporter_id?: string;
-    environment_id?: string;
-    distance_km?: number;
-    mission_day?: number;
-  }): Observable<TriageIncident> {
+  startTriage(request: TriageStartRequest): Observable<TriageIncident> {
     return this.http.post<TriageIncident>(`${API_BASE}/api/triage/start`, request);
   }
 
@@ -143,7 +156,7 @@ export class ApiService {
     return this.http.get<TriageIncident>(`${API_BASE}/api/triage/${incidentId}`);
   }
 
-  // fresh = true asks the LLM again instead of reusing a saved plan (free tier: 20 calls a day)
+  // fresh = true asks for a newly written plan instead of the saved one
   generatePlan(assessment: AssessmentResponse, fresh = false): Observable<GeneratedPlan> {
     return this.http
       .post<CountermeasurePlan>(`${API_BASE}/api/plans/generate`, assessment, {

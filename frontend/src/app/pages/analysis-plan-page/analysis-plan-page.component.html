@@ -1,0 +1,43 @@
+@let a = store.assessment();
+@let p = store.plan();
+@let done = training.summary();
+
+<app-section-header eyebrow="Daily analysis" heading="Training & nutrition plan">
+  @if (p) {
+    {{ summary() }}
+  } @else {
+    Today's sessions, nutrition and what they cost life support.
+  }
+</app-section-header>
+
+<!-- spoken when a countdown reaches zero; there is no sound -->
+<p class="sr-only" aria-live="polite">{{ announcement() }}</p>
+
+@if (a && p) {
+  @if (training.locked()) {
+    <p class="m-0 mt-6 rounded-2xl border border-crit/60 bg-crit/10 px-5 py-3 text-sm leading-6 text-ink backdrop-blur-xl" role="status">
+      <span class="status status-red mr-2">Emergency active</span>
+      Follow the triage. Training cannot be started until the emergency is cleared.
+    </p>
+  }
+
+  @if (done.total) {
+    <section class="panel mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 px-5 py-4" aria-label="Training progress">
+      <div class="text-sm leading-6 text-ink">
+        <span class="num text-xl">{{ done.completed }}</span> of {{ done.total }} sessions completed,
+        <span class="num text-xl">{{ done.minutesDone }}</span> of {{ done.minutesPlanned }} planned minutes
+      </div>
+      <div class="h-1 min-w-40 flex-1 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
+        <div class="h-full rounded-full bg-signal transition-[width] duration-500" [style.width.%]="(done.completed / done.total) * 100"></div>
+      </div>
+    </section>
+  }
+
+  <app-countermeasure-plan class="mt-4" [plan]="p" />
+} @else if (a) {
+  <section class="panel mt-6 p-6" role="status">
+    <div class="display text-lg text-ink">Preparing today's plan…</div>
+  </section>
+} @else {
+  <app-awaiting-panel />
+}

@@ -207,9 +207,9 @@ export const GUIDES: Record<IndicatorId, MeasurementGuide> = {
       'A day with no log counts as zero.',
     ],
     why: [
-      'Bones that carry no weight lose mineral, and muscles shrink with them. Loading the skeleton is the main countermeasure.',
+      'Bones that carry no weight lose mineral, and muscles shrink with them. Loading the skeleton is the main protection.',
     ],
-    fact: { value: '1 to 1.5%', caption: 'of bone mineral lost per month in weight-bearing bones without countermeasures' },
+    fact: { value: '1 to 1.5%', caption: 'of bone mineral lost per month in weight-bearing bones if nothing is done' },
     act: [
       'YELLOW: do the planned resistive session today and do not skip the next one.',
       'If equipment or schedule is the reason, tell the flight surgeon so the plan can change.',

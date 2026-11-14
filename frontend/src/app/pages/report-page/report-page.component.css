@@ -1,0 +1,49 @@
+:host { display: block; }
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5625rem 0.625rem;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  background: none;
+  color: var(--color-ink-dim);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+}
+.row:hover { background: rgb(255 255 255 / 0.05); color: var(--color-ink); }
+.row[aria-current='page'] {
+  border-color: var(--color-line-strong);
+  background: rgb(255 255 255 / 0.08);
+  color: var(--color-ink);
+}
+
+.reset {
+  margin: 0.75rem 0.625rem 0.25rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink-mute);
+  font: inherit;
+  font-size: 0.75rem;
+  text-decoration: underline;
+  text-decoration-color: var(--color-line-strong);
+  text-underline-offset: 0.25rem;
+  cursor: pointer;
+}
+.reset:hover { color: var(--color-ink); }
+
+/* the A4 sheet on a desk: it keeps its paper size and scrolls sideways on small screens */
+.paper {
+  overflow-x: auto;
+  padding: 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: rgb(255 255 255 / 0.06);
+}
+.paper app-mission-report-print { display: block; width: max-content; margin: 0 auto; }
