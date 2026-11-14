@@ -1,0 +1,195 @@
+@let a = store.assessment();
+@let p = store.plan();
+
+<section class="hero" aria-labelledby="hero-title">
+  <!-- decoration from the design: not a control -->
+  <div class="rail" aria-hidden="true">
+    <span class="rail-line"></span>
+    <span class="rail-tick"></span>
+    <span class="rail-tick"></span>
+    <span class="rail-play">
+      <svg viewBox="0 0 12 12" width="11" height="11" fill="currentColor"><path d="M3 1.5v9l7.5-4.5Z" /></svg>
+    </span>
+  </div>
+
+  <div class="copy">
+    <p class="system" role="status">
+      <span>System status</span>
+      @if (a) {
+        <span [class]="'status status-' + a.overall.toLowerCase()">{{ a.overall }} {{ statusWord[a.overall] }}</span>
+      } @else {
+        <span class="text-ink-dim">{{ store.loading() ? 'Loading' : "Awaiting today's readings" }}</span>
+      }
+    </p>
+
+    <h1 id="hero-title" class="wide title">
+      NASA<br />
+      Health care<br />
+      <span class="text-signal">Monitoring.</span>
+    </h1>
+    <p class="lede">Crew vitals, daily analysis and emergency triage for missions far from Earth.</p>
+
+    <div class="mt-7 flex flex-wrap gap-3">
+      <a routerLink="/health" class="btn btn-primary btn-lg">Open health</a>
+      <a routerLink="/analysis" class="btn btn-lg">Daily analysis</a>
+    </div>
+
+    @if (a && emergency.active()) {
+      <div class="emergency" role="group" aria-labelledby="home-emergency">
+        <div id="home-emergency" class="status status-red">Red · triage recommended</div>
+        <p class="m-0 mt-2 text-sm leading-6 text-ink">
+          A reading for Ast. {{ store.member().name }} is past its red limit. Nothing is dialled automatically: follow
+          onboard medical procedures.
+        </p>
+        <button type="button" class="btn btn-danger btn-lg mt-3" (click)="emergency.open()">{{ emergency.label() }}</button>
+      </div>
+    } @else if (a && a.overall === 'YELLOW') {
+      <p class="caution">
+        <span class="status status-yellow">Caution</span>
+        Some readings have moved away from this crew member's own normal.
+        <a routerLink="/analysis/readings" class="text-signal">See today's analysis</a>
+      </p>
+    }
+  </div>
+
+  @if (a) {
+    <div class="crew-tag">
+      <div class="display text-sm text-ink">Crew: Ast. {{ store.member().name }}</div>
+      <div class="eyebrow mt-1">Mission day {{ a.mission_day }} · {{ a.environment.gravity_g }} g</div>
+    </div>
+
+    <aside class="stats" aria-label="Today at a glance">
+      <app-metric-tile [value]="measured()" label="Readings today" />
+      <app-metric-tile [value]="a.mission_day" label="Mission day" />
+      @if (delay(); as d) {
+        <app-metric-tile [value]="d.value" [unit]="d.unit" [label]="d.unit ? 'One-way delay' : 'Link to Earth'" />
+      }
+      @if (p) {
+        <app-metric-tile
+          [value]="'+' + p.resources.totals.extra_kcal"
+          unit="kcal"
+          label="Life-support load"
+          [note]="p.resources.label"
+        />
+      }
+      <button type="button" class="explore" (click)="overview.scrollIntoView()">
+        <span>Scroll to explore</span>
+        <span class="explore-arrow" aria-hidden="true">
+          <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 1.5v9M2.5 7 6 10.5 9.5 7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </button>
+    </aside>
+  }
+</section>
+
+<section #overview class="cards" aria-label="Sections">
+  <a routerLink="/health" class="panel card">
+    <div class="card-head">
+      <h2 class="display card-title">Health</h2>
+      @if (a) {
+        <span class="chip num">{{ measured() }}/{{ a.indicators.length }}</span>
+      }
+    </div>
+    <img class="body" src="/assets/body-wireframe.webp" alt="" width="840" height="1125" />
+    <div class="card-foot">
+      @if (a) {
+        <div class="flex items-center gap-2 text-sm text-ink">
+          Ast. {{ store.member().name }}
+          <span [class]="'status status-' + a.overall.toLowerCase()">{{ a.overall }}</span>
+        </div>
+        <ul class="regions">
+          @for (id of regionIds; track id) {
+            <li [class]="'status status-' + a.regions[id].status.toLowerCase()">
+              {{ regionLabels[id] }}<span class="sr-only"> {{ a.regions[id].status }}</span>
+            </li>
+          }
+        </ul>
+      } @else {
+        <div class="eyebrow">Awaiting today's readings</div>
+      }
+    </div>
+  </a>
+
+  <a routerLink="/analysis" class="panel card">
+    <div class="card-head">
+      <h2 class="display card-title">Daily analysis</h2>
+      @if (p && p.draft.sessions.length) {
+        <span class="chip num">{{ plannedMinutes() }} min</span>
+      }
+    </div>
+    @if (p) {
+      <ul class="sessions">
+        @for (session of p.draft.sessions.slice(0, 3); track session.exercise_id) {
+          <li>
+            <span>{{ exerciseTitle(session.exercise_id) }}</span>
+            <span class="num text-ink-mute">{{ session.minutes }} min</span>
+          </li>
+        } @empty {
+          <li>No training sessions planned today</li>
+        }
+      </ul>
+      <div class="card-foot">
+        <div class="num text-lg text-ink">+{{ p.resources.totals.extra_kcal }} <span class="unit">kcal</span></div>
+        <div class="eyebrow">{{ p.resources.label }}</div>
+      </div>
+    } @else {
+      <div class="card-foot">
+        <div class="eyebrow">{{ store.planLoading() || store.loading() ? "Preparing today's plan" : "Awaiting today's readings" }}</div>
+      </div>
+    }
+  </a>
+
+  <a routerLink="/mission" class="panel card">
+    <div class="card-head">
+      <h2 class="display card-title">Mission</h2>
+      @if (a) {
+        <span class="chip">{{ a.comms.mode }}</span>
+      }
+    </div>
+    <svg class="orbit" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+      <circle cx="80" cy="80" r="20" /><circle cx="80" cy="80" r="38" /><circle cx="80" cy="80" r="56" /><circle cx="80" cy="80" r="74" />
+      <circle class="dot" cx="80" cy="80" r="5" />
+      <circle class="dot" cx="96" cy="68" r="2.5" /><circle class="dot" cx="53" cy="107" r="2.5" />
+      <circle class="dot lit" cx="134" cy="94" r="3.5" /><circle class="dot" cx="42" cy="38" r="2.5" />
+      <circle class="dot lit" cx="14" cy="112" r="3" /><circle class="dot" cx="118" cy="143" r="2.5" />
+    </svg>
+    <div class="card-foot">
+      @if (a) {
+        <div class="text-sm text-ink">{{ a.environment.label }}</div>
+        <div class="eyebrow num">
+          {{ a.environment.gravity_g }} g
+          @if (delay(); as d) {
+            · {{ d.value }}@if (d.unit) { {{ d.unit }} one way }
+          }
+        </div>
+      } @else {
+        <div class="eyebrow">Awaiting today's readings</div>
+      }
+    </div>
+  </a>
+
+  <a routerLink="/report" class="panel card">
+    <div class="card-head">
+      <h2 class="display card-title">Daily report</h2>
+      @if (a) {
+        <span class="chip num">Day {{ a.mission_day }}</span>
+      }
+    </div>
+    <ol class="steps">
+      <li [class.done]="measured() > 0">
+        <span>Readings</span>
+        <span class="eyebrow">{{ a ? measured() + ' of ' + a.indicators.length + ' logged' : 'awaiting' }}</span>
+      </li>
+      <li [class.done]="!!p">
+        <span>Analysis plan</span>
+        <span class="eyebrow">{{ p ? p.draft.sessions.length + ' sessions' : 'pending' }}</span>
+      </li>
+      <li>
+        <span>Flight surgeon report</span>
+        <span class="eyebrow">Print or save as PDF</span>
+      </li>
+    </ol>
+  </a>
+</section>

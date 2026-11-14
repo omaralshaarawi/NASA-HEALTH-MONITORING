@@ -1,13 +1,11 @@
-<main class="mx-auto max-w-[84rem] px-4 pb-16 sm:px-6 lg:px-8">
-  <app-top-bar [assessment]="assessment()" />
-
-  <section class="mt-6 flex flex-wrap items-end justify-between gap-4">
+<div class="pb-8">
+  <section class="flex flex-wrap items-end justify-between gap-4">
     <div>
       <div class="eyebrow">Emergency checklist · deterministic protocol</div>
       <h1 class="display m-0 mt-1 text-4xl leading-none text-ink">Crew triage</h1>
       <p class="m-0 mt-2 max-w-3xl text-sm leading-6 text-ink-dim">Follow the onboard medical procedures. This checklist is decision support only and never diagnoses or selects medication.</p>
     </div>
-    <a routerLink="/" class="btn">Back to dashboard</a>
+    <a routerLink="/home" class="btn">Back to home</a>
   </section>
 
   @if (offline()) {
@@ -180,5 +178,4 @@
     }
   }
 
-  @if (assessment(); as a) { <p class="m-0 mt-8 border-t border-line pt-4 text-xs leading-5 text-ink-mute">{{ a.disclaimer }}</p> }
-</main>
+</div>

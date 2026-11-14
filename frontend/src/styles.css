@@ -1,63 +1,61 @@
 @import "tailwindcss";
 
 /* Fonts are bundled, so the app looks the same without internet. */
-@import "@fontsource/barlow-condensed/latin-500.css";
+@import "@fontsource/lexend/latin-300.css";
+@import "@fontsource/lexend/latin-400.css";
+@import "@fontsource/lexend/latin-500.css";
+@import "@fontsource/lexend/latin-600.css";
+@import "@fontsource/lexend-exa/latin-300.css";
+@import "@fontsource/lexend-exa/latin-400.css";
+/* the printed flight surgeon report keeps its own narrow faces */
 @import "@fontsource/barlow-condensed/latin-600.css";
 @import "@fontsource/ibm-plex-sans/latin-400.css";
-@import "@fontsource/ibm-plex-sans/latin-500.css";
-@import "@fontsource/ibm-plex-sans/latin-600.css";
 @import "@fontsource/ibm-plex-mono/latin-400.css";
 @import "@fontsource/ibm-plex-mono/latin-500.css";
 
 /*
- * Shared theme ("Mission Control").
- * One accent (signal). Green / amber / red are reserved for health status and nothing else.
+ * Shared theme: dark space, glass cards.
+ * One accent (signal, a muted sage). Green / amber / red are reserved for health status.
  */
 @theme {
-  --color-void: #060a10;
-  --color-hull: #0a1019;
-  --color-panel: #0e1622;
-  --color-raised: #142031;
-  --color-line: #1e2b3c;
-  --color-line-strong: #33465d;
+  --color-void: #05070a;
+  --color-hull: #0a0e13;
+  --color-panel: rgb(20 25 32 / 0.5);
+  --color-raised: #171d25;
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-line-strong: rgb(255 255 255 / 0.24);
 
-  --color-ink: #e8eef6;
-  --color-ink-dim: #a9b8ca;
-  --color-ink-mute: #7d8ea3;
+  --color-ink: #f3f5f7;
+  --color-ink-dim: #b9c1cb;
+  --color-ink-mute: #8b95a2;
 
-  --color-signal: #5ad1f5;
-  --color-signal-dim: #1c5c73;
+  --color-signal: #a9cdb5;
+  --color-signal-dim: #3c5245;
 
-  --color-ok: #3ddc97;
-  --color-warn: #f5b83d;
-  --color-crit: #ff6464;
+  --color-ok: #7fd9a4;
+  --color-warn: #f0b955;
+  --color-crit: #ff6b6b;
 
-  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Lexend Exa", "Lexend", system-ui, sans-serif;
+  --font-sans: "Lexend", system-ui, sans-serif;
+  --font-mono: "Lexend", system-ui, sans-serif;
+
+  --radius-card: 24px;
+  --blur-glass: 22px;
 }
 
 html {
   background: var(--color-void);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  /* faint star field and horizon glow; cheap, no images */
-  background:
-    radial-gradient(1200px 500px at 50% -220px, rgb(90 209 245 / 0.07), transparent 70%),
-    radial-gradient(1px 1px at 12% 18%, rgb(255 255 255 / 0.5) 50%, transparent 51%),
-    radial-gradient(1px 1px at 78% 9%, rgb(255 255 255 / 0.4) 50%, transparent 51%),
-    radial-gradient(1px 1px at 35% 6%, rgb(255 255 255 / 0.3) 50%, transparent 51%),
-    radial-gradient(1px 1px at 91% 31%, rgb(255 255 255 / 0.35) 50%, transparent 51%),
-    radial-gradient(1px 1px at 58% 14%, rgb(255 255 255 / 0.25) 50%, transparent 51%),
-    radial-gradient(1px 1px at 5% 42%, rgb(255 255 255 / 0.3) 50%, transparent 51%),
-    var(--color-void);
-  background-attachment: fixed;
 }
 
 :focus-visible {
@@ -68,39 +66,48 @@ body {
 @layer components {
   /* small uppercase caption above a value or a section */
   .eyebrow {
-    font-family: var(--font-mono);
     font-size: 0.6875rem;
+    font-weight: 400;
     line-height: 1rem;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-ink-mute);
   }
 
+  /* card and page titles */
   .display {
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* the wide face: hero title and the wordmark only */
+  .wide {
     font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: 0.04em;
+    font-weight: 300;
     text-transform: uppercase;
   }
 
   /* measurement units keep their own capitalisation (mL, mmHg, kcal) */
   .unit {
-    font-family: var(--font-mono);
     font-size: 0.6875rem;
+    font-weight: 400;
     line-height: 1rem;
     letter-spacing: 0.04em;
     color: var(--color-ink-mute);
   }
 
   .num {
-    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
   }
 
+  /* the glass card */
   .panel {
-    background: var(--color-panel);
+    background: linear-gradient(160deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.02) 60%), var(--color-panel);
     border: 1px solid var(--color-line);
-    border-radius: 6px;
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(var(--blur-glass));
+    -webkit-backdrop-filter: blur(var(--blur-glass));
   }
 
   .btn {
@@ -109,17 +116,19 @@ body {
     justify-content: center;
     gap: 0.5rem;
     min-height: 2.5rem;
-    padding: 0 1rem;
+    padding: 0 1.125rem;
     border: 1px solid var(--color-line-strong);
-    border-radius: 4px;
-    background: transparent;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.04);
     color: var(--color-ink);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    font-weight: 400;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    text-decoration: none;
     cursor: pointer;
-    transition: background-color 120ms, border-color 120ms, color 120ms;
+    transition: background-color 140ms, border-color 140ms, color 140ms, box-shadow 140ms;
   }
   .btn:hover:not(:disabled) {
     border-color: var(--color-signal);
@@ -130,24 +139,42 @@ body {
     cursor: not-allowed;
   }
   .btn-primary {
-    background: var(--color-signal);
-    border-color: var(--color-signal);
+    background: var(--color-ink);
+    border-color: var(--color-ink);
     color: var(--color-void);
     font-weight: 500;
   }
   .btn-primary:hover:not(:disabled) {
-    background: #8adffa;
-    border-color: #8adffa;
+    background: #fff;
+    border-color: #fff;
     color: var(--color-void);
+    box-shadow: 0 0 24px rgb(255 255 255 / 0.22);
+  }
+  .btn-danger {
+    background: var(--color-crit);
+    border-color: var(--color-crit);
+    color: var(--color-void);
+    font-weight: 500;
+  }
+  .btn-danger:hover:not(:disabled) {
+    background: #ff8a8a;
+    border-color: #ff8a8a;
+    color: var(--color-void);
+  }
+  .btn-lg {
+    min-height: 3rem;
+    padding: 0 1.5rem;
+    font-size: 0.8125rem;
   }
 
   .chip {
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
-    padding: 0.125rem 0.5rem;
+    padding: 0.125rem 0.625rem;
     border: 1px solid var(--color-line-strong);
     border-radius: 999px;
+    background: rgb(255 255 255 / 0.03);
     font-size: 0.75rem;
     line-height: 1.25rem;
     color: var(--color-ink-dim);
@@ -159,13 +186,14 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
-    font-family: var(--font-mono);
     font-size: 0.6875rem;
-    letter-spacing: 0.12em;
+    font-weight: 400;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
   .status::before {
     content: "";
+    flex: none;
     width: 0.5rem;
     height: 0.5rem;
     background: currentColor;
@@ -176,9 +204,17 @@ body {
   .status-yellow::before { transform: rotate(45deg); }
   .status-red { color: var(--color-crit); }
   .status-red::before { clip-path: polygon(50% 0, 100% 100%, 0 100%); width: 0.5625rem; }
+
+  .status-pill {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, currentColor 9%, transparent);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;

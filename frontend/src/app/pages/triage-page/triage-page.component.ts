@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signa
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EMPTY, Subscription, catchError, interval, map, of, switchMap } from 'rxjs';
 
-import { TopBarComponent } from '../../components/dashboard/top-bar.component';
 import { CREW } from '../../core/crew';
 import { ApiService, TriageAnswer, TriageIncident, TriageProtocol } from '../../core/api.service';
 import { VoiceOperatorService } from '../../core/voice-operator.service';
@@ -15,7 +14,7 @@ const BUNDLED_PROTOCOL = protocolJson as TriageProtocol;
 
 @Component({
   selector: 'app-triage-page',
-  imports: [DatePipe, DecimalPipe, RouterLink, TopBarComponent],
+  imports: [DatePipe, DecimalPipe, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './triage-page.component.html',
 })

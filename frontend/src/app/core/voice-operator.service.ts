@@ -3,8 +3,10 @@ import { Injectable, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { UltravoxSession } from 'ultravox-client';
 
+import { environment } from '../../environments/environment';
+
 // n8n workflow that opens the triage incident and creates the Ultravox call (see voice-n8n/README.md)
-export const JARVIS_START_URL = 'https://primary-production-8b38b6c7.up.railway.app/webhook/jarvis-start';
+export const JARVIS_START_URL = environment.jarvisStartUrl;
 
 export type VoiceStatus = 'off' | 'connecting' | 'listening' | 'thinking' | 'speaking' | 'ended' | 'failed';
 

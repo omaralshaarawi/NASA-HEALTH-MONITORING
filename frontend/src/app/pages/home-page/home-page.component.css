@@ -1,0 +1,296 @@
+:host { display: block; }
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  padding: 1.5rem 0 2.5rem;
+}
+
+.rail { display: none; }
+
+.system {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--color-line);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 0.04);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-dim);
+}
+
+.title {
+  margin: 1.5rem 0 0;
+  font-size: clamp(2.125rem, 4.4vw, 3.875rem);
+  line-height: 1.08;
+  color: var(--color-ink);
+}
+
+.lede {
+  max-width: 26rem;
+  margin: 1.25rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--color-ink-dim);
+}
+
+.emergency {
+  max-width: 34rem;
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--color-crit) 60%, transparent);
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--color-crit) 14%, transparent);
+  backdrop-filter: blur(var(--blur-glass));
+}
+
+.caution {
+  max-width: 34rem;
+  margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-ink-dim);
+}
+.caution .status { margin-right: 0.375rem; }
+
+.crew-tag {
+  justify-self: start;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 0.875rem;
+  background: rgb(20 25 32 / 0.55);
+  backdrop-filter: blur(var(--blur-glass));
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.explore { display: none; }
+
+@media (min-width: 64rem) {
+  .hero {
+    grid-template-columns: 4.5rem minmax(0, 1fr) 8.5rem;
+    column-gap: 1.5rem;
+    padding: 1.25rem 0 1.75rem;
+  }
+
+  .rail {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--color-ink);
+  }
+  .rail-line {
+    position: absolute;
+    top: 1rem;
+    bottom: 5rem;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--color-line-strong) 20%, var(--color-line-strong) 80%, transparent);
+  }
+  .rail-tick {
+    position: relative;
+    width: 0.875rem;
+    height: 1px;
+    background: var(--color-ink-dim);
+  }
+  .rail-play {
+    position: absolute;
+    bottom: 1rem;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .copy { align-self: center; }
+
+  .crew-tag {
+    position: absolute;
+    right: 17rem;
+    top: 7.5rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    align-content: start;
+    gap: 0;
+    text-align: center;
+    /* the tiles sit over the bright limb of the planet */
+    text-shadow: 0 1px 10px rgb(5 7 10 / 0.9);
+  }
+  .stats app-metric-tile {
+    padding: 0.875rem 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .stats app-metric-tile:first-child { padding-top: 0; }
+
+  .explore {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    border: 0;
+    background: none;
+    color: var(--color-ink-dim);
+    font: inherit;
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .explore:hover { color: var(--color-ink); }
+  .explore-arrow {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.06);
+  }
+}
+
+/* the four section cards */
+.cards {
+  display: grid;
+  gap: 1rem;
+  scroll-margin-top: 1rem;
+}
+@media (min-width: 40rem) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 80rem) { .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 17.5rem;
+  padding: 1.25rem;
+  overflow: hidden;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: border-color 160ms, transform 160ms;
+}
+.card:hover {
+  border-color: var(--color-line-strong);
+  transform: translateY(-2px);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.card-title {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-ink);
+}
+.card-foot {
+  position: relative;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* wireframe figure: the photo has a black ground, which screen blending drops out */
+.body {
+  position: absolute;
+  left: 50%;
+  top: 3rem;
+  width: auto;
+  height: 9.25rem;
+  transform: translateX(-50%);
+  mix-blend-mode: screen;
+  /* crush the near-black ground to true black so no box shows through the glass */
+  filter: contrast(1.35) brightness(0.92);
+  -webkit-mask-image: radial-gradient(ellipse 50% 52% at 50% 48%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 52% at 50% 48%, #000 62%, transparent 100%);
+  pointer-events: none;
+}
+
+.regions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem 0.75rem;
+  margin: 0.625rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.regions li {
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.sessions {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: var(--color-ink-dim);
+}
+.sessions li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.orbit {
+  align-self: center;
+  width: 9.5rem;
+  height: 9.5rem;
+  margin-top: 0.75rem;
+  stroke: rgb(255 255 255 / 0.16);
+}
+.orbit .dot { fill: var(--color-ink-dim); stroke: none; }
+.orbit .lit { fill: var(--color-signal); }
+
+.steps {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.steps li {
+  position: relative;
+  display: grid;
+  gap: 0.125rem;
+  padding: 0.625rem 0.75rem 0.625rem 2rem;
+  border: 1px solid var(--color-line);
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-ink-dim);
+}
+.steps li::before {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  top: 1rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid var(--color-ink-mute);
+  border-radius: 50%;
+}
+.steps li.done { color: var(--color-ink); background: rgb(255 255 255 / 0.04); }
+.steps li.done::before { border-color: var(--color-signal); background: var(--color-signal); }

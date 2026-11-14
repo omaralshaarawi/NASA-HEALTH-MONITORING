@@ -8,8 +8,9 @@ import {
   DailyMeasurementAndCompliance,
   EnvironmentProfile,
 } from '../models/contract';
+import { environment } from '../../environments/environment';
 
-export const API_BASE = 'http://localhost:8080';
+export const API_BASE = environment.apiBase;
 
 // where the backend got the plan from (X-Plan-Source header); MOCK means the backend was not reachable
 export type PlanSource = 'LIVE' | 'SAVED' | 'OFFLINE' | 'MOCK';
