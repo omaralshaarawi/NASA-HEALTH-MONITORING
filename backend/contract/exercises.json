@@ -1,0 +1,732 @@
+{
+  "schema_version": "1.0.0",
+  "landmark_reference": "MediaPipe Pose 33-landmark index (0=NOSE, 11=LEFT_SHOULDER, 12=RIGHT_SHOULDER, 13=LEFT_ELBOW, 14=RIGHT_ELBOW, 15=LEFT_WRIST, 16=RIGHT_WRIST, 23=LEFT_HIP, 24=RIGHT_HIP, 25=LEFT_KNEE, 26=RIGHT_KNEE, 27=LEFT_ANKLE, 28=RIGHT_ANKLE)",
+  "exercises": [
+    {
+      "exercise_id": "resistive_moderate",
+      "name": "ARED resistive loading, moderate (or bands)",
+      "target_system": "SPINE_BONE",
+      "met": 3.5,
+      "valid_gravities_g": [0.0, 0.16, 0.38],
+      "cv_tracking_mode": "REP_COUNTER",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Stand on the ARED platform with feet flat and the load bar (or anchored bands) across your shoulders, and place the camera at hip height about 45 degrees to your side, 2 m away, so shoulder, hip, knee and ankle stay in frame.",
+      "primary_angle": {
+        "joint_name": "knee_flexion",
+        "point_a": { "index": 23, "name": "LEFT_HIP" },
+        "vertex_b": { "index": 25, "name": "LEFT_KNEE" },
+        "point_c": { "index": 27, "name": "LEFT_ANKLE" },
+        "bilateral_mirror": {
+          "point_a_index": 24,
+          "vertex_b_index": 26,
+          "point_c_index": 28
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "UP",
+        "eccentric_stage": "DOWN",
+        "down_trigger_deg": 100,
+        "up_trigger_deg": 160,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 12,
+        "default_hold_seconds": 0
+      },
+      "form_guardrails": [
+        {
+          "check_id": "trunk_fold",
+          "description": "Torso collapsing forward onto the thighs at the bottom of the squat, which shifts the bar load onto the lower back.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 55,
+          "max_safe_deg": 180,
+          "severity": "RED",
+          "hud_warning_text": "CHEST UP - BACK FOLDING FORWARD"
+        },
+        {
+          "check_id": "squat_depth",
+          "description": "Knees bending past a controlled squat depth under load.",
+          "point_a_index": 23,
+          "vertex_b_index": 25,
+          "point_c_index": 27,
+          "min_safe_deg": 60,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "TOO DEEP - STOP AND RISE SLOWLY"
+        },
+        {
+          "check_id": "spinal_alignment",
+          "description": "Head dropping forward so the neck and upper spine round under the load bar.",
+          "point_a_index": 0,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 130,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "HEAD UP - EYES FORWARD"
+        },
+        {
+          "check_id": "shoulder_level",
+          "description": "One shoulder dropping so the load bar tilts and loads the spine unevenly.",
+          "point_a_index": 12,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 75,
+          "max_safe_deg": 105,
+          "severity": "YELLOW",
+          "hud_warning_text": "LEVEL THE LOAD BAR"
+        }
+      ]
+    },
+    {
+      "exercise_id": "resistive_vigorous",
+      "name": "ARED resistive loading, vigorous",
+      "target_system": "SPINE_BONE",
+      "met": 6.0,
+      "valid_gravities_g": [0.0, 0.16, 0.38],
+      "cv_tracking_mode": "REP_COUNTER",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Lock your feet flat on the ARED platform with the load bar seated on your shoulders, and place the camera at hip height about 45 degrees to your side, 2 m away, with your whole body in frame through the full squat.",
+      "primary_angle": {
+        "joint_name": "knee_flexion",
+        "point_a": { "index": 23, "name": "LEFT_HIP" },
+        "vertex_b": { "index": 25, "name": "LEFT_KNEE" },
+        "point_c": { "index": 27, "name": "LEFT_ANKLE" },
+        "bilateral_mirror": {
+          "point_a_index": 24,
+          "vertex_b_index": 26,
+          "point_c_index": 28
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "UP",
+        "eccentric_stage": "DOWN",
+        "down_trigger_deg": 90,
+        "up_trigger_deg": 165,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 8,
+        "default_hold_seconds": 0
+      },
+      "form_guardrails": [
+        {
+          "check_id": "trunk_fold",
+          "description": "Torso collapsing forward onto the thighs at the bottom of a heavy squat, which shifts the bar load onto the lower back.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 60,
+          "max_safe_deg": 180,
+          "severity": "RED",
+          "hud_warning_text": "CHEST UP - BACK FOLDING FORWARD"
+        },
+        {
+          "check_id": "squat_depth",
+          "description": "Knees bending past a controlled squat depth under heavy load.",
+          "point_a_index": 23,
+          "vertex_b_index": 25,
+          "point_c_index": 27,
+          "min_safe_deg": 60,
+          "max_safe_deg": 180,
+          "severity": "RED",
+          "hud_warning_text": "TOO DEEP - REDUCE RANGE"
+        },
+        {
+          "check_id": "spinal_alignment",
+          "description": "Head dropping forward so the neck and upper spine round under the load bar.",
+          "point_a_index": 0,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 135,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "HEAD UP - EYES FORWARD"
+        },
+        {
+          "check_id": "shoulder_level",
+          "description": "One shoulder dropping so the heavy load bar tilts and loads the spine unevenly.",
+          "point_a_index": 12,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 78,
+          "max_safe_deg": 102,
+          "severity": "RED",
+          "hud_warning_text": "BAR TILTING - LEVEL THE LOAD"
+        }
+      ]
+    },
+    {
+      "exercise_id": "cycle_ergometer",
+      "name": "Cycle ergometer (cardio), moderate",
+      "target_system": "CHEST_CARDIO",
+      "met": 6.8,
+      "valid_gravities_g": [0.0, 0.16, 0.38],
+      "cv_tracking_mode": "CADENCE_TRACKER",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Strap in with your back against the pad and shoes clipped to the pedals, and place the camera at seat height about 45 degrees to your side so hip, knee and ankle are visible through the whole pedal stroke.",
+      "primary_angle": {
+        "joint_name": "knee_flexion",
+        "point_a": { "index": 23, "name": "LEFT_HIP" },
+        "vertex_b": { "index": 25, "name": "LEFT_KNEE" },
+        "point_c": { "index": 27, "name": "LEFT_ANKLE" },
+        "bilateral_mirror": {
+          "point_a_index": 24,
+          "vertex_b_index": 26,
+          "point_c_index": 28
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "EXTENDED",
+        "eccentric_stage": "FLEXED",
+        "down_trigger_deg": 105,
+        "up_trigger_deg": 135,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 300,
+        "default_hold_seconds": 0
+      },
+      "form_guardrails": [
+        {
+          "check_id": "knee_overextension",
+          "description": "Knee locking straight at the bottom of the pedal stroke or jamming tight at the top, a sign the seat distance is wrong.",
+          "point_a_index": 23,
+          "vertex_b_index": 25,
+          "point_c_index": 27,
+          "min_safe_deg": 60,
+          "max_safe_deg": 165,
+          "severity": "YELLOW",
+          "hud_warning_text": "KNEE LOCKING - ADJUST SEAT DISTANCE"
+        },
+        {
+          "check_id": "trunk_position",
+          "description": "Torso hunching over the thighs or floating off the back pad while pedalling.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 55,
+          "max_safe_deg": 155,
+          "severity": "YELLOW",
+          "hud_warning_text": "BACK ON THE PAD - CHECK STRAPS"
+        },
+        {
+          "check_id": "spinal_alignment",
+          "description": "Head dropping forward so the neck and upper spine round during the effort.",
+          "point_a_index": 0,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 130,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "HEAD UP - RELAX NECK"
+        }
+      ]
+    },
+    {
+      "exercise_id": "treadmill_harness",
+      "name": "Treadmill with harness, brisk walk or jog",
+      "target_system": "CHEST_CARDIO",
+      "met": 7.0,
+      "valid_gravities_g": [0.0, 0.16, 0.38],
+      "cv_tracking_mode": "CADENCE_TRACKER",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Clip the harness around your hips and shoulders so the bungees pull you onto the belt, and place the camera at hip height about 45 degrees to your side, far enough back to keep head to ankles in frame.",
+      "primary_angle": {
+        "joint_name": "knee_flexion",
+        "point_a": { "index": 23, "name": "LEFT_HIP" },
+        "vertex_b": { "index": 25, "name": "LEFT_KNEE" },
+        "point_c": { "index": 27, "name": "LEFT_ANKLE" },
+        "bilateral_mirror": {
+          "point_a_index": 24,
+          "vertex_b_index": 26,
+          "point_c_index": 28
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "EXTENDED",
+        "eccentric_stage": "FLEXED",
+        "down_trigger_deg": 135,
+        "up_trigger_deg": 155,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 375,
+        "default_hold_seconds": 0
+      },
+      "form_guardrails": [
+        {
+          "check_id": "trunk_lean",
+          "description": "Torso pitching forward at the hips against the harness pull instead of running tall.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 100,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "STAND TALL - REDUCE FORWARD LEAN"
+        },
+        {
+          "check_id": "spinal_alignment",
+          "description": "Head dropping forward so the neck and upper spine round under the shoulder straps.",
+          "point_a_index": 0,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 130,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "HEAD UP - LOOK AHEAD"
+        },
+        {
+          "check_id": "shoulder_level",
+          "description": "One shoulder pulled lower than the other, a sign of uneven harness or bungee tension.",
+          "point_a_index": 12,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 75,
+          "max_safe_deg": 105,
+          "severity": "YELLOW",
+          "hud_warning_text": "UNEVEN SHOULDERS - CHECK HARNESS STRAPS"
+        },
+        {
+          "check_id": "hip_sway",
+          "description": "Pelvis dropping or swaying sideways relative to the torso on each stride.",
+          "point_a_index": 24,
+          "vertex_b_index": 23,
+          "point_c_index": 11,
+          "min_safe_deg": 78,
+          "max_safe_deg": 102,
+          "severity": "YELLOW",
+          "hud_warning_text": "HIPS SWAYING - SHORTEN STRIDE"
+        }
+      ]
+    },
+    {
+      "exercise_id": "zero_t2_ergometer",
+      "name": "Zero T2 treadmill-free compact ergometer and resistive session",
+      "target_system": "SPINE_BONE",
+      "met": 5.0,
+      "valid_gravities_g": [0.0, 0.16, 0.38],
+      "cv_tracking_mode": "REP_COUNTER",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Brace both feet on the compact unit and grip the handle, and place the camera at chest height about 45 degrees to your side so shoulder, elbow, wrist, hip and knee stay in frame as you pull the handle to your chest.",
+      "primary_angle": {
+        "joint_name": "elbow_flexion",
+        "point_a": { "index": 11, "name": "LEFT_SHOULDER" },
+        "vertex_b": { "index": 13, "name": "LEFT_ELBOW" },
+        "point_c": { "index": 15, "name": "LEFT_WRIST" },
+        "bilateral_mirror": {
+          "point_a_index": 12,
+          "vertex_b_index": 14,
+          "point_c_index": 16
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "EXTENDED",
+        "eccentric_stage": "FLEXED",
+        "down_trigger_deg": 80,
+        "up_trigger_deg": 150,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 15,
+        "default_hold_seconds": 0
+      },
+      "form_guardrails": [
+        {
+          "check_id": "trunk_range",
+          "description": "Torso folding too far forward at the start of the pull or leaning too far back at the finish, which loads the lower spine.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 50,
+          "max_safe_deg": 125,
+          "severity": "RED",
+          "hud_warning_text": "TORSO OUT OF RANGE - SIT TALL"
+        },
+        {
+          "check_id": "knee_lockout",
+          "description": "Knees snapping fully straight at the end of the leg push.",
+          "point_a_index": 23,
+          "vertex_b_index": 25,
+          "point_c_index": 27,
+          "min_safe_deg": 60,
+          "max_safe_deg": 170,
+          "severity": "YELLOW",
+          "hud_warning_text": "SOFT KNEES - DO NOT LOCK OUT"
+        },
+        {
+          "check_id": "shoulder_level",
+          "description": "One shoulder hiking or dropping so the handle is pulled unevenly.",
+          "point_a_index": 12,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 75,
+          "max_safe_deg": 105,
+          "severity": "YELLOW",
+          "hud_warning_text": "PULL EVENLY - LEVEL SHOULDERS"
+        }
+      ]
+    },
+    {
+      "exercise_id": "walk_surface",
+      "name": "Walking on the surface (partial gravity)",
+      "target_system": "CHEST_CARDIO",
+      "met": 3.5,
+      "valid_gravities_g": [0.16, 0.38, 1.0],
+      "cv_tracking_mode": "CADENCE_TRACKER",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Not used in 0 g: in partial gravity, with suit and life-support pack checked, walk with short steady steps across the view of a camera set at hip height about 45 degrees to your path so head to ankles stay in frame.",
+      "primary_angle": {
+        "joint_name": "knee_flexion",
+        "point_a": { "index": 23, "name": "LEFT_HIP" },
+        "vertex_b": { "index": 25, "name": "LEFT_KNEE" },
+        "point_c": { "index": 27, "name": "LEFT_ANKLE" },
+        "bilateral_mirror": {
+          "point_a_index": 24,
+          "vertex_b_index": 26,
+          "point_c_index": 28
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "EXTENDED",
+        "eccentric_stage": "FLEXED",
+        "down_trigger_deg": 148,
+        "up_trigger_deg": 162,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 250,
+        "default_hold_seconds": 0
+      },
+      "form_guardrails": [
+        {
+          "check_id": "trunk_lean",
+          "description": "Torso pitching far forward over the legs, a loss-of-balance posture in partial gravity with a pack on.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 120,
+          "max_safe_deg": 180,
+          "severity": "RED",
+          "hud_warning_text": "LEANING TOO FAR - SHORTEN STEPS"
+        },
+        {
+          "check_id": "shoulder_level",
+          "description": "One shoulder carried lower than the other, a sign the pack load is off balance.",
+          "point_a_index": 12,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 75,
+          "max_safe_deg": 105,
+          "severity": "YELLOW",
+          "hud_warning_text": "LEVEL SHOULDERS - CHECK PACK BALANCE"
+        },
+        {
+          "check_id": "hip_sway",
+          "description": "Pelvis dropping or swaying sideways relative to the torso on each step.",
+          "point_a_index": 24,
+          "vertex_b_index": 23,
+          "point_c_index": 11,
+          "min_safe_deg": 75,
+          "max_safe_deg": 105,
+          "severity": "YELLOW",
+          "hud_warning_text": "HIPS SWAYING - SLOW DOWN"
+        }
+      ]
+    },
+    {
+      "exercise_id": "stretch_mobility",
+      "name": "Stretching and mobility",
+      "target_system": "SPINE_BONE",
+      "met": 2.3,
+      "valid_gravities_g": [0.0, 0.16, 0.38, 1.0],
+      "cv_tracking_mode": "POSTURE_HOLD",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Hook your feet under the restraint bar and place the camera at chest height about 45 degrees to your side, far enough back to keep fingertips to ankles in frame as you reach slowly without bouncing.",
+      "primary_angle": {
+        "joint_name": "shoulder_flexion",
+        "point_a": { "index": 23, "name": "LEFT_HIP" },
+        "vertex_b": { "index": 11, "name": "LEFT_SHOULDER" },
+        "point_c": { "index": 13, "name": "LEFT_ELBOW" },
+        "bilateral_mirror": {
+          "point_a_index": 24,
+          "vertex_b_index": 12,
+          "point_c_index": 14
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "UP",
+        "eccentric_stage": "DOWN",
+        "down_trigger_deg": 90,
+        "up_trigger_deg": 120,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 3,
+        "default_hold_seconds": 20
+      },
+      "form_guardrails": [
+        {
+          "check_id": "spinal_alignment",
+          "description": "Bending or arching at the waist instead of lengthening the spine during the reach.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 140,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "LONG SPINE - DO NOT ARCH OR FOLD"
+        },
+        {
+          "check_id": "elbow_extension",
+          "description": "Elbows bending so the reach no longer lengthens the shoulders and back.",
+          "point_a_index": 11,
+          "vertex_b_index": 13,
+          "point_c_index": 15,
+          "min_safe_deg": 135,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "STRAIGHTEN ARMS - REACH LONG"
+        },
+        {
+          "check_id": "knee_extension",
+          "description": "Knees bending so the feet slip out from under the restraint bar.",
+          "point_a_index": 23,
+          "vertex_b_index": 25,
+          "point_c_index": 27,
+          "min_safe_deg": 150,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "LEGS LONG - FEET UNDER THE BAR"
+        }
+      ]
+    },
+    {
+      "exercise_id": "thigh_cuff_bcomplex",
+      "name": "Veno-constrictive thigh cuff and B-complex protocol (vision / SANS)",
+      "target_system": "HEAD_NEURO",
+      "met": 1.0,
+      "valid_gravities_g": [0.0, 0.16, 0.38],
+      "cv_tracking_mode": "POSTURE_HOLD",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Rest reclined in your restraint with the cuffs on the upper thighs as set by the flight surgeon, and place the camera about 45 degrees to your side so head, shoulder, hip and knee are visible; the camera only confirms resting posture and never sets cuff pressure or timing.",
+      "primary_angle": {
+        "joint_name": "head_level_tilt",
+        "point_a": { "index": 0, "name": "NOSE" },
+        "vertex_b": { "index": 11, "name": "LEFT_SHOULDER" },
+        "point_c": { "index": 23, "name": "LEFT_HIP" },
+        "bilateral_mirror": {
+          "point_a_index": 0,
+          "vertex_b_index": 12,
+          "point_c_index": 24
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "NEUTRAL",
+        "eccentric_stage": "TILTED",
+        "down_trigger_deg": 130,
+        "up_trigger_deg": 142,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 1,
+        "default_hold_seconds": 30
+      },
+      "form_guardrails": [
+        {
+          "check_id": "recline_posture",
+          "description": "Body curling up tightly or straightening out of the reclined resting position.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 90,
+          "max_safe_deg": 150,
+          "severity": "YELLOW",
+          "hud_warning_text": "STAY RECLINED IN RESTRAINT"
+        },
+        {
+          "check_id": "knee_position",
+          "description": "Legs pulled into a deep bend or pushed fully straight so the thighs leave the camera view.",
+          "point_a_index": 23,
+          "vertex_b_index": 25,
+          "point_c_index": 27,
+          "min_safe_deg": 70,
+          "max_safe_deg": 160,
+          "severity": "YELLOW",
+          "hud_warning_text": "RELAX LEGS - KEEP THIGHS IN VIEW"
+        }
+      ]
+    },
+    {
+      "exercise_id": "compression_fluid_loading",
+      "name": "Lower-body compression and fluid loading (before landing or surface work)",
+      "target_system": "CHEST_CARDIO",
+      "met": 1.0,
+      "valid_gravities_g": [0.0, 0.16, 0.38, 1.0],
+      "cv_tracking_mode": "POSTURE_HOLD",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "With the compression garment on, slide your feet into the foot restraints and stand tall within reach of a handrail, and place the camera at hip height about 45 degrees to your side with head to ankles in frame; the camera only confirms upright posture, and fluid amounts come from the flight surgeon.",
+      "primary_angle": {
+        "joint_name": "hip_hinge",
+        "point_a": { "index": 11, "name": "LEFT_SHOULDER" },
+        "vertex_b": { "index": 23, "name": "LEFT_HIP" },
+        "point_c": { "index": 25, "name": "LEFT_KNEE" },
+        "bilateral_mirror": {
+          "point_a_index": 12,
+          "vertex_b_index": 24,
+          "point_c_index": 26
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "EXTENDED",
+        "eccentric_stage": "FLEXED",
+        "down_trigger_deg": 140,
+        "up_trigger_deg": 155,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 1,
+        "default_hold_seconds": 30
+      },
+      "form_guardrails": [
+        {
+          "check_id": "knee_buckle",
+          "description": "Knees giving way while standing, an early sign of light-headedness.",
+          "point_a_index": 23,
+          "vertex_b_index": 25,
+          "point_c_index": 27,
+          "min_safe_deg": 150,
+          "max_safe_deg": 180,
+          "severity": "RED",
+          "hud_warning_text": "KNEES BUCKLING - HOLD THE HANDRAIL"
+        },
+        {
+          "check_id": "head_drop",
+          "description": "Head sagging forward instead of staying level over the shoulders.",
+          "point_a_index": 0,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 130,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "HEAD DROPPING - STEADY YOURSELF"
+        },
+        {
+          "check_id": "shoulder_level",
+          "description": "Body tipping to one side instead of standing level.",
+          "point_a_index": 12,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 75,
+          "max_safe_deg": 105,
+          "severity": "YELLOW",
+          "hud_warning_text": "BODY LEANING - STAND LEVEL"
+        }
+      ]
+    },
+    {
+      "exercise_id": "circadian_led_journaling",
+      "name": "Circadian LED lighting and crew journaling session",
+      "target_system": "HEAD_NEURO",
+      "met": 1.3,
+      "valid_gravities_g": [0.0, 0.16, 0.38, 1.0],
+      "cv_tracking_mode": "POSTURE_HOLD",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Anchor yourself seated with a foot or thigh restraint facing the LED light panel with your journal in front of you, and place the camera at shoulder height about 45 degrees to your side so head, shoulder and hip are visible.",
+      "primary_angle": {
+        "joint_name": "head_level_tilt",
+        "point_a": { "index": 0, "name": "NOSE" },
+        "vertex_b": { "index": 11, "name": "LEFT_SHOULDER" },
+        "point_c": { "index": 23, "name": "LEFT_HIP" },
+        "bilateral_mirror": {
+          "point_a_index": 0,
+          "vertex_b_index": 12,
+          "point_c_index": 24
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "NEUTRAL",
+        "eccentric_stage": "TILTED",
+        "down_trigger_deg": 125,
+        "up_trigger_deg": 140,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 1,
+        "default_hold_seconds": 30
+      },
+      "form_guardrails": [
+        {
+          "check_id": "seated_posture",
+          "description": "Torso slumping over the journal or drifting out of the seated position away from the light panel.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 70,
+          "max_safe_deg": 125,
+          "severity": "YELLOW",
+          "hud_warning_text": "SIT UPRIGHT - FACE THE LIGHT PANEL"
+        },
+        {
+          "check_id": "shoulder_level",
+          "description": "Body leaning to one side instead of sitting level in front of the light panel.",
+          "point_a_index": 12,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 75,
+          "max_safe_deg": 105,
+          "severity": "YELLOW",
+          "hud_warning_text": "LEVEL SHOULDERS - SIT SQUARE"
+        }
+      ]
+    },
+    {
+      "exercise_id": "microbial_swab_air_check",
+      "name": "Habitat microbial surface swab and air check",
+      "target_system": "SYSTEMIC_IMMUNE_METABOLIC",
+      "met": 2.0,
+      "valid_gravities_g": [0.0, 0.16, 0.38, 1.0],
+      "cv_tracking_mode": "REP_COUNTER",
+      "camera_orientation": "SIDE_45_DEG",
+      "setup_instruction_0g": "Anchor your feet in a foot restraint within easy arm's reach of the marked surface, and place the camera at chest height about 45 degrees to your side so shoulder, elbow, wrist and hip stay in frame while you swab.",
+      "primary_angle": {
+        "joint_name": "elbow_flexion",
+        "point_a": { "index": 11, "name": "LEFT_SHOULDER" },
+        "vertex_b": { "index": 13, "name": "LEFT_ELBOW" },
+        "point_c": { "index": 15, "name": "LEFT_WRIST" },
+        "bilateral_mirror": {
+          "point_a_index": 12,
+          "vertex_b_index": 14,
+          "point_c_index": 16
+        }
+      },
+      "rep_thresholds": {
+        "start_stage": "EXTENDED",
+        "eccentric_stage": "FLEXED",
+        "down_trigger_deg": 90,
+        "up_trigger_deg": 150,
+        "min_visibility_confidence": 0.65,
+        "default_target_reps": 5,
+        "default_hold_seconds": 0
+      },
+      "form_guardrails": [
+        {
+          "check_id": "trunk_overreach",
+          "description": "Torso bending at the waist to reach a surface that is too far away, which can pull the feet out of the restraint.",
+          "point_a_index": 11,
+          "vertex_b_index": 23,
+          "point_c_index": 25,
+          "min_safe_deg": 135,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "MOVE CLOSER - DO NOT OVERREACH"
+        },
+        {
+          "check_id": "shoulder_overreach",
+          "description": "Swabbing arm raised far above shoulder height instead of repositioning the body.",
+          "point_a_index": 23,
+          "vertex_b_index": 11,
+          "point_c_index": 13,
+          "min_safe_deg": 0,
+          "max_safe_deg": 140,
+          "severity": "YELLOW",
+          "hud_warning_text": "ARM TOO HIGH - REPOSITION BODY"
+        },
+        {
+          "check_id": "spinal_alignment",
+          "description": "Head craning forward so the neck and upper spine round while reaching.",
+          "point_a_index": 0,
+          "vertex_b_index": 11,
+          "point_c_index": 23,
+          "min_safe_deg": 130,
+          "max_safe_deg": 180,
+          "severity": "YELLOW",
+          "hud_warning_text": "NECK NEUTRAL - STEP CLOSER"
+        }
+      ]
+    }
+  ]
+}

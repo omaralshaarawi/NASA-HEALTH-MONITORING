@@ -1,0 +1,96 @@
+{
+  "version": "1.0.0-hackathon",
+  "threshold_status": "PROTOTYPE. Limits are team-chosen and NOT clinically validated; the NASA HRP pages the team extracted give hazard context, not per-vital limits. Context for each indicator is named in 'source'.",
+  "constants": { "c_km_s": 299792.458, "autonomous_delay_s": 5 },
+  "global": {
+    "z_yellow": 2.5,
+    "z_red": 3.0,
+    "drift_yellow": 2.5,
+    "drift_min_z": 1.0,
+    "anchor_days": 7,
+    "drift_window_days": 7,
+    "min_points": 5,
+    "red_z_needs_confirmation": true
+  },
+  "resource_math": {
+    "rest_met": 1.0,
+    "kcal_per_met_kg_h": 1.0,
+    "water_ml_per_kcal": 1.15,
+    "co2_g_per_kcal": 0.34,
+    "notes": "Simulated Closed-Loop ECLSS Estimates (decision support, not life-support design). Context: NASA HRP Hostile/Closed Environments video, as transcribed by the team: 'Close the loop - Recycling all possible resources, including an astronaut's carbon dioxide and urine, into tomorrow's Air and Water.' extra_kcal = (MET - rest_met) * mass_kg * hours. CO2 is derived from standard respiratory physiology: respiratory quotient 0.85 (dimensionless, NOT g/kcal) at 4.86 kcal per L O2 gives 0.175 L CO2 per kcal, about 0.34 g/kcal at STP. Water 1.15 mL/kcal and all MET values are team simulation assumptions."
+  },
+  "radiation": {
+    "ratio_yellow": 1.5,
+    "ratio_red": 3.0,
+    "event_label": "possible Solar Particle Event (solar flare)",
+    "note": "Context: NASA HRP Space Radiation: mission effective doses range from about 50 to 2,000 mSv (1 mSv is roughly 10 chest X-rays); ISS crews get about 10x Earth's dose; deep space adds Solar Particle Events (solar flares, 11-year cycle) and Galactic Cosmic Rays. Daily expected rates below are scenario presets derived from that range, not measurements."
+  },
+  "compliance": {
+    "resistive": { "low_fraction_of_target": 0.5, "low_days_yellow": 3, "max_status": "YELLOW" },
+    "ration": { "low_pct": 80, "low_days_yellow": 2, "very_low_pct": 60, "very_low_days_red": 3 },
+    "streak_goal": "morning_vitals_logged AND resistive >= low_fraction*target AND ration >= low_pct"
+  },
+  "composites": {
+    "immune_risk": {
+      "radiation_ratio_min": 1.5,
+      "mild_z": 1.5,
+      "members": ["temp", "sleep"],
+      "status": "YELLOW",
+      "note": "Elevated radiation AND (mild temp rise OR mild sleep drop). RED only via temp's own absolute limit. Context: NASA HRP Hostile/Closed Environments: stress hormones, radiation and poor sleep alter immunity."
+    }
+  },
+  "regions": {
+    "HEAD_NEURO": ["sleep", "mood", "pvt", "cabin_co2"],
+    "CHEST_CARDIO": ["hr_rest", "sbp", "dbp"],
+    "SPINE_BONE": ["resistive"],
+    "SYSTEMIC_IMMUNE_METABOLIC": ["temp", "glucose", "ration", "radiation", "immune_risk"]
+  },
+  "indicators": [
+    { "id": "hr_rest", "label": "Resting heart rate", "unit": "bpm", "path": "vitals.hr_rest_bpm", "kind": "anchor", "bad": "high", "floor_sd": 3.0,
+      "abs": { "red_hi": 100 }, "input_0g": "Optical PPG / chest strap", "source": "team prototype. Context: NASA HRP Gravity (cardiovascular adaptation, arrhythmia risk) and Radiation (circulatory disease)" },
+    { "id": "sbp", "label": "Systolic BP", "unit": "mmHg", "path": "vitals.sbp_mmHg", "kind": "anchor", "bad": "both", "floor_sd": 5.0,
+      "abs": { "yellow_hi": 135, "red_hi": 160, "yellow_lo": 100, "red_lo": 90 }, "input_0g": "Cuff held at heart level", "source": "team prototype; low side ADDED. Context: NASA HRP Gravity (fluid shift, low BP and fainting on landing; countered by lower-body compression and fluid loading)" },
+    { "id": "dbp", "label": "Diastolic BP", "unit": "mmHg", "path": "vitals.dbp_mmHg", "kind": "anchor", "bad": "high", "floor_sd": 4.0,
+      "abs": { "yellow_hi": 90, "red_hi": 100 }, "input_0g": "Same cuff reading as systolic", "source": "ADDED (team listed SBP/DBP but gave no DBP limits); team prototype" },
+    { "id": "glucose", "label": "Fasting glucose", "unit": "mg/dL", "path": "vitals.glucose_mg_dl", "kind": "anchor", "bad": "both", "floor_sd": 6.0,
+      "abs": { "yellow_hi": 105, "red_hi": 140, "yellow_lo": 70, "red_lo": 65 }, "input_0g": "Fingerstick strip", "source": "team prototype; 126-140 gap closed (yellow), low yellow 70 ADDED. Context: NASA HRP Isolation (limited food variety, nutritional deficiency)" },
+    { "id": "temp", "label": "Core temperature", "unit": "C", "path": "vitals.temp_c", "kind": "anchor", "bad": "both", "floor_sd": 0.2,
+      "abs": { "yellow_hi": 37.6, "red_hi": 38.3, "red_lo": 35.5 }, "input_0g": "Tympanic thermometer", "source": "team prototype. Context: NASA HRP Hostile/Closed Environments (altered immunity, infections, microbes passing between crewmates)" },
+    { "id": "sleep", "label": "Sleep duration", "unit": "h", "path": "vitals.sleep_h", "kind": "anchor", "bad": "low", "floor_sd": 1.0,
+      "abs": { "yellow_lo": 5.5, "red_lo": 4.0 }, "input_0g": "Actigraphy / crew log", "source": "team prototype; floor raised 0.5 -> 1.0 h (see test_engine test 4). Context: NASA HRP Isolation (circadian misalignment; a Martian sol is 24 h 38 min; NASA tracks lighting, movement and sleep with wrist actigraphy)" },
+    { "id": "mood", "label": "Mood (1-10)", "unit": "score", "path": "vitals.mood_1_10", "kind": "anchor", "bad": "low", "floor_sd": 1.0,
+      "abs": { "yellow_lo": 4, "red_lo": 3 }, "input_0g": "Daily self-report slider", "source": "ADDED absolute limits (team prototype); RED means 'contact crew psychologist / flight surgeon', not an emergency. Context: NASA HRP Isolation (mood, morale, cognition decline; crew journaling as a countermeasure)" },
+    { "id": "pvt", "label": "PVT reaction time", "unit": "ms", "path": "pvt.median_rt_ms", "kind": "anchor", "bad": "high", "floor_sd": 20.0,
+      "abs": { "yellow_hi": 350, "red_hi": 450 }, "input_0g": "30 s browser click test (median RT)", "source": "team prototype; browser and mouse latency add a few tens of ms, so the anchor Z matters more than the absolute limits. Context: NASA HRP Gravity (fine motor skills, spatial orientation, hand-eye coordination) and Radiation (CNS effects on cognition and motor function)" },
+    { "id": "cabin_co2", "label": "Cabin CO2", "unit": "mmHg", "path": "habitat.cabin_co2_mmHg", "kind": "limit_only", "bad": "high", "floor_sd": null,
+      "abs": { "yellow_hi": 3.0, "red_hi": 4.5 }, "input_0g": "Habitat telemetry (passive)", "source": "team prototype limits; no official CO2 limit was extracted from the NASA HRP pages. Context: NASA HRP Hostile/Closed Environments habitability factor 'Air'" },
+    { "id": "radiation", "label": "Radiation dose rate", "unit": "mSv/day", "path": "habitat.radiation_mSv_day", "kind": "ratio", "bad": "high", "floor_sd": null,
+      "abs": {}, "input_0g": "Habitat dosimeter telemetry (passive)", "source": "judged against the environment's expected rate (ratio rule); an elevated ratio is surfaced as a possible Solar Particle Event (solar flare) alert. Context: NASA HRP Space Radiation" },
+    { "id": "resistive", "label": "Resistive exercise", "unit": "min", "path": "compliance.ared_resistive_minutes", "kind": "compliance", "bad": "low", "floor_sd": null,
+      "abs": {}, "input_0g": "Crew log (ARED on station; any resistive device elsewhere)", "source": "team rule: <30 min for 3+ days in microgravity -> YELLOW. Context: NASA HRP Gravity (spine and hips lose about 1-1.5% mineral density per month in microgravity; ISS crews exercise about 2 h/day in total)" },
+    { "id": "ration", "label": "Ration intake", "unit": "%", "path": "compliance.ration_intake_pct", "kind": "compliance", "bad": "low", "floor_sd": null,
+      "abs": {}, "input_0g": "Crew log", "source": "team rule: <80% -> nutrition flag (2-day confirm and RED tier ADDED). Context: NASA HRP Radiation (nausea, anorexia) and Isolation (food variety)" },
+    { "id": "immune_risk", "label": "Immune risk (composite)", "unit": "flag", "path": null, "kind": "composite", "bad": "high", "floor_sd": null,
+      "abs": {}, "input_0g": "derived", "source": "team rule: elevated radiation + mild temp rise or sleep drop. Context: NASA HRP Hostile/Closed Environments (stress hormones + radiation + poor sleep alter immunity)" }
+  ],
+  "environments": {
+    "SPACE_STATION": { "label": "Space station (LEO)", "environment": "SPACE_STATION", "body": "EARTH_ORBIT", "gravity_g": 0.0,
+      "distance_km": { "fixed": 400 }, "comm_label": "Near-real-time relay", "radiation_expected_mSv_day": 0.4, "cabin_co2_default_mmHg": 2.6, "resistive_target_min": 60,
+      "source": "Scenario preset. NASA HRP Distance: ISS is about 250 miles (~402 km) up. NASA HRP Space Radiation: ISS crews get about 10x Earth's dose; 50-100 mSv over a ~6-month stay is 0.27-0.55 mSv/day, preset 0.4." },
+    "DEEP_SPACECRAFT": { "label": "Deep-space transit to Mars", "environment": "DEEP_SPACECRAFT", "body": "DEEP_SPACE", "gravity_g": 0.0,
+      "distance_km": { "min": 54600000, "max": 401000000, "default": 225000000 }, "comm_label": "Light-time delay", "radiation_expected_mSv_day": 1.4, "cabin_co2_default_mmHg": 2.8, "resistive_target_min": 60,
+      "source": "Scenario preset. NASA HRP Distance: Mars averages about 140 million miles (~225 million km, the slider default); NASA quotes delays up to ~20 min one way, the app computes 3.0-22.3 min from distance/c. NASA HRP Space Radiation: multi-year missions approach 500-2,000 mSv, roughly 1.0-1.8 mSv/day; preset is the 1.4 midpoint. Slider min/max are Earth-Mars orbital geometry." },
+    "PLANETARY_BASE_MOON": { "label": "Lunar base", "environment": "PLANETARY_BASE", "body": "MOON", "gravity_g": 0.16,
+      "distance_km": { "fixed": 384400 }, "comm_label": "Light-time delay", "radiation_expected_mSv_day": 1.4, "cabin_co2_default_mmHg": 2.6, "resistive_target_min": 30,
+      "source": "Scenario preset. NASA HRP Distance: Moon is 238,855 miles (~384,400 km). Radiation preset sits in the same deep-space range (no magnetic-field protection). Gravity 0.16 g." },
+    "PLANETARY_BASE_MARS": { "label": "Mars base", "environment": "PLANETARY_BASE", "body": "MARS", "gravity_g": 0.38,
+      "distance_km": { "min": 54600000, "max": 401000000, "default": 225000000 }, "comm_label": "Light-time delay", "radiation_expected_mSv_day": 1.0, "cabin_co2_default_mmHg": 2.6, "resistive_target_min": 30,
+      "source": "Scenario preset. NASA HRP Gravity: Mars surface is 3/8 g (0.375 g). Radiation preset is the low end of the 1.0-1.8 mSv/day range, a simulation assumption (NASA's pages give no separate surface rate)." },
+    "SURFACE_ROVER_MOON": { "label": "Lunar rover", "environment": "SURFACE_ROVER", "body": "MOON", "gravity_g": 0.16,
+      "distance_km": { "fixed": 384400 }, "comm_label": "Light-time delay", "radiation_expected_mSv_day": 1.4, "cabin_co2_default_mmHg": 3.2, "resistive_target_min": 30,
+      "source": "Scenario preset, same radiation and distance as the lunar base; small cabin gives a higher CO2 default (simulation assumption)." },
+    "SURFACE_ROVER_MARS": { "label": "Mars rover", "environment": "SURFACE_ROVER", "body": "MARS", "gravity_g": 0.38,
+      "distance_km": { "min": 54600000, "max": 401000000, "default": 225000000 }, "comm_label": "Light-time delay", "radiation_expected_mSv_day": 1.0, "cabin_co2_default_mmHg": 3.2, "resistive_target_min": 30,
+      "source": "Scenario preset, same as the Mars base; small cabin gives a higher CO2 default (simulation assumption)." }
+  }
+}

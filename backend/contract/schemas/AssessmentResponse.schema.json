@@ -1,0 +1,465 @@
+{
+  "$ref": "#/definitions/AssessmentResponse",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AssessmentResponse": {
+      "properties": {
+        "astronaut_id": {
+          "type": "string"
+        },
+        "comms": {
+          "properties": {
+            "emergency_action": {
+              "description": "Label for the big button: LIVE -> \"Call flight surgeon\", AUTONOMOUS -> \"Autonomous triage + queue packet\".",
+              "enum": [
+                "CALL_FLIGHT_SURGEON",
+                "AUTONOMOUS_TRIAGE_STORE_AND_FORWARD"
+              ],
+              "type": "string"
+            },
+            "mode": {
+              "enum": [
+                "LIVE",
+                "AUTONOMOUS"
+              ],
+              "type": "string"
+            },
+            "one_way_delay_s": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "one_way_delay_s",
+            "mode",
+            "emergency_action"
+          ],
+          "type": "object"
+        },
+        "compliance": {
+          "properties": {
+            "bone_low_days": {
+              "type": "number"
+            },
+            "nutrition_low_days": {
+              "type": "number"
+            },
+            "streak_days": {
+              "description": "Consecutive days with vitals logged AND resistive >= 50% target AND ration >= 80%.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "streak_days",
+            "bone_low_days",
+            "nutrition_low_days"
+          ],
+          "type": "object"
+        },
+        "disclaimer": {
+          "const": "Prototype decision-support tool using simulated data. Not a medical device and not a diagnosis. Follow flight-surgeon and onboard medical procedures.",
+          "type": "string"
+        },
+        "environment": {
+          "$ref": "#/definitions/EnvironmentProfile"
+        },
+        "flags": {
+          "description": "Named flags for the UI chips. SYSTEMIC_IMMUNE is the composite immune_risk rule.",
+          "items": {
+            "enum": [
+              "SYSTEMIC_IMMUNE",
+              "SPINE_BONE",
+              "INADEQUATE_NUTRITION",
+              "REMEASURE_NEEDED"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "generated_at_iso": {
+          "type": "string"
+        },
+        "indicators": {
+          "items": {
+            "$ref": "#/definitions/IndicatorAssessment"
+          },
+          "type": "array"
+        },
+        "mission_day": {
+          "type": "number"
+        },
+        "overall": {
+          "$ref": "#/definitions/Status",
+          "description": "Worst region status."
+        },
+        "regions": {
+          "properties": {
+            "CHEST_CARDIO": {
+              "$ref": "#/definitions/RegionAssessment"
+            },
+            "HEAD_NEURO": {
+              "$ref": "#/definitions/RegionAssessment"
+            },
+            "SPINE_BONE": {
+              "$ref": "#/definitions/RegionAssessment"
+            },
+            "SYSTEMIC_IMMUNE_METABOLIC": {
+              "$ref": "#/definitions/RegionAssessment"
+            }
+          },
+          "required": [
+            "HEAD_NEURO",
+            "CHEST_CARDIO",
+            "SPINE_BONE",
+            "SYSTEMIC_IMMUNE_METABOLIC"
+          ],
+          "type": "object"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "type": "string"
+        },
+        "thresholds_status": {
+          "const": "PROTOTYPE",
+          "type": "string"
+        },
+        "triage_recommended": {
+          "description": "True when any indicator breaches an absolute RED limit. Makes the emergency button prominent. Never auto-dials.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "astronaut_id",
+        "mission_day",
+        "generated_at_iso",
+        "environment",
+        "overall",
+        "indicators",
+        "regions",
+        "compliance",
+        "flags",
+        "comms",
+        "triage_recommended",
+        "thresholds_status",
+        "disclaimer"
+      ],
+      "type": "object"
+    },
+    "Body": {
+      "enum": [
+        "EARTH_ORBIT",
+        "DEEP_SPACE",
+        "MOON",
+        "MARS"
+      ],
+      "type": "string"
+    },
+    "EnvironmentId": {
+      "enum": [
+        "SPACE_STATION",
+        "DEEP_SPACECRAFT",
+        "PLANETARY_BASE_MOON",
+        "PLANETARY_BASE_MARS",
+        "SURFACE_ROVER_MOON",
+        "SURFACE_ROVER_MARS"
+      ],
+      "type": "string"
+    },
+    "EnvironmentProfile": {
+      "description": "Loaded from rules.json \"environments\", then enriched with live values.",
+      "properties": {
+        "body": {
+          "$ref": "#/definitions/Body"
+        },
+        "cabin_co2_mmHg": {
+          "type": "number"
+        },
+        "comm_label": {
+          "description": "\"Near-real-time relay\" for LEO, otherwise \"Light-time delay\". Show the number only when not LEO.",
+          "type": "string"
+        },
+        "comm_mode": {
+          "description": "AUTONOMOUS when one_way_delay_s > 5 (rules.json constants.autonomous_delay_s). Drives the emergency button.",
+          "enum": [
+            "LIVE",
+            "AUTONOMOUS"
+          ],
+          "type": "string"
+        },
+        "distance_km": {
+          "description": "Current Earth distance. Fixed for LEO/Moon; slider 54.6e6..401e6 km for Mars (one-way 3.0..22.3 min).",
+          "type": "number"
+        },
+        "distance_range_km": {
+          "description": "Present only when distance is variable (Mars).",
+          "properties": {
+            "max": {
+              "type": "number"
+            },
+            "min": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ],
+          "type": "object"
+        },
+        "environment": {
+          "$ref": "#/definitions/EnvironmentType"
+        },
+        "gravity_g": {
+          "description": "0 | 0.16 | 0.38",
+          "type": "number"
+        },
+        "id": {
+          "$ref": "#/definitions/EnvironmentId"
+        },
+        "label": {
+          "type": "string"
+        },
+        "one_way_delay_s": {
+          "description": "COMPUTED: distance_km / 299792.458. Never typed in.",
+          "type": "number"
+        },
+        "radiation_expected_mSv_day": {
+          "description": "Background rate for this place; the radiation rule compares telemetry against it (ratio >= 1.5 yellow, >= 3 red).",
+          "type": "number"
+        },
+        "radiation_mSv_day": {
+          "description": "Current passive telemetry (preset default, overridable to simulate a solar particle event).",
+          "type": "number"
+        },
+        "resistive_target_min": {
+          "description": "Daily resistive-exercise target. 60 in microgravity, 30 in partial gravity.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "environment",
+        "body",
+        "gravity_g",
+        "distance_km",
+        "one_way_delay_s",
+        "comm_label",
+        "comm_mode",
+        "radiation_expected_mSv_day",
+        "radiation_mSv_day",
+        "cabin_co2_mmHg",
+        "resistive_target_min"
+      ],
+      "type": "object"
+    },
+    "EnvironmentType": {
+      "description": "The brief's four environments, split by celestial body where gravity/radiation/delay differ.",
+      "enum": [
+        "SPACE_STATION",
+        "DEEP_SPACECRAFT",
+        "PLANETARY_BASE",
+        "SURFACE_ROVER"
+      ],
+      "type": "string"
+    },
+    "IndicatorAssessment": {
+      "properties": {
+        "abs_level": {
+          "description": "Severity of the absolute-limit test alone: 0 none, 1 yellow, 2 red. Triage fires only on 2.",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "number"
+        },
+        "anchor": {
+          "anyOf": [
+            {
+              "properties": {
+                "mean": {
+                  "type": "number"
+                },
+                "n": {
+                  "type": "number"
+                },
+                "sd_eff": {
+                  "type": "number"
+                },
+                "sd_raw": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "mean",
+                "sd_raw",
+                "sd_eff",
+                "n"
+              ],
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Personal anchor from mission days 1-7. null until 5+ anchor readings exist and day > 7."
+        },
+        "consecutive_low_days": {
+          "description": "resistive / ration only.",
+          "type": "number"
+        },
+        "drift_z": {
+          "description": "slope * 6 / sd_eff, positive = worse.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "id": {
+          "$ref": "#/definitions/IndicatorId"
+        },
+        "label": {
+          "type": "string"
+        },
+        "ratio": {
+          "description": "radiation only: value / expected rate.",
+          "type": "number"
+        },
+        "reasons": {
+          "description": "Human-readable, deterministic reasons, e.g. \"Z=2.9 vs own normal 61.2\". Show these to the user as-is.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "region": {
+          "$ref": "#/definitions/RegionId"
+        },
+        "remeasure": {
+          "description": "True when a Z-only RED was held at YELLOW pending a second reading. UI: \"Re-measure to confirm\".",
+          "type": "boolean"
+        },
+        "slope_per_day": {
+          "description": "7-day OLS slope in the indicator's unit per day.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "status": {
+          "$ref": "#/definitions/Status"
+        },
+        "trend": {
+          "description": "Last up to 14 values, oldest first, null for gaps. For sparklines.",
+          "items": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "z": {
+          "description": "(today - anchor mean) / sd_eff, signed so positive = worse. sd_eff = max(sd_raw, floor_sd).",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "unit",
+        "region",
+        "value",
+        "status",
+        "reasons",
+        "anchor",
+        "z",
+        "slope_per_day",
+        "drift_z",
+        "abs_level",
+        "remeasure",
+        "trend"
+      ],
+      "type": "object"
+    },
+    "IndicatorId": {
+      "enum": [
+        "hr_rest",
+        "sbp",
+        "dbp",
+        "glucose",
+        "temp",
+        "sleep",
+        "mood",
+        "pvt",
+        "cabin_co2",
+        "radiation",
+        "resistive",
+        "ration",
+        "immune_risk"
+      ],
+      "type": "string"
+    },
+    "RegionAssessment": {
+      "properties": {
+        "drivers": {
+          "description": "Indicator ids that set the status (empty when GREEN). Highlight these in the popover.",
+          "items": {
+            "$ref": "#/definitions/IndicatorId"
+          },
+          "type": "array"
+        },
+        "id": {
+          "$ref": "#/definitions/RegionId"
+        },
+        "members": {
+          "items": {
+            "$ref": "#/definitions/IndicatorId"
+          },
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/definitions/Status",
+          "description": "Worst status among its member indicators. Colours the SVG body region."
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "drivers",
+        "members"
+      ],
+      "type": "object"
+    },
+    "RegionId": {
+      "enum": [
+        "HEAD_NEURO",
+        "CHEST_CARDIO",
+        "SPINE_BONE",
+        "SYSTEMIC_IMMUNE_METABOLIC"
+      ],
+      "type": "string"
+    },
+    "Status": {
+      "enum": [
+        "GREEN",
+        "YELLOW",
+        "RED"
+      ],
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "$ref": "#/definitions/CountermeasurePlanDraft",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CountermeasurePlanDraft": {
+      "description": "What the LLM returns (strict JSON schema, see countermeasure_plan_draft.schema.json). It chooses from exercise_menu.json and writes words. It does NOT write numbers other than minutes and kcal_adjustment, and the server validates both against limits.",
+      "properties": {
+        "escalate_to_flight_surgeon": {
+          "type": "boolean"
+        },
+        "escalation_reason": {
+          "type": "string"
+        },
+        "explanation": {
+          "description": "<= 120 words, plain English, must not contain numbers that are not in the assessment.",
+          "type": "string"
+        },
+        "nutrition": {
+          "properties": {
+            "focus": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "kcal_adjustment": {
+              "type": "number"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kcal_adjustment",
+            "focus",
+            "notes"
+          ],
+          "type": "object"
+        },
+        "sessions": {
+          "items": {
+            "properties": {
+              "exercise_id": {
+                "type": "string"
+              },
+              "instructions": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "minutes": {
+                "type": "number"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "target_system": {
+                "$ref": "#/definitions/RegionId"
+              }
+            },
+            "required": [
+              "exercise_id",
+              "minutes",
+              "target_system",
+              "instructions",
+              "rationale"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "sessions",
+        "nutrition",
+        "escalate_to_flight_surgeon",
+        "escalation_reason",
+        "explanation"
+      ],
+      "type": "object"
+    },
+    "RegionId": {
+      "enum": [
+        "HEAD_NEURO",
+        "CHEST_CARDIO",
+        "SPINE_BONE",
+        "SYSTEMIC_IMMUNE_METABOLIC"
+      ],
+      "type": "string"
+    }
+  }
+}

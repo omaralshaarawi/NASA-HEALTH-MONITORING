@@ -1,0 +1,548 @@
+{
+ "schema_version": "1.0.0",
+ "astronaut_id": "ast_kai",
+ "mission_day": 14,
+ "generated_at_iso": "2026-11-14T08:00:00Z",
+ "environment": {
+  "id": "DEEP_SPACECRAFT",
+  "label": "Deep-space transit to Mars",
+  "environment": "DEEP_SPACECRAFT",
+  "body": "DEEP_SPACE",
+  "gravity_g": 0.0,
+  "distance_km": 225000000,
+  "one_way_delay_s": 750.519,
+  "comm_label": "Light-time delay",
+  "comm_mode": "AUTONOMOUS",
+  "radiation_expected_mSv_day": 1.4,
+  "radiation_mSv_day": 2.98,
+  "cabin_co2_mmHg": 2.6,
+  "resistive_target_min": 60,
+  "distance_range_km": {
+   "min": 54600000,
+   "max": 401000000
+  }
+ },
+ "overall": "YELLOW",
+ "indicators": [
+  {
+   "id": "hr_rest",
+   "label": "Resting heart rate",
+   "unit": "bpm",
+   "region": "CHEST_CARDIO",
+   "value": 69.9,
+   "status": "YELLOW",
+   "reasons": [
+    "Z=2.9 vs own normal 61.2"
+   ],
+   "anchor": {
+    "mean": 61.186,
+    "sd_raw": 0.765,
+    "sd_eff": 3.0,
+    "n": 7
+   },
+   "z": 2.9,
+   "slope_per_day": 1.175,
+   "drift_z": 2.35,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    61.5,
+    61.6,
+    60.3,
+    60.2,
+    61.2,
+    62.4,
+    61.1,
+    63.1,
+    64.3,
+    65.2,
+    66.8,
+    67.5,
+    69.4,
+    69.9
+   ]
+  },
+  {
+   "id": "sbp",
+   "label": "Systolic BP",
+   "unit": "mmHg",
+   "region": "CHEST_CARDIO",
+   "value": 118.0,
+   "status": "GREEN",
+   "reasons": [],
+   "anchor": {
+    "mean": 117.286,
+    "sd_raw": 2.928,
+    "sd_eff": 5.0,
+    "n": 7
+   },
+   "z": 0.14,
+   "slope_per_day": 0.179,
+   "drift_z": 0.21,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    118.0,
+    120.0,
+    121.0,
+    112.0,
+    116.0,
+    117.0,
+    117.0,
+    115.0,
+    122.0,
+    118.0,
+    120.0,
+    114.0,
+    122.0,
+    118.0
+   ]
+  },
+  {
+   "id": "dbp",
+   "label": "Diastolic BP",
+   "unit": "mmHg",
+   "region": "CHEST_CARDIO",
+   "value": 78.0,
+   "status": "GREEN",
+   "reasons": [],
+   "anchor": {
+    "mean": 77.143,
+    "sd_raw": 1.676,
+    "sd_eff": 4.0,
+    "n": 7
+   },
+   "z": 0.21,
+   "slope_per_day": 0.536,
+   "drift_z": 0.8,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    76.0,
+    80.0,
+    76.0,
+    76.0,
+    79.0,
+    76.0,
+    77.0,
+    74.0,
+    76.0,
+    78.0,
+    80.0,
+    79.0,
+    77.0,
+    78.0
+   ]
+  },
+  {
+   "id": "glucose",
+   "label": "Fasting glucose",
+   "unit": "mg/dL",
+   "region": "SYSTEMIC_IMMUNE_METABOLIC",
+   "value": 90.0,
+   "status": "GREEN",
+   "reasons": [],
+   "anchor": {
+    "mean": 92.143,
+    "sd_raw": 3.436,
+    "sd_eff": 6.0,
+    "n": 7
+   },
+   "z": 0.36,
+   "slope_per_day": -0.357,
+   "drift_z": 0.36,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    90.0,
+    88.0,
+    95.0,
+    88.0,
+    95.0,
+    96.0,
+    93.0,
+    92.0,
+    91.0,
+    88.0,
+    87.0,
+    92.0,
+    87.0,
+    90.0
+   ]
+  },
+  {
+   "id": "temp",
+   "label": "Core temperature",
+   "unit": "C",
+   "region": "SYSTEMIC_IMMUNE_METABOLIC",
+   "value": 37.16,
+   "status": "GREEN",
+   "reasons": [],
+   "anchor": {
+    "mean": 36.819,
+    "sd_raw": 0.101,
+    "sd_eff": 0.2,
+    "n": 7
+   },
+   "z": 1.71,
+   "slope_per_day": 0.055,
+   "drift_z": 1.65,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    36.75,
+    37.0,
+    36.74,
+    36.8,
+    36.84,
+    36.89,
+    36.71,
+    36.82,
+    36.91,
+    37.0,
+    36.98,
+    37.1,
+    37.12,
+    37.16
+   ]
+  },
+  {
+   "id": "sleep",
+   "label": "Sleep duration",
+   "unit": "h",
+   "region": "HEAD_NEURO",
+   "value": 4.8,
+   "status": "YELLOW",
+   "reasons": [
+    "4.8 h at/below yellow limit 5.5"
+   ],
+   "anchor": {
+    "mean": 7.257,
+    "sd_raw": 0.439,
+    "sd_eff": 1.0,
+    "n": 7
+   },
+   "z": 2.46,
+   "slope_per_day": -0.296,
+   "drift_z": 1.78,
+   "abs_level": 1,
+   "remeasure": false,
+   "trend": [
+    6.9,
+    8.1,
+    7.0,
+    7.6,
+    7.0,
+    7.2,
+    7.0,
+    6.7,
+    6.3,
+    6.0,
+    5.7,
+    5.6,
+    5.2,
+    4.8
+   ]
+  },
+  {
+   "id": "mood",
+   "label": "Mood (1-10)",
+   "unit": "score",
+   "region": "HEAD_NEURO",
+   "value": 5,
+   "status": "YELLOW",
+   "reasons": [
+    "Z=2.9 vs own normal 7.9"
+   ],
+   "anchor": {
+    "mean": 7.857,
+    "sd_raw": 0.378,
+    "sd_eff": 1.0,
+    "n": 7
+   },
+   "z": 2.86,
+   "slope_per_day": -0.357,
+   "drift_z": 2.14,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8,
+    8,
+    7,
+    7,
+    6,
+    6,
+    6,
+    5,
+    5
+   ]
+  },
+  {
+   "id": "pvt",
+   "label": "PVT reaction time",
+   "unit": "ms",
+   "region": "HEAD_NEURO",
+   "value": 307.0,
+   "status": "YELLOW",
+   "reasons": [
+    "Z=2.9 vs own normal 249.3"
+   ],
+   "anchor": {
+    "mean": 249.286,
+    "sd_raw": 6.237,
+    "sd_eff": 20.0,
+    "n": 7
+   },
+   "z": 2.89,
+   "slope_per_day": 8.036,
+   "drift_z": 2.41,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    249.0,
+    257.0,
+    253.0,
+    256.0,
+    241.0,
+    244.0,
+    245.0,
+    261.0,
+    263.0,
+    272.0,
+    284.0,
+    291.0,
+    297.0,
+    307.0
+   ]
+  },
+  {
+   "id": "cabin_co2",
+   "label": "Cabin CO2",
+   "unit": "mmHg",
+   "region": "HEAD_NEURO",
+   "value": 2.6,
+   "status": "GREEN",
+   "reasons": [],
+   "anchor": null,
+   "z": null,
+   "slope_per_day": null,
+   "drift_z": null,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    2.7,
+    2.8,
+    2.6,
+    2.7,
+    2.7,
+    2.8,
+    2.5,
+    2.7,
+    2.7,
+    2.7,
+    2.6,
+    2.5,
+    2.6,
+    2.6
+   ]
+  },
+  {
+   "id": "radiation",
+   "label": "Radiation dose rate",
+   "unit": "mSv/day",
+   "region": "SYSTEMIC_IMMUNE_METABOLIC",
+   "value": 2.98,
+   "status": "YELLOW",
+   "reasons": [
+    "2.98 mSv/day is 2.1x the expected 1.4 - possible Solar Particle Event (solar flare)"
+   ],
+   "anchor": null,
+   "z": null,
+   "slope_per_day": null,
+   "drift_z": null,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    1.33,
+    1.37,
+    1.34,
+    1.45,
+    1.39,
+    1.44,
+    1.37,
+    1.45,
+    1.4,
+    1.38,
+    1.37,
+    1.35,
+    3.12,
+    2.98
+   ],
+   "ratio": 2.13
+  },
+  {
+   "id": "resistive",
+   "label": "Resistive exercise",
+   "unit": "min",
+   "region": "SPINE_BONE",
+   "value": 11,
+   "status": "YELLOW",
+   "reasons": [
+    "under 30 min resistive exercise for 4 days (target 60)"
+   ],
+   "anchor": null,
+   "z": null,
+   "slope_per_day": null,
+   "drift_z": null,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    57,
+    63,
+    61,
+    59,
+    63,
+    62,
+    61,
+    58,
+    57,
+    58,
+    19,
+    18,
+    11,
+    11
+   ],
+   "consecutive_low_days": 4
+  },
+  {
+   "id": "ration",
+   "label": "Ration intake",
+   "unit": "%",
+   "region": "SYSTEMIC_IMMUNE_METABOLIC",
+   "value": 75,
+   "status": "YELLOW",
+   "reasons": [
+    "ration under 80% for 3 days"
+   ],
+   "anchor": null,
+   "z": null,
+   "slope_per_day": null,
+   "drift_z": null,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": [
+    99,
+    99,
+    98,
+    97,
+    98,
+    98,
+    99,
+    100,
+    98,
+    98,
+    98,
+    74,
+    70,
+    75
+   ],
+   "consecutive_low_days": 3
+  },
+  {
+   "id": "immune_risk",
+   "label": "Immune risk (composite)",
+   "unit": "flag",
+   "region": "SYSTEMIC_IMMUNE_METABOLIC",
+   "value": null,
+   "status": "YELLOW",
+   "reasons": [
+    "radiation 2.1x expected together with temp, sleep"
+   ],
+   "anchor": null,
+   "z": null,
+   "slope_per_day": null,
+   "drift_z": null,
+   "abs_level": 0,
+   "remeasure": false,
+   "trend": []
+  }
+ ],
+ "regions": {
+  "HEAD_NEURO": {
+   "id": "HEAD_NEURO",
+   "status": "YELLOW",
+   "drivers": [
+    "sleep",
+    "mood",
+    "pvt"
+   ],
+   "members": [
+    "sleep",
+    "mood",
+    "pvt",
+    "cabin_co2"
+   ]
+  },
+  "CHEST_CARDIO": {
+   "id": "CHEST_CARDIO",
+   "status": "YELLOW",
+   "drivers": [
+    "hr_rest"
+   ],
+   "members": [
+    "hr_rest",
+    "sbp",
+    "dbp"
+   ]
+  },
+  "SPINE_BONE": {
+   "id": "SPINE_BONE",
+   "status": "YELLOW",
+   "drivers": [
+    "resistive"
+   ],
+   "members": [
+    "resistive"
+   ]
+  },
+  "SYSTEMIC_IMMUNE_METABOLIC": {
+   "id": "SYSTEMIC_IMMUNE_METABOLIC",
+   "status": "YELLOW",
+   "drivers": [
+    "ration",
+    "radiation",
+    "immune_risk"
+   ],
+   "members": [
+    "temp",
+    "glucose",
+    "ration",
+    "radiation",
+    "immune_risk"
+   ]
+  }
+ },
+ "compliance": {
+  "streak_days": 0,
+  "bone_low_days": 4,
+  "nutrition_low_days": 3
+ },
+ "flags": [
+  "SYSTEMIC_IMMUNE",
+  "SPINE_BONE",
+  "INADEQUATE_NUTRITION"
+ ],
+ "comms": {
+  "one_way_delay_s": 750.519,
+  "mode": "AUTONOMOUS",
+  "emergency_action": "AUTONOMOUS_TRIAGE_STORE_AND_FORWARD"
+ },
+ "triage_recommended": false,
+ "thresholds_status": "PROTOTYPE",
+ "disclaimer": "Prototype decision-support tool using simulated data. Not a medical device and not a diagnosis. Follow flight-surgeon and onboard medical procedures."
+}

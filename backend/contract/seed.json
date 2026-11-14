@@ -1,0 +1,1299 @@
+[
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 1,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.2,
+   "sbp_mmHg": 119.0,
+   "dbp_mmHg": 72.0,
+   "glucose_mg_dl": 94.0,
+   "temp_c": 36.85,
+   "sleep_h": 6.9,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 252.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.39,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 58,
+   "ration_intake_pct": 97
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 2,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 62.1,
+   "sbp_mmHg": 116.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 88.0,
+   "temp_c": 36.76,
+   "sleep_h": 7.2,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 252.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.37,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 60,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 3,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.4,
+   "sbp_mmHg": 119.0,
+   "dbp_mmHg": 74.0,
+   "glucose_mg_dl": 91.0,
+   "temp_c": 36.66,
+   "sleep_h": 6.8,
+   "mood_1_10": 9
+  },
+  "pvt": {
+   "median_rt_ms": 245.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.46,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 57,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 4,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.0,
+   "sbp_mmHg": 113.0,
+   "dbp_mmHg": 76.0,
+   "glucose_mg_dl": 93.0,
+   "temp_c": 36.77,
+   "sleep_h": 7.5,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 250.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.43,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 100
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 5,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.8,
+   "sbp_mmHg": 114.0,
+   "dbp_mmHg": 75.0,
+   "glucose_mg_dl": 96.0,
+   "temp_c": 36.87,
+   "sleep_h": 7.6,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 230.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.48,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 62,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 6,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.1,
+   "sbp_mmHg": 120.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 87.0,
+   "temp_c": 36.91,
+   "sleep_h": 7.1,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 245.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.47,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 58,
+   "ration_intake_pct": 97
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 7,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.1,
+   "sbp_mmHg": 118.0,
+   "dbp_mmHg": 76.0,
+   "glucose_mg_dl": 91.0,
+   "temp_c": 36.8,
+   "sleep_h": 7.1,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 257.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.37,
+   "cabin_co2_mmHg": 2.8
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 61,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 8,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 62.6,
+   "sbp_mmHg": 122.0,
+   "dbp_mmHg": 79.0,
+   "glucose_mg_dl": 96.0,
+   "temp_c": 36.7,
+   "sleep_h": 7.2,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 254.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.51,
+   "cabin_co2_mmHg": 3.0
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 57,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 9,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.2,
+   "sbp_mmHg": 118.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 95.0,
+   "temp_c": 36.77,
+   "sleep_h": 7.2,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 246.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.39,
+   "cabin_co2_mmHg": 2.8
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 58,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 10,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 62.7,
+   "sbp_mmHg": 118.0,
+   "dbp_mmHg": 72.0,
+   "glucose_mg_dl": 88.0,
+   "temp_c": 36.72,
+   "sleep_h": 6.9,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 243.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.4,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 60,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 11,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.4,
+   "sbp_mmHg": 119.0,
+   "dbp_mmHg": 75.0,
+   "glucose_mg_dl": 89.0,
+   "temp_c": 36.87,
+   "sleep_h": 7.0,
+   "mood_1_10": 6
+  },
+  "pvt": {
+   "median_rt_ms": 258.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.35,
+   "cabin_co2_mmHg": 2.8
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 63,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 12,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 62.4,
+   "sbp_mmHg": 115.0,
+   "dbp_mmHg": 71.0,
+   "glucose_mg_dl": 90.0,
+   "temp_c": 36.81,
+   "sleep_h": 7.1,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 248.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.43,
+   "cabin_co2_mmHg": 2.8
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 62,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 13,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.5,
+   "sbp_mmHg": 120.0,
+   "dbp_mmHg": 75.0,
+   "glucose_mg_dl": 94.0,
+   "temp_c": 36.88,
+   "sleep_h": 6.8,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 241.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.4,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 97
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_nova",
+  "mission_day": 14,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.8,
+   "sbp_mmHg": 118.0,
+   "dbp_mmHg": 75.0,
+   "glucose_mg_dl": 96.0,
+   "temp_c": 36.83,
+   "sleep_h": 6.7,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 249.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.47,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 62,
+   "ration_intake_pct": 100
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 1,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.5,
+   "sbp_mmHg": 118.0,
+   "dbp_mmHg": 76.0,
+   "glucose_mg_dl": 90.0,
+   "temp_c": 36.75,
+   "sleep_h": 6.9,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 249.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.33,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 57,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 2,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.6,
+   "sbp_mmHg": 120.0,
+   "dbp_mmHg": 80.0,
+   "glucose_mg_dl": 88.0,
+   "temp_c": 37.0,
+   "sleep_h": 8.1,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 257.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.37,
+   "cabin_co2_mmHg": 2.8
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 63,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 3,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.3,
+   "sbp_mmHg": 121.0,
+   "dbp_mmHg": 76.0,
+   "glucose_mg_dl": 95.0,
+   "temp_c": 36.74,
+   "sleep_h": 7.0,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 253.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.34,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 61,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 4,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.2,
+   "sbp_mmHg": 112.0,
+   "dbp_mmHg": 76.0,
+   "glucose_mg_dl": 88.0,
+   "temp_c": 36.8,
+   "sleep_h": 7.6,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 256.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.45,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 97
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 5,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.2,
+   "sbp_mmHg": 116.0,
+   "dbp_mmHg": 79.0,
+   "glucose_mg_dl": 95.0,
+   "temp_c": 36.84,
+   "sleep_h": 7.0,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 241.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.39,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 63,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 6,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 62.4,
+   "sbp_mmHg": 117.0,
+   "dbp_mmHg": 76.0,
+   "glucose_mg_dl": 96.0,
+   "temp_c": 36.89,
+   "sleep_h": 7.2,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 244.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.44,
+   "cabin_co2_mmHg": 2.8
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 62,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 7,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.1,
+   "sbp_mmHg": 117.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 93.0,
+   "temp_c": 36.71,
+   "sleep_h": 7.0,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 245.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.37,
+   "cabin_co2_mmHg": 2.5
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 61,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 8,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 63.1,
+   "sbp_mmHg": 115.0,
+   "dbp_mmHg": 74.0,
+   "glucose_mg_dl": 92.0,
+   "temp_c": 36.82,
+   "sleep_h": 6.7,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 261.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.45,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 58,
+   "ration_intake_pct": 100
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 9,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 64.3,
+   "sbp_mmHg": 122.0,
+   "dbp_mmHg": 76.0,
+   "glucose_mg_dl": 91.0,
+   "temp_c": 36.91,
+   "sleep_h": 6.3,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 263.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.4,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 57,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 10,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 65.2,
+   "sbp_mmHg": 118.0,
+   "dbp_mmHg": 78.0,
+   "glucose_mg_dl": 88.0,
+   "temp_c": 37.0,
+   "sleep_h": 6.0,
+   "mood_1_10": 6
+  },
+  "pvt": {
+   "median_rt_ms": 272.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.38,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 58,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 11,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 66.8,
+   "sbp_mmHg": 120.0,
+   "dbp_mmHg": 80.0,
+   "glucose_mg_dl": 87.0,
+   "temp_c": 36.98,
+   "sleep_h": 5.7,
+   "mood_1_10": 6
+  },
+  "pvt": {
+   "median_rt_ms": 284.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.37,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 19,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 12,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 67.5,
+   "sbp_mmHg": 114.0,
+   "dbp_mmHg": 79.0,
+   "glucose_mg_dl": 92.0,
+   "temp_c": 37.1,
+   "sleep_h": 5.6,
+   "mood_1_10": 6
+  },
+  "pvt": {
+   "median_rt_ms": 291.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.35,
+   "cabin_co2_mmHg": 2.5
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 18,
+   "ration_intake_pct": 74
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 13,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 69.4,
+   "sbp_mmHg": 122.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 87.0,
+   "temp_c": 37.12,
+   "sleep_h": 5.2,
+   "mood_1_10": 5
+  },
+  "pvt": {
+   "median_rt_ms": 297.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 3.12,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 11,
+   "ration_intake_pct": 70
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_kai",
+  "mission_day": 14,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 69.9,
+   "sbp_mmHg": 118.0,
+   "dbp_mmHg": 78.0,
+   "glucose_mg_dl": 90.0,
+   "temp_c": 37.16,
+   "sleep_h": 4.8,
+   "mood_1_10": 5
+  },
+  "pvt": {
+   "median_rt_ms": 307.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 2.98,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 11,
+   "ration_intake_pct": 75
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 1,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.8,
+   "sbp_mmHg": 118.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 95.0,
+   "temp_c": 36.74,
+   "sleep_h": 7.5,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 251.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.34,
+   "cabin_co2_mmHg": 2.8
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 58,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 2,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.0,
+   "sbp_mmHg": 117.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 94.0,
+   "temp_c": 36.76,
+   "sleep_h": 6.7,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 242.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.33,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 3,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.1,
+   "sbp_mmHg": 120.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 84.0,
+   "temp_c": 36.66,
+   "sleep_h": 6.6,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 266.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.38,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 100
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 4,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.5,
+   "sbp_mmHg": 116.0,
+   "dbp_mmHg": 78.0,
+   "glucose_mg_dl": 92.0,
+   "temp_c": 36.91,
+   "sleep_h": 7.1,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 248.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.35,
+   "cabin_co2_mmHg": 2.5
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 63,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 5,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.8,
+   "sbp_mmHg": 114.0,
+   "dbp_mmHg": 75.0,
+   "glucose_mg_dl": 83.0,
+   "temp_c": 36.84,
+   "sleep_h": 7.3,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 273.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.45,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 58,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 6,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.8,
+   "sbp_mmHg": 109.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 90.0,
+   "temp_c": 36.77,
+   "sleep_h": 7.3,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 252.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.33,
+   "cabin_co2_mmHg": 2.6
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 63,
+   "ration_intake_pct": 97
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 7,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 59.5,
+   "sbp_mmHg": 116.0,
+   "dbp_mmHg": 75.0,
+   "glucose_mg_dl": 88.0,
+   "temp_c": 36.83,
+   "sleep_h": 6.9,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 244.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.34,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 100
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 8,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 63.2,
+   "sbp_mmHg": 120.0,
+   "dbp_mmHg": 73.0,
+   "glucose_mg_dl": 90.0,
+   "temp_c": 36.66,
+   "sleep_h": 6.4,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 251.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.37,
+   "cabin_co2_mmHg": 2.5
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 61,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 9,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.9,
+   "sbp_mmHg": 118.0,
+   "dbp_mmHg": 77.0,
+   "glucose_mg_dl": 99.0,
+   "temp_c": 36.86,
+   "sleep_h": 7.1,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 242.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.45,
+   "cabin_co2_mmHg": 2.9
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 10,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 61.5,
+   "sbp_mmHg": 119.0,
+   "dbp_mmHg": 74.0,
+   "glucose_mg_dl": 86.0,
+   "temp_c": 36.76,
+   "sleep_h": 7.2,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 245.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.25,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 11,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.2,
+   "sbp_mmHg": 116.0,
+   "dbp_mmHg": 75.0,
+   "glucose_mg_dl": 90.0,
+   "temp_c": 36.95,
+   "sleep_h": 7.3,
+   "mood_1_10": 8
+  },
+  "pvt": {
+   "median_rt_ms": 248.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.44,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 58,
+   "ration_intake_pct": 99
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 12,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 62.7,
+   "sbp_mmHg": 116.0,
+   "dbp_mmHg": 74.0,
+   "glucose_mg_dl": 88.0,
+   "temp_c": 36.79,
+   "sleep_h": 7.7,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 260.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.38,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 100
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 13,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 60.4,
+   "sbp_mmHg": 116.0,
+   "dbp_mmHg": 76.0,
+   "glucose_mg_dl": 90.0,
+   "temp_c": 36.79,
+   "sleep_h": 6.7,
+   "mood_1_10": 7
+  },
+  "pvt": {
+   "median_rt_ms": 250.0,
+   "lapses_gt500ms": 0,
+   "n_trials": 20,
+   "source": "BROWSER_30S"
+  },
+  "habitat": {
+   "radiation_mSv_day": 1.46,
+   "cabin_co2_mmHg": 2.5
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 58,
+   "ration_intake_pct": 100
+  },
+  "attachments": []
+ },
+ {
+  "astronaut_id": "ast_lin",
+  "mission_day": 14,
+  "environment_id": "DEEP_SPACECRAFT",
+  "source": "SIMULATED",
+  "vitals": {
+   "hr_rest_bpm": 118.0,
+   "sbp_mmHg": 168.0,
+   "dbp_mmHg": 104.0,
+   "glucose_mg_dl": 88.0,
+   "temp_c": 36.71,
+   "sleep_h": 6.2,
+   "mood_1_10": 5
+  },
+  "pvt": null,
+  "habitat": {
+   "radiation_mSv_day": 1.45,
+   "cabin_co2_mmHg": 2.7
+  },
+  "compliance": {
+   "morning_vitals_logged": true,
+   "ared_resistive_minutes": 59,
+   "ration_intake_pct": 98
+  },
+  "attachments": []
+ }
+]
