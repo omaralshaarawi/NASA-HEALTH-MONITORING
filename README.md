@@ -112,3 +112,12 @@ Use **Reset demo data** on the Daily Report page to go back to the original day 
 cd backend && ./mvnw test
 cd frontend && npx ng test --watch=false
 ```
+
+## Use of AI
+
+Some of the code in this project was generated with AI tools to accelerate innovation. AI was also
+used for:
+
+- the space background and body wireframe images, which carry a sparkle watermark in the app,
+- the voice of the JARVIS emergency operator, which the app labels as an SI-generated voice,
+- the wording of the daily training plans, which the backend checks against the rules before use.
