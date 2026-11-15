@@ -4,8 +4,7 @@ import { environment } from '../../../environments/environment';
 
 export type ClientStatus = 'connecting' | 'listening' | 'thinking' | 'speaking' | 'disconnected';
 
-// One utterance. While someone is still talking the same line arrives again with more text,
-// and finally with final = true.
+// interim lines are resent with more text until final is true
 export interface CallLine {
   speaker: 'JARVIS' | 'YOU';
   text: string;
@@ -14,25 +13,20 @@ export interface CallLine {
 
 export interface VoiceCallListener {
   status(status: ClientStatus): void;
-  // the whole conversation so far, oldest first
   transcript(lines: CallLine[]): void;
 }
 
-// What the call service needs from a voice provider. The real one talks to Ultravox;
-// the fake one plays a short scripted call for tests and offline demos.
 export interface VoiceCallClient {
-  // rejects when the microphone cannot be used
   checkMicrophone(): Promise<void>;
-  // throws when the call cannot be joined
   join(joinUrl: string, listener: VoiceCallListener): void;
   setMuted(muted: boolean): void;
-  // stops reporting to the listener and leaves the call; safe to call twice
+  // safe to call twice
   leave(): Promise<void>;
 }
 
 export type VoiceCallClientFactory = () => Promise<VoiceCallClient>;
 
-// The Ultravox SDK is large, so it is only downloaded when a call is actually started.
+// lazy, so the Ultravox SDK only downloads when a call starts
 export const VOICE_CALL_CLIENT = new InjectionToken<VoiceCallClientFactory>('voice call client', {
   providedIn: 'root',
   factory: () => async () =>

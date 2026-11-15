@@ -5,7 +5,7 @@ import com.nasa.spacehealth.model.IndicatorAssessment.Anchor;
 import java.util.ArrayList;
 import java.util.List;
 
-// Working result for one indicator while a day is being assessed. status: 0 green, 1 yellow, 2 red.
+// status: 0 green, 1 yellow, 2 red
 class IndicatorResult {
 
     int status;

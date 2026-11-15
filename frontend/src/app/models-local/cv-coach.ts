@@ -1,6 +1,6 @@
 import { AssessmentResponse, RegionId, Status } from '../models/contract';
 
-// Shapes returned by cv-service (the camera coach). Not part of the shared contract.
+// cv-service responses, not part of the contract
 
 export type CvTrackingMode = 'REP_COUNTER' | 'CADENCE_TRACKER' | 'POSTURE_HOLD';
 
@@ -32,7 +32,7 @@ export interface CvTelemetry {
   primary_angle: number;
   visibility_ok: boolean;
   camera_active: boolean;
-  // form check from the camera, not a health status
+  // camera form check, not a health status
   severity: Status;
   hud_warning: string;
   active_warnings: string[];

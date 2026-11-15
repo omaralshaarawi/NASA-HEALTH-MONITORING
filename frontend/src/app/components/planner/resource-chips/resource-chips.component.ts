@@ -1,8 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-// The "close the loop" cost of a workout: extra food energy, water and CO2 the habitat has to handle.
-// All three numbers come from the backend (ResourceBlock); nothing is calculated here.
 @Component({
   selector: 'app-resource-chips',
   imports: [DecimalPipe],

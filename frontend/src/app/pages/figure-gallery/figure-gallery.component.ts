@@ -4,7 +4,7 @@ import { ExerciseFigureComponent } from '../../components/planner/exercise-figur
 import { FIGURES } from '../../components/planner/exercise-figure/figures';
 import { exerciseTitle } from '../../components/planner/planner-labels';
 
-// Dev page: every illustration side by side, to check the drawings. Open /dev/figures.
+// dev only: /dev/figures
 @Component({
   selector: 'app-figure-gallery',
   imports: [ExerciseFigureComponent],

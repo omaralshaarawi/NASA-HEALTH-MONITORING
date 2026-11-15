@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, booleanAttribute, input } from '@angular/core';
 
-// One number with its unit and a caption underneath. An icon can be passed as content.
 @Component({
   selector: 'app-metric-tile',
   changeDetection: ChangeDetectionStrategy.OnPush,

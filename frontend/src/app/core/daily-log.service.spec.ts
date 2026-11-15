@@ -46,11 +46,12 @@ describe('DailyLogService', () => {
 describe('MissionStore, closing a day', () => {
   let http: HttpTestingController;
 
-  // answers what the store asks for on start-up: crew list, habitats, Kai's assessment and plan
   function setUp(): MissionStore {
     localStorage.setItem('crew-health.crew', 'ast_kai');
     TestBed.resetTestingModule();
-    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    });
     const store = TestBed.inject(MissionStore);
     http = TestBed.inject(HttpTestingController);
     http.expectOne(`${API_BASE}/api/astronauts`).flush([]);
@@ -61,7 +62,9 @@ describe('MissionStore, closing a day', () => {
 
   function serve(assessment: AssessmentResponse): void {
     http.expectOne((r) => r.url === `${API_BASE}/api/assessments/ast_kai`).flush(assessment);
-    http.expectOne(`${API_BASE}/api/plans/generate`).flush({ ...KAI_PLAN, generated_for_mission_day: assessment.mission_day });
+    http
+      .expectOne(`${API_BASE}/api/plans/generate`)
+      .flush({ ...KAI_PLAN, generated_for_mission_day: assessment.mission_day });
   }
 
   beforeEach(() => localStorage.clear());
@@ -78,7 +81,7 @@ describe('MissionStore, closing a day', () => {
     expect(store.pendingDay()).toBe(15);
     expect(store.lastClosed()?.assessment).toEqual(KAI);
 
-    // a reload still has only day 14 on the backend: still waiting
+    // the backend still only has day 14
     store.refresh();
     http.expectOne(`${API_BASE}/api/astronauts`).flush([]);
     http.expectOne(`${API_BASE}/api/environments`).flush([]);
@@ -99,7 +102,11 @@ describe('MissionStore, closing a day', () => {
         source: 'MANUAL',
         vitals: { hr_rest_bpm: 62 },
         habitat: { radiation_mSv_day: 1.4, cabin_co2_mmHg: 2.6 },
-        compliance: { morning_vitals_logged: true, ared_resistive_minutes: 60, ration_intake_pct: 100 },
+        compliance: {
+          morning_vitals_logged: true,
+          ared_resistive_minutes: 60,
+          ration_intake_pct: 100,
+        },
       })
       .subscribe();
     http.expectOne(`${API_BASE}/api/measurements`).flush(day15);

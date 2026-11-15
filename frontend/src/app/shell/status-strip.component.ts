@@ -4,7 +4,6 @@ import { MissionStore } from '../core/mission-store.service';
 import { delayText } from '../ui/format';
 import { StatusChipComponent } from '../ui/status-chip.component';
 
-// One line of mission facts under the top bar: who, how they are, where, and how far Earth is.
 @Component({
   selector: 'app-status-strip',
   imports: [StatusChipComponent],
@@ -17,7 +16,7 @@ import { StatusChipComponent } from '../ui/status-chip.component';
         <span class="chip num">Day {{ a.mission_day }}</span>
         <span class="chip">{{ a.environment.label }}</span>
         <span class="chip num">{{ a.environment.gravity_g }} g</span>
-        <!-- near Earth the comm mode chip already says LIVE -->
+        <!-- near Earth the LIVE chip already says it -->
         @if (delay(); as d) {
           @if (d.unit) {
             <span class="chip num">{{ d.value }} {{ d.unit }} one way</span>

@@ -3,8 +3,6 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 
 import { EnvironmentProfile } from '../../models/contract';
 
-// Pick a habitat, and for Mars the Earth distance. Every value shown comes from the backend's
-// environment list; the assessment is recomputed by the backend for the choice.
 @Component({
   selector: 'app-habitat-switcher',
   imports: [DecimalPipe],
@@ -61,7 +59,9 @@ export class HabitatSwitcherComponent {
   readonly distanceSelected = output<number>();
 
   protected selectedEnvironment(): EnvironmentProfile | undefined {
-    return this.environments().find((environment) => environment.id === this.selectedEnvironmentId());
+    return this.environments().find(
+      (environment) => environment.id === this.selectedEnvironmentId(),
+    );
   }
 
   protected distanceChanged(event: Event): void {

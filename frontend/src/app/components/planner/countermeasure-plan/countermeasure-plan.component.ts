@@ -8,8 +8,6 @@ import { exerciseTitle, menuItem } from '../planner-labels';
 import { SessionCardComponent } from '../session-card/session-card.component';
 import { SessionTimerComponent } from '../session-timer/session-timer.component';
 
-// Today's plan for one crew member: training sessions with their timers, nutrition, and what
-// the plan costs life support. Display only: every number comes from the plan as received.
 @Component({
   selector: 'app-countermeasure-plan',
   imports: [DecimalPipe, PlainWordsPipe, SessionCardComponent, SessionTimerComponent],
@@ -19,7 +17,6 @@ import { SessionTimerComponent } from '../session-timer/session-timer.component'
 })
 export class CountermeasurePlanComponent {
   readonly plan = input.required<CountermeasurePlan>();
-  // "Launch camera coach" on a session: the host opens the coach for that exercise
   readonly coachRequested = output<string>();
 
   protected readonly training = inject(TrainingService);
@@ -27,7 +24,6 @@ export class CountermeasurePlanComponent {
   protected readonly draft = computed(() => this.plan().draft);
   protected readonly resources = computed(() => this.plan().resources);
 
-  // how much of the total extra energy each session accounts for, for the bar in the life-support panel
   protected readonly shares = computed(() => {
     const total = this.resources().totals.extra_kcal;
     return this.resources().sessions.map((s) => ({

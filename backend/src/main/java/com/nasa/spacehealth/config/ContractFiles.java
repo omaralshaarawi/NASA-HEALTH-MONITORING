@@ -13,12 +13,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-// Reads the shared files in /contract (rules, seed data, protocol, schemas).
 public class ContractFiles {
 
     private static final String CLASSPATH_DIR = "contract/";
 
-    // null when the files are read from the jar's classpath instead of a folder on disk.
+    // null when reading from the jar's classpath
     private final Path dir;
     private final ObjectMapper mapper;
 
@@ -35,7 +34,7 @@ public class ContractFiles {
                 return p;
             }
         }
-        // Deployed builds may ship only the jar, so the build also bundles the contract inside it.
+        // deployed builds may only have the jar, so the contract is bundled in it too
         if (ContractFiles.class.getClassLoader().getResource(CLASSPATH_DIR + "rules.json") != null) {
             return null;
         }

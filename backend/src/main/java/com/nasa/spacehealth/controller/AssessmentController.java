@@ -49,7 +49,6 @@ public class AssessmentController {
         return assessmentService.addMeasurement(body);
     }
 
-    // demo helper: drop posted data and reload seed.json
     @PostMapping("/reset")
     public Map<String, Object> reset() {
         return Map.of("seed_records", assessmentService.reset());

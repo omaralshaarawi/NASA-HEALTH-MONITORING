@@ -8,10 +8,11 @@ import { TrainingService } from '../../core/training.service';
 import { RegionId } from '../../models/contract';
 import { STATUS_WORD, delayText } from '../../ui/format';
 import { MetricTileComponent } from '../../ui/metric-tile.component';
+import { SiMarkComponent } from '../../ui/si-mark.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [RouterLink, MetricTileComponent],
+  imports: [RouterLink, MetricTileComponent, SiMarkComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
@@ -21,8 +22,12 @@ export class HomePageComponent {
   protected readonly emergency = inject(EmergencyService);
   protected readonly training = inject(TrainingService);
 
-  protected readonly regionIds: RegionId[] = ['HEAD_NEURO', 'CHEST_CARDIO', 'SPINE_BONE', 'SYSTEMIC_IMMUNE_METABOLIC'];
-  // one word each: the card is narrow
+  protected readonly regionIds: RegionId[] = [
+    'HEAD_NEURO',
+    'CHEST_CARDIO',
+    'SPINE_BONE',
+    'SYSTEMIC_IMMUNE_METABOLIC',
+  ];
   protected readonly regionNames: Record<RegionId, string> = {
     HEAD_NEURO: 'Head',
     CHEST_CARDIO: 'Chest',
@@ -32,8 +37,9 @@ export class HomePageComponent {
   protected readonly statusWord = STATUS_WORD;
   protected readonly exerciseTitle = exerciseTitle;
 
-  // how many of today's indicators have a value
-  protected readonly measured = computed(() => this.store.assessment()?.indicators.filter((i) => i.value !== null).length ?? 0);
+  protected readonly measured = computed(
+    () => this.store.assessment()?.indicators.filter((i) => i.value !== null).length ?? 0,
+  );
 
   protected readonly plannedMinutes = computed(
     () => this.store.plan()?.draft.sessions.reduce((sum, session) => sum + session.minutes, 0) ?? 0,

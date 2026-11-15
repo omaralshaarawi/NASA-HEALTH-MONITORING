@@ -7,8 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
-// Compares two JSON trees field by field and returns one line per difference.
-// Numbers must be the exact same double (-0.0 != 0.0); null and missing are different.
+// one line per difference; -0.0 != 0.0 and null != missing
 public final class JsonDiff {
 
     private JsonDiff() {

@@ -28,7 +28,6 @@ public class AssessmentService {
     private record Crew(String name, String scenario) {
     }
 
-    // The three demo astronauts from seed.json
     private static final Map<String, Crew> SEEDED_CREW = Map.of(
             "ast_nova", new Crew("Nova", "Nominal: all systems inside the personal baseline"),
             "ast_kai", new Crew("Kai", "Multi-system drift from day 8, solar particle event on days 13-14"),
@@ -73,7 +72,6 @@ public class AssessmentService {
                 .toList();
     }
 
-    // day: null = latest day. envId: null = the habitat that day was recorded in.
     public AssessmentResponse assess(String astronautId, Integer day, String envId, Double distanceKm) {
         int missionDay = day != null ? day : repository.latestDay(astronautId);
         List<DailyMeasurementAndCompliance> records = repository.findUpTo(astronautId, missionDay);

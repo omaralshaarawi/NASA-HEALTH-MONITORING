@@ -14,9 +14,9 @@ import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
-// Calls Gemini generateContent with a response schema, so the answer is always JSON in the draft shape.
-// The schema is the contract's CountermeasurePlanDraft, tightened: exercise_id is an enum of the
-// items allowed at this gravity, and minutes carries the menu limits.
+// Uses a response schema so Gemini always answers in the draft shape. It's the contract's
+// CountermeasurePlanDraft, tightened: exercise_id is an enum of what this gravity allows
+// and minutes has the menu limits.
 @Component
 public class GeminiDraftGenerator implements DraftGenerator {
 

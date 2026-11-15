@@ -13,9 +13,8 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-// Plans we already have, looked up by llm.input_hash (a hash of exactly what the LLM was sent).
-// Starts with the recorded plans in resources/fallback-plans and also keeps every live LLM plan
-// made since start-up, so the same assessment does not cost another API call.
+// Looked up by llm.input_hash. Starts with resources/fallback-plans and keeps every live plan
+// since start-up, so the same assessment never costs a second API call.
 @Component
 public class SavedPlans {
 
@@ -44,7 +43,6 @@ public class SavedPlans {
         byHash.put(plan.llm().inputHash(), plan);
     }
 
-    // back to only the recorded files
     public synchronized void reset() {
         byHash.clear();
         recordedByAstronaut.clear();

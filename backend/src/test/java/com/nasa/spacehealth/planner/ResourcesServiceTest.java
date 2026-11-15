@@ -19,7 +19,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-// Compares the Java resource math with contract/resources.py (outputs saved in resources_reference.json).
+// expected values from contract/resources.py (resources_reference.json)
 @SpringBootTest
 class ResourcesServiceTest {
 

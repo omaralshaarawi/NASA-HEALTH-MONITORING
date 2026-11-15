@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// Same drafts, same problems (and same wording) as validate_draft() in contract/resources.py.
+// same drafts, same problems, same wording as validate_draft()
 @SpringBootTest
 class DraftValidatorTest {
 

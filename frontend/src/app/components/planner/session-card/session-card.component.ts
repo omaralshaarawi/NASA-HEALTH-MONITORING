@@ -20,7 +20,6 @@ type SessionResources = ResourceBlock['sessions'][number];
 export class SessionCardComponent {
   readonly session = input.required<Session>();
   readonly index = input.required<number>();
-  // the resource row for this session, if the backend sent one
   readonly resources = input<SessionResources | null>(null);
 
   protected readonly title = computed(() => exerciseTitle(this.session().exercise_id));

@@ -3,7 +3,7 @@
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="lead">
-    <!-- the slider and play button are decoration from the design, not controls -->
+    <!-- decorative -->
     <span class="rail-line" aria-hidden="true"><i></i><i></i></span>
 
     <div class="intro">
@@ -17,7 +17,7 @@
       </p>
 
       <h1 id="hero-title" class="wide title">
-        NASA<br />
+        Astropital<br />
         Health care<br />
         <span class="text-signal">Monitoring.</span>
       </h1>
@@ -87,7 +87,7 @@
   }
 </section>
 
-<section #overview class="cards" aria-label="Sections">
+<section class="cards" aria-label="Sections">
   <a routerLink="/health" class="panel card">
     <div class="card-head">
       <h2 class="display card-title">Health</h2>
@@ -96,6 +96,7 @@
       }
     </div>
     <img class="body" src="/assets/body-wireframe.webp" alt="" width="840" height="1125" />
+    <app-si-mark class="card-mark" />
     <div class="card-foot">
       @if (a) {
         <div class="flex items-center gap-2 text-sm text-ink">
@@ -208,13 +209,4 @@
       </li>
     </ol>
   </a>
-
-  <button type="button" class="explore" (click)="overview.scrollIntoView()">
-    <span>Scroll to explore</span>
-    <span class="explore-arrow" aria-hidden="true">
-      <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M6 1.5v9M2.5 7 6 10.5 9.5 7" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </span>
-  </button>
 </section>

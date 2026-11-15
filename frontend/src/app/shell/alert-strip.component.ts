@@ -5,9 +5,6 @@ import { EmergencyService } from '../core/emergency.service';
 import { MissionStore } from '../core/mission-store.service';
 import { VoiceCallService } from '../core/voice/voice-call.service';
 
-// Red strip under the top bar on every page while triage is recommended. It cannot be dismissed;
-// it goes away when the assessment no longer recommends triage. While the voice call is running
-// it also carries the call's mute and end buttons, whichever page is open.
 @Component({
   selector: 'app-alert-strip',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,9 +47,10 @@ export class AlertStripComponent {
   protected readonly call = inject(VoiceCallService);
 
   protected readonly confirmingEnd = signal(false);
-  protected readonly patientName = computed(() => CREW.find((m) => m.id === this.call.patientId())?.name ?? '');
+  protected readonly patientName = computed(
+    () => CREW.find((m) => m.id === this.call.patientId())?.name ?? '',
+  );
 
-  // one extra tap, so the call is not ended by accident
   protected end(): void {
     if (!this.confirmingEnd()) {
       this.confirmingEnd.set(true);

@@ -1,6 +1,6 @@
-:host { display: block; }
-
-/* ---------- hero ---------- */
+:host {
+  display: block;
+}
 
 .hero {
   position: relative;
@@ -11,7 +11,9 @@
 }
 
 .rail-line,
-.rail-play { display: none; }
+.rail-play {
+  display: none;
+}
 
 .system {
   display: inline-flex;
@@ -27,7 +29,9 @@
   text-transform: uppercase;
   color: var(--color-ink-dim);
 }
-.system .status { font-size: inherit; }
+.system .status {
+  font-size: inherit;
+}
 
 .title {
   margin: 1.25rem 0 0;
@@ -50,13 +54,15 @@
   gap: 0.9375rem;
   margin-top: 2rem;
 }
-/* the second button is quieter than the first */
 .cta .btn:not(.btn-primary) {
   background: rgb(10 14 19 / 0.45);
   color: var(--color-ink-dim);
   backdrop-filter: blur(var(--blur-glass));
 }
-.cta .btn:not(.btn-primary):hover { color: var(--color-ink); border-color: var(--color-ink-dim); }
+.cta .btn:not(.btn-primary):hover {
+  color: var(--color-ink);
+  border-color: var(--color-ink-dim);
+}
 
 .notice {
   max-width: 34rem;
@@ -76,7 +82,9 @@
   line-height: 1.6;
   color: var(--color-ink-dim);
 }
-.caution .status { margin-right: 0.375rem; }
+.caution .status {
+  margin-right: 0.375rem;
+}
 
 .crew-tag {
   justify-self: start;
@@ -118,9 +126,10 @@
   }
   .intro,
   .cta,
-  .notice { grid-column: 2; }
+  .notice {
+    grid-column: 2;
+  }
 
-  /* thin slider line beside the title, with its two ticks */
   .rail-line {
     position: relative;
     display: flex;
@@ -137,7 +146,12 @@
     top: 0;
     bottom: -0.75rem;
     width: 1px;
-    background: linear-gradient(180deg, var(--color-line-strong), var(--color-line) 60%, transparent);
+    background: linear-gradient(
+      180deg,
+      var(--color-line-strong),
+      var(--color-line) 60%,
+      transparent
+    );
   }
   .rail-line i {
     position: relative;
@@ -146,8 +160,14 @@
     border: 1px solid var(--color-ink-dim);
     background: var(--color-void);
   }
-  .rail-line i:first-child { border-bottom: 0; border-radius: 0.5rem 0.5rem 0 0; }
-  .rail-line i:last-child { border-top: 0; border-radius: 0 0 0.5rem 0.5rem; }
+  .rail-line i:first-child {
+    border-bottom: 0;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+  .rail-line i:last-child {
+    border-top: 0;
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
 
   .rail-play {
     display: grid;
@@ -177,21 +197,29 @@
     gap: 2rem;
     padding-top: 3.25rem;
     text-align: center;
-    /* the tiles sit over the bright limb of the planet */
+    /* readable over the bright edge of the planet */
     text-shadow: 0 1px 10px rgb(5 7 10 / 0.9);
   }
-  .icon { margin-inline: auto; }
+  .icon {
+    margin-inline: auto;
+  }
 }
-
-/* ---------- the four section cards and the scroll capsule ---------- */
 
 .cards {
   display: grid;
   gap: 0.75rem;
   scroll-margin-top: 1rem;
 }
-@media (min-width: 40rem) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 64rem) { .cards { grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.12fr) 7.5rem; } }
+@media (min-width: 40rem) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 64rem) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.12fr);
+  }
+}
 
 .card {
   position: relative;
@@ -202,7 +230,9 @@
   overflow: hidden;
   color: var(--color-ink);
   text-decoration: none;
-  transition: border-color 160ms, transform 160ms;
+  transition:
+    border-color 160ms,
+    transform 160ms;
 }
 .card:hover {
   border-color: var(--color-line-strong);
@@ -222,7 +252,6 @@
   font-size: 0.75rem;
   color: var(--color-ink);
 }
-/* card chips are small squared tags in the design */
 .card .chip {
   padding: 0 0.4375rem;
   border-color: var(--color-line);
@@ -239,8 +268,9 @@
   padding-top: 1rem;
 }
 
-/* leave room for the arrow box */
-.card:has(.go) .card-foot { padding-right: 2.75rem; }
+.card:has(.go) .card-foot {
+  padding-right: 2.75rem;
+}
 
 .go {
   position: absolute;
@@ -255,9 +285,10 @@
   background: rgb(255 255 255 / 0.04);
   color: var(--color-ink-dim);
 }
-.card:hover .go { color: var(--color-ink); }
+.card:hover .go {
+  color: var(--color-ink);
+}
 
-/* wireframe figure, fading out behind the caption */
 .body {
   position: absolute;
   left: 50%;
@@ -268,6 +299,12 @@
   -webkit-mask-image: linear-gradient(180deg, #000 68%, transparent 96%);
   mask-image: linear-gradient(180deg, #000 68%, transparent 96%);
   pointer-events: none;
+}
+
+.card-mark {
+  position: absolute;
+  left: calc(50% + 2.75rem);
+  top: 11.75rem;
 }
 
 .regions {
@@ -307,7 +344,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.sessions li span:last-child { white-space: nowrap; }
+.sessions li span:last-child {
+  white-space: nowrap;
+}
 
 .orbit {
   align-self: center;
@@ -316,10 +355,14 @@
   margin-top: 0.5rem;
   stroke: rgb(255 255 255 / 0.16);
 }
-.orbit .dot { fill: var(--color-ink-dim); stroke: none; }
-.orbit .lit { fill: var(--color-signal); }
+.orbit .dot {
+  fill: var(--color-ink-dim);
+  stroke: none;
+}
+.orbit .lit {
+  fill: var(--color-signal);
+}
 
-/* timeline: dots on a line, one boxed row per step */
 .steps {
   position: relative;
   display: grid;
@@ -364,39 +407,7 @@
   background: rgb(255 255 255 / 0.05);
   color: var(--color-ink);
 }
-.steps li.done::before { border-color: var(--color-signal); background: var(--color-signal); }
-
-.explore { display: none; }
-
-@media (min-width: 64rem) {
-  /* tall capsule at the end of the row; the backdrop shows through it */
-  .explore {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.75rem;
-    padding: 0 0.5rem 1.25rem;
-    border: 1px solid var(--color-line);
-    border-radius: 4rem 4rem 1.5rem 1.5rem;
-    background: linear-gradient(180deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.01) 55%);
-    color: var(--color-ink-dim);
-    font: inherit;
-    font-size: 0.59375rem;
-    line-height: 1.4;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: border-color 160ms, color 160ms;
-  }
-  .explore:hover { border-color: var(--color-line-strong); color: var(--color-ink); }
-  .explore-arrow {
-    display: grid;
-    place-items: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border: 1px solid var(--color-line-strong);
-    border-radius: 50%;
-    background: rgb(255 255 255 / 0.06);
-  }
+.steps li.done::before {
+  border-color: var(--color-signal);
+  background: var(--color-signal);
 }

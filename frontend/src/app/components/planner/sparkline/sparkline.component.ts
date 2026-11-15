@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
-// Small trend line for up to 14 daily values (null = not measured, shown as a gap),
-// with an optional dashed line for the personal baseline.
+// null = not measured, drawn as a gap
 @Component({
   selector: 'app-sparkline',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,10 +50,12 @@ export class SparklineComponent {
     const span = max - min || 1;
     const pad = 4;
 
-    const x = (i: number) => (values.length === 1 ? this.width / 2 : (i / (values.length - 1)) * (this.width - 2 * pad) + pad);
+    const x = (i: number) =>
+      values.length === 1
+        ? this.width / 2
+        : (i / (values.length - 1)) * (this.width - 2 * pad) + pad;
     const y = (v: number) => this.height - pad - ((v - min) / span) * (this.height - 2 * pad);
 
-    // break the line wherever a day is missing
     const segments: string[] = [];
     let current: string[] = [];
     let last: [number, number] | null = null;
@@ -72,6 +73,10 @@ export class SparklineComponent {
     if (current.length) {
       segments.push(current.join(' '));
     }
-    return { segments, last: last as [number, number] | null, baselineY: baseline === null ? null : y(baseline) };
+    return {
+      segments,
+      last: last as [number, number] | null,
+      baselineY: baseline === null ? null : y(baseline),
+    };
   });
 }

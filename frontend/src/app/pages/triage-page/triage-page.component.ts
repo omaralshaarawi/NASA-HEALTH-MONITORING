@@ -1,5 +1,12 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, Subscription, catchError, interval, map, of, skip, switchMap } from 'rxjs';
@@ -37,7 +44,9 @@ export class TriagePageComponent {
   protected readonly environmentId = signal('SPACE_STATION');
   protected readonly distanceKm = signal(400);
   protected readonly missionDay = signal(14);
-  protected readonly maxDay = computed(() => Math.max(14, this.missionDay(), this.assessment()?.mission_day ?? 14));
+  protected readonly maxDay = computed(() =>
+    Math.max(14, this.missionDay(), this.assessment()?.mission_day ?? 14),
+  );
   protected readonly loading = signal(true);
   protected readonly busy = signal(false);
   protected readonly offline = signal(false);
@@ -45,18 +54,23 @@ export class TriagePageComponent {
   protected readonly notice = signal('');
   protected readonly currentStep = computed(() => {
     const incident = this.incident();
-    return incident ? this.protocol().steps.find((step) => step.id === incident.state.current_step_id) ?? null : null;
+    return incident
+      ? (this.protocol().steps.find((step) => step.id === incident.state.current_step_id) ?? null)
+      : null;
   });
   protected readonly ended = computed(() => this.incident()?.state.status === 'ENDED');
   protected readonly environment = computed(
-    () => this.environments().find((environment) => environment.id === this.environmentId()) ?? this.assessment()?.environment ?? null,
+    () =>
+      this.environments().find((environment) => environment.id === this.environmentId()) ??
+      this.assessment()?.environment ??
+      null,
   );
 
   constructor() {
-    // the call itself belongs to the app and carries on after this page is left
+    // the call is app-wide and outlives this page
     inject(DestroyRef).onDestroy(() => this.incidentWatch?.unsubscribe());
 
-    // the emergency button pressed while this page is already open
+    // emergency button pressed while already on this page
     this.route.queryParamMap.pipe(skip(1), takeUntilDestroyed()).subscribe((params) => {
       if (!params.has('autostart') || this.busy() || this.loading()) return;
       if (this.incident() && !this.ended()) return;
@@ -74,14 +88,19 @@ export class TriagePageComponent {
     const day = Number(query.get('day'));
     if (Number.isFinite(day) && day > 0) this.missionDay.set(day);
 
-    this.api.triageProtocol().pipe(catchError(() => {
-      this.offline.set(true);
-      this.notice.set('Protocol service unavailable · using the bundled locked checklist.');
-      return of(BUNDLED_PROTOCOL);
-    })).subscribe((protocol) => {
-      this.protocol.set(protocol);
-      this.loadContext(query.get('incident'));
-    });
+    this.api
+      .triageProtocol()
+      .pipe(
+        catchError(() => {
+          this.offline.set(true);
+          this.notice.set('Protocol service unavailable · using the bundled locked checklist.');
+          return of(BUNDLED_PROTOCOL);
+        }),
+      )
+      .subscribe((protocol) => {
+        this.protocol.set(protocol);
+        this.loadContext(query.get('incident'));
+      });
   }
 
   protected patientChanged(event: Event): void {
@@ -115,12 +134,11 @@ export class TriagePageComponent {
       this.useLocalIncident();
       return;
     }
-    // the voice call is for emergencies only; otherwise the checklist runs on screen
+    // voice only when triage is recommended
     if (this.assessment()!.triage_recommended) this.startWithVoice();
     else this.startOnScreen();
   }
 
-  // "Call again" on the voice panel: a new call, which opens its own incident
   protected callAgain(): void {
     if (this.busy() || !this.assessment()) return;
     this.busy.set(true);
@@ -128,10 +146,13 @@ export class TriagePageComponent {
     this.startWithVoice();
   }
 
-  // JARVIS opens the incident and joins by voice; if that fails the checklist still starts on screen
   private startWithVoice(): void {
     void this.voice
-      .start({ patient_id: this.patientId(), environment_id: this.environmentId(), distance_km: this.distanceKm() })
+      .start({
+        patient_id: this.patientId(),
+        environment_id: this.environmentId(),
+        distance_km: this.distanceKm(),
+      })
       .then((incidentId) => {
         if (incidentId) this.followVoiceIncident(incidentId);
         else if (this.incident()) this.busy.set(false);
@@ -140,29 +161,33 @@ export class TriagePageComponent {
   }
 
   private startOnScreen(): void {
-    this.api.startTriage({
-      patient_id: this.patientId(),
-      reporter_id: this.patientId(),
-      environment_id: this.environmentId(),
-      distance_km: this.distanceKm(),
-      mission_day: this.assessment()!.mission_day,
-    }).subscribe({
-      next: (incident) => {
-        this.setIncident(incident);
-        this.busy.set(false);
-        this.writeIncidentToUrl(incident.incident_id);
-      },
-      error: (error: unknown) => {
-        if (this.isNetworkError(error)) {
-          this.offline.set(true);
-          this.notice.set('Connection lost · continuing with the bundled protocol locally; no packet can be queued.');
-          this.useLocalIncident();
-          return;
-        }
-        this.error.set(this.errorMessage(error, 'Could not start the triage incident.'));
-        this.busy.set(false);
-      },
-    });
+    this.api
+      .startTriage({
+        patient_id: this.patientId(),
+        reporter_id: this.patientId(),
+        environment_id: this.environmentId(),
+        distance_km: this.distanceKm(),
+        mission_day: this.assessment()!.mission_day,
+      })
+      .subscribe({
+        next: (incident) => {
+          this.setIncident(incident);
+          this.busy.set(false);
+          this.writeIncidentToUrl(incident.incident_id);
+        },
+        error: (error: unknown) => {
+          if (this.isNetworkError(error)) {
+            this.offline.set(true);
+            this.notice.set(
+              'Connection lost · continuing with the bundled protocol locally; no packet can be queued.',
+            );
+            this.useLocalIncident();
+            return;
+          }
+          this.error.set(this.errorMessage(error, 'Could not start the triage incident.'));
+          this.busy.set(false);
+        },
+      });
   }
 
   protected answer(answer: TriageAnswer): void {
@@ -182,12 +207,17 @@ export class TriagePageComponent {
       },
       error: (error: unknown) => {
         if (this.statusCode(error) === 409) {
-          this.refreshIncident(incident.incident_id, 'The incident was refreshed after an out-of-sync response. Review the current step before continuing.');
+          this.refreshIncident(
+            incident.incident_id,
+            'The incident was refreshed after an out-of-sync response. Review the current step before continuing.',
+          );
           return;
         }
         if (this.isNetworkError(error)) {
           this.offline.set(true);
-          this.notice.set('Connection lost · continuing locally; actions are not reaching Earth and no packet can be queued.');
+          this.notice.set(
+            'Connection lost · continuing locally; actions are not reaching Earth and no packet can be queued.',
+          );
           this.busy.set(false);
           this.applyLocalAnswer(answer);
           return;
@@ -207,26 +237,30 @@ export class TriagePageComponent {
       return;
     }
     this.busy.set(true);
-    this.api.endTriage({ incident_id: incident.incident_id, reason: 'ended manually by the crew' }).subscribe({
-      next: (updated) => {
-        this.setIncident(updated);
-        this.busy.set(false);
-      },
-      error: (error: unknown) => {
-        if (this.statusCode(error) === 409) {
-          this.refreshIncident(incident.incident_id, 'The incident state was refreshed.');
-          return;
-        }
-        if (this.isNetworkError(error)) {
-          this.offline.set(true);
-          this.notice.set('Connection lost · ended locally; the incident packet cannot be queued from this device.');
-          this.finishLocally('ended manually by the crew');
-          return;
-        }
-        this.error.set(this.errorMessage(error, 'Could not end the incident.'));
-        this.busy.set(false);
-      },
-    });
+    this.api
+      .endTriage({ incident_id: incident.incident_id, reason: 'ended manually by the crew' })
+      .subscribe({
+        next: (updated) => {
+          this.setIncident(updated);
+          this.busy.set(false);
+        },
+        error: (error: unknown) => {
+          if (this.statusCode(error) === 409) {
+            this.refreshIncident(incident.incident_id, 'The incident state was refreshed.');
+            return;
+          }
+          if (this.isNetworkError(error)) {
+            this.offline.set(true);
+            this.notice.set(
+              'Connection lost · ended locally; the incident packet cannot be queued from this device.',
+            );
+            this.finishLocally('ended manually by the crew');
+            return;
+          }
+          this.error.set(this.errorMessage(error, 'Could not end the incident.'));
+          this.busy.set(false);
+        },
+      });
   }
 
   protected stepLabel(stepId: string): string {
@@ -242,44 +276,50 @@ export class TriagePageComponent {
   }
 
   private loadContext(incidentId: string | null): void {
-    this.api.environments().pipe(
-      catchError(() => {
-        this.offline.set(true);
-        return of([] as EnvironmentProfile[]);
-      }),
-      switchMap((environments) => {
+    this.api
+      .environments()
+      .pipe(
+        catchError(() => {
+          this.offline.set(true);
+          return of([] as EnvironmentProfile[]);
+        }),
+        switchMap((environments) => {
+          this.environments.set(environments);
+          const selected = environments.find(
+            (environment) => environment.id === this.environmentId(),
+          );
+          if (selected && !this.route.snapshot.queryParamMap.has('distanceKm')) {
+            this.distanceKm.set(selected.distance_km);
+          }
+          return this.api
+            .assessment(this.patientId(), {
+              day: this.missionDay(),
+              envId: this.environmentId(),
+              distanceKm: this.distanceKm(),
+            })
+            .pipe(
+              catchError(() => {
+                this.offline.set(true);
+                return of(MOCK_ASSESSMENTS[this.patientId()]);
+              }),
+              map((assessment) => ({ environments, assessment })),
+            );
+        }),
+      )
+      .subscribe(({ environments, assessment }) => {
         this.environments.set(environments);
-        const selected = environments.find((environment) => environment.id === this.environmentId());
-        if (selected && !this.route.snapshot.queryParamMap.has('distanceKm')) {
-          this.distanceKm.set(selected.distance_km);
+        this.assessment.set(assessment);
+        if (!environments.some((environment) => environment.id === this.environmentId())) {
+          this.environmentId.set(assessment.environment.id);
         }
-        return this.api.assessment(this.patientId(), {
-          day: this.missionDay(),
-          envId: this.environmentId(),
-          distanceKm: this.distanceKm(),
-        }).pipe(
-          catchError(() => {
-            this.offline.set(true);
-            return of(MOCK_ASSESSMENTS[this.patientId()]);
-          }),
-          map((assessment) => ({ environments, assessment })),
-        );
-      }),
-    ).subscribe(({ environments, assessment }) => {
-      this.environments.set(environments);
-      this.assessment.set(assessment);
-      if (!environments.some((environment) => environment.id === this.environmentId())) {
-        this.environmentId.set(assessment.environment.id);
-      }
-      this.distanceKm.set(assessment.environment.distance_km);
-      this.missionDay.set(assessment.mission_day);
-      this.loading.set(false);
-      if (incidentId) this.loadExistingIncident(incidentId);
-      else if (this.route.snapshot.queryParamMap.has('autostart')) this.start();
-    });
+        this.distanceKm.set(assessment.environment.distance_km);
+        this.missionDay.set(assessment.mission_day);
+        this.loading.set(false);
+        if (incidentId) this.loadExistingIncident(incidentId);
+        else if (this.route.snapshot.queryParamMap.has('autostart')) this.start();
+      });
   }
 
-  // The call's incident lives on the backend; show it and keep the screen in step with the voice.
   private followVoiceIncident(incidentId: string): void {
     this.api.triageIncident(incidentId).subscribe({
       next: (incident) => {
@@ -289,7 +329,9 @@ export class TriagePageComponent {
         this.watchIncident(incident.incident_id);
       },
       error: () => {
-        this.notice.set('JARVIS is on the call, but its incident is on another backend, so this screen runs its own checklist.');
+        this.notice.set(
+          'JARVIS is on the call, but its incident is on another backend, so this screen runs its own checklist.',
+        );
         if (this.incident()) this.busy.set(false);
         else this.startOnScreen();
       },
@@ -298,34 +340,41 @@ export class TriagePageComponent {
 
   private watchIncident(incidentId: string): void {
     this.incidentWatch?.unsubscribe();
-    this.incidentWatch = interval(2000).pipe(
-      switchMap(() => this.api.triageIncident(incidentId).pipe(catchError(() => EMPTY))),
-    ).subscribe((latest) => {
-      const shown = this.incident();
-      if (!shown || shown.incident_id !== incidentId || this.offline()) {
-        this.incidentWatch?.unsubscribe();
-        return;
-      }
-      const moved = latest.state.step_log.length !== shown.state.step_log.length || latest.state.status !== shown.state.status;
-      if (moved && !this.busy()) this.setIncident(latest);
-      if (latest.state.status === 'ENDED') this.incidentWatch?.unsubscribe();
-    });
+    this.incidentWatch = interval(2000)
+      .pipe(switchMap(() => this.api.triageIncident(incidentId).pipe(catchError(() => EMPTY))))
+      .subscribe((latest) => {
+        const shown = this.incident();
+        if (!shown || shown.incident_id !== incidentId || this.offline()) {
+          this.incidentWatch?.unsubscribe();
+          return;
+        }
+        const moved =
+          latest.state.step_log.length !== shown.state.step_log.length ||
+          latest.state.status !== shown.state.status;
+        if (moved && !this.busy()) this.setIncident(latest);
+        if (latest.state.status === 'ENDED') this.incidentWatch?.unsubscribe();
+      });
   }
 
   private loadAssessment(): void {
     this.loading.set(true);
-    this.api.assessment(this.patientId(), {
-      day: this.missionDay(),
-      envId: this.environmentId(),
-      distanceKm: this.distanceKm(),
-    }).pipe(catchError(() => {
-      this.offline.set(true);
-      return of(MOCK_ASSESSMENTS[this.patientId()]);
-    })).subscribe((assessment) => {
-      this.assessment.set(assessment);
-      this.environmentId.set(assessment.environment.id);
-      this.loading.set(false);
-    });
+    this.api
+      .assessment(this.patientId(), {
+        day: this.missionDay(),
+        envId: this.environmentId(),
+        distanceKm: this.distanceKm(),
+      })
+      .pipe(
+        catchError(() => {
+          this.offline.set(true);
+          return of(MOCK_ASSESSMENTS[this.patientId()]);
+        }),
+      )
+      .subscribe((assessment) => {
+        this.assessment.set(assessment);
+        this.environmentId.set(assessment.environment.id);
+        this.loading.set(false);
+      });
   }
 
   private loadExistingIncident(incidentId: string): void {
@@ -347,11 +396,13 @@ export class TriagePageComponent {
         if (saved && saved.state.step_log.length > incident.state.step_log.length) {
           this.offline.set(true);
           this.setIncident(saved);
-          this.notice.set('Restored local progress that was not synced to the server. No packet can be queued.');
+          this.notice.set(
+            'Restored local progress that was not synced to the server. No packet can be queued.',
+          );
         } else {
           this.setIncident(incident);
-          // coming back to the page while JARVIS is still working through this incident
-          if (this.voice.active() && this.voice.incidentId() === incidentId) this.watchIncident(incidentId);
+          if (this.voice.active() && this.voice.incidentId() === incidentId)
+            this.watchIncident(incidentId);
         }
       },
       error: () => {
@@ -364,7 +415,9 @@ export class TriagePageComponent {
           this.persistIncident(this.incident()!);
           this.writeIncidentToUrl(this.incident()!.incident_id);
         }
-        this.notice.set('Server incident unavailable · using the last saved browser state; no packet can be queued.');
+        this.notice.set(
+          'Server incident unavailable · using the last saved browser state; no packet can be queued.',
+        );
       },
     });
   }
@@ -374,13 +427,17 @@ export class TriagePageComponent {
     this.setIncident(incident);
     this.busy.set(false);
     this.writeIncidentToUrl(incident.incident_id);
-    this.notice.set('Local protocol mode · follow the checklist; this device cannot queue a packet.');
+    this.notice.set(
+      'Local protocol mode · follow the checklist; this device cannot queue a packet.',
+    );
   }
 
   private createLocalIncident(id?: string): TriageIncident {
     const assessment = this.assessment() ?? MOCK_ASSESSMENTS[this.patientId()];
     const environment = this.environment() ?? assessment.environment;
-    const incidentId = id?.startsWith('local_') ? id : `local_${Math.random().toString(36).slice(2, 10)}`;
+    const incidentId = id?.startsWith('local_')
+      ? id
+      : `local_${Math.random().toString(36).slice(2, 10)}`;
     return {
       schema_version: assessment.schema_version,
       incident_id: incidentId,
@@ -398,12 +455,14 @@ export class TriagePageComponent {
       patient_snapshot: {
         mission_day: assessment.mission_day,
         overall: assessment.overall,
-        red_indicators: assessment.indicators.filter((indicator) => indicator.status === 'RED').map((indicator) => ({
-          id: indicator.id,
-          value: indicator.value,
-          unit: indicator.unit,
-          reasons: indicator.reasons,
-        })),
+        red_indicators: assessment.indicators
+          .filter((indicator) => indicator.status === 'RED')
+          .map((indicator) => ({
+            id: indicator.id,
+            value: indicator.value,
+            unit: indicator.unit,
+            reasons: indicator.reasons,
+          })),
         latest_vitals: null,
         recent_attachments: [],
       },
@@ -433,7 +492,11 @@ export class TriagePageComponent {
     if (nextStep.terminal) {
       updated = {
         ...updated,
-        state: { current_step_id: nextStep.id, step_log: [...log, { step_id: nextStep.id, at_iso: atIso }], status: 'ENDED' },
+        state: {
+          current_step_id: nextStep.id,
+          step_log: [...log, { step_id: nextStep.id, at_iso: atIso }],
+          status: 'ENDED',
+        },
       };
       this.notice.set('Protocol completed locally. No incident packet was sent or queued.');
     }
@@ -447,7 +510,11 @@ export class TriagePageComponent {
     const entry = step ? [{ step_id: step.id, at_iso: new Date().toISOString() }] : [];
     this.setIncident({
       ...incident,
-      state: { ...incident.state, status: 'ENDED', step_log: [...incident.state.step_log, ...entry] },
+      state: {
+        ...incident.state,
+        status: 'ENDED',
+        step_log: [...incident.state.step_log, ...entry],
+      },
     });
     this.notice.set(`${reason}. This browser cannot create or queue the store-and-forward packet.`);
   }
@@ -487,21 +554,25 @@ export class TriagePageComponent {
     try {
       sessionStorage.setItem(`triage_${incident.incident_id}`, JSON.stringify(incident));
     } catch {
-      this.notice.set('Browser storage is unavailable; this incident cannot be resumed after reload.');
+      this.notice.set(
+        'Browser storage is unavailable; this incident cannot be resumed after reload.',
+      );
     }
   }
 
   private readStoredIncident(id: string): TriageIncident | null {
     try {
       const value = sessionStorage.getItem(`triage_${id}`);
-      return value ? JSON.parse(value) as TriageIncident : null;
+      return value ? (JSON.parse(value) as TriageIncident) : null;
     } catch {
       return null;
     }
   }
 
   private statusCode(error: unknown): number {
-    return typeof error === 'object' && error !== null && 'status' in error ? Number((error as { status: number }).status) : 0;
+    return typeof error === 'object' && error !== null && 'status' in error
+      ? Number((error as { status: number }).status)
+      : 0;
   }
 
   private isNetworkError(error: unknown): boolean {

@@ -1,6 +1,5 @@
 package com.nasa.spacehealth.model;
 
-// Fixed values from contract.ts
 public final class Contract {
 
     public static final String SCHEMA_VERSION = "1.0.0";

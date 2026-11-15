@@ -15,12 +15,10 @@
   </div>
 
   <div class="mt-5 grid gap-5 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
-    <!-- placement diagram -->
     <figure class="m-0 rounded-xl border border-line bg-hull p-4">
       <svg viewBox="0 0 240 210" class="block h-auto w-full" role="img" [attr.aria-label]="'Placement diagram: ' + guide().title">
         @switch (kind()) {
           @case ('OCULAR_ULTRASOUND') {
-            <!-- face, front view, eyes closed -->
             <path class="skin" d="M120 22C84 22 66 50 66 92c0 46 22 92 54 92s54-46 54-92c0-42-18-70-54-70Z" />
             <path class="hint" d="M84 86q12 8 24 0M132 86q12 8 24 0" />
             <path class="hint" d="M80 74q14-8 28-2M132 72q14-6 28 2" />
@@ -36,7 +34,7 @@
             <circle class="tag" cx="204" cy="78" r="9" /><text class="tag-text" x="204" y="78">2</text>
           }
           @default {
-            <!-- torso, front view. The patient's left is on the right of the picture. -->
+            <!-- patient's left is on the right of the picture -->
             <path class="skin" d="M104 10v18q-22 6-48 18q-8 26-2 56h16q2 50 8 98h84q6-48 8-98h16q6-30-2-56q-26-12-48-18V10Z" />
             <path class="hint" d="M120 44v76M96 58q24 10 48 0M94 78q26 10 52 0M94 98q26 10 52 0" />
             @if (kind() === 'CARDIAC_ULTRASOUND') {
@@ -93,7 +91,6 @@
     </div>
   </div>
 
-  <!-- capture and attach -->
   <section class="mt-5 rounded-xl border border-line px-4 py-4" aria-labelledby="capture-title">
     <div class="flex flex-wrap items-center justify-between gap-3">
       <div>

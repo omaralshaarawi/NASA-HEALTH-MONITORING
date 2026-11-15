@@ -1,11 +1,13 @@
-/* Paper styling: black on white, sized in mm and pt so screen and print match. */
 .sheet {
   width: 192mm;
   margin: 0 auto;
   padding: 8mm 9mm;
   background: #fff;
   color: #10161d;
-  font: 400 8pt/1.4 "IBM Plex Sans", system-ui, sans-serif;
+  font:
+    400 8pt/1.4 'IBM Plex Sans',
+    system-ui,
+    sans-serif;
 }
 
 .head {
@@ -17,18 +19,23 @@
   border-bottom: 0.5mm solid #10161d;
 }
 .title {
-  font: 600 17pt/1 "Barlow Condensed", "Arial Narrow", sans-serif;
+  font:
+    600 17pt/1 'Barlow Condensed',
+    'Arial Narrow',
+    sans-serif;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 .cap {
-  font: 400 6.2pt/1.4 "IBM Plex Mono", monospace;
+  font:
+    400 6.2pt/1.4 'IBM Plex Mono',
+    monospace;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #55606d;
 }
 .mono {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-variant-numeric: tabular-nums;
 }
 
@@ -47,7 +54,10 @@
 
 h3 {
   margin: 3.2mm 0 1.4mm;
-  font: 600 10pt/1 "Barlow Condensed", "Arial Narrow", sans-serif;
+  font:
+    600 10pt/1 'Barlow Condensed',
+    'Arial Narrow',
+    sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -69,7 +79,9 @@ table {
 th {
   padding: 1mm 1.5mm;
   border-bottom: 0.3mm solid #10161d;
-  font: 400 6.2pt/1.3 "IBM Plex Mono", monospace;
+  font:
+    400 6.2pt/1.3 'IBM Plex Mono',
+    monospace;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-align: left;
@@ -103,18 +115,31 @@ tfoot td {
   font-weight: 500;
 }
 
-/* status on paper: shape and word, readable in black and white */
 .st {
-  font: 500 6.6pt/1 "IBM Plex Mono", monospace;
+  font:
+    500 6.6pt/1 'IBM Plex Mono',
+    monospace;
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
-.st-GREEN { color: #0b6b45; }
-.st-YELLOW { color: #8a5a00; }
-.st-RED { color: #b3261e; }
-.st-GREEN::before { content: "● "; }
-.st-YELLOW::before { content: "◆ "; }
-.st-RED::before { content: "▲ "; }
+.st-GREEN {
+  color: #0b6b45;
+}
+.st-YELLOW {
+  color: #8a5a00;
+}
+.st-RED {
+  color: #b3261e;
+}
+.st-GREEN::before {
+  content: '● ';
+}
+.st-YELLOW::before {
+  content: '◆ ';
+}
+.st-RED::before {
+  content: '▲ ';
+}
 
 .two {
   display: grid;

@@ -2,7 +2,6 @@
 
 <app-modal-shell heading="Camera coach" eyebrow="Pose tracking · reps and form" (closed)="closed.emit()">
   <div class="grid gap-5 lg:grid-cols-[minmax(0,1.45fr)_minmax(19rem,1fr)]">
-    <!-- the camera -->
     <section aria-label="Camera">
       <div class="feed">
         @switch (phase()) {
@@ -31,7 +30,6 @@
       </p>
     </section>
 
-    <!-- counters and controls -->
     <div class="min-w-0 space-y-4">
       @if (phase() === 'online' && t) {
         <label class="block text-sm text-ink-dim">
@@ -49,7 +47,6 @@
           <p class="m-0 text-sm text-crit" role="alert">{{ problem() }}</p>
         }
 
-        <!-- the form check from the camera: shape, colour and word -->
         <div class="banner" [class]="'banner banner-' + t.severity.toLowerCase()" role="status" aria-live="polite">
           <span [class]="'status status-' + t.severity.toLowerCase()">Form {{ t.severity }}</span>
           <span class="text-sm text-ink">{{ t.hud_warning }}</span>
@@ -89,7 +86,6 @@
           <p class="m-0 mt-1 text-sm leading-6 text-ink-dim">{{ t.setup_instruction_0g }}</p>
         </div>
 
-        <!-- add the workout to today's record -->
         <section class="rounded-xl border border-line px-4 py-4" aria-label="Sync workout">
           <label class="block text-sm text-ink-dim">
             Minutes to credit <span class="unit">optional</span>

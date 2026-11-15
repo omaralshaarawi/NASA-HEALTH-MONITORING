@@ -2,21 +2,35 @@ import { CallLine, ClientStatus, VoiceCallClient, VoiceCallListener } from './vo
 
 type Step = { at: number; status?: ClientStatus; line?: CallLine };
 
-// A short scripted call. Each step fires this many milliseconds after joining.
+// ms after joining
 const SCRIPT: Step[] = [
   { at: 800, status: 'speaking', line: { speaker: 'JARVIS', text: 'JARVIS here.', final: false } },
   { at: 1600, line: { speaker: 'JARVIS', text: 'JARVIS here. I am with you.', final: false } },
-  { at: 2400, status: 'listening', line: { speaker: 'JARVIS', text: 'JARVIS here. I am with you. This is a simulated call.', final: true } },
+  {
+    at: 2400,
+    status: 'listening',
+    line: {
+      speaker: 'JARVIS',
+      text: 'JARVIS here. I am with you. This is a simulated call.',
+      final: true,
+    },
+  },
   { at: 4000, line: { speaker: 'YOU', text: 'Yes', final: false } },
   { at: 4600, status: 'thinking', line: { speaker: 'YOU', text: 'Yes.', final: true } },
-  { at: 5600, status: 'speaking', line: { speaker: 'JARVIS', text: 'Understood. Continue with the checklist on screen.', final: true } },
+  {
+    at: 5600,
+    status: 'speaking',
+    line: {
+      speaker: 'JARVIS',
+      text: 'Understood. Continue with the checklist on screen.',
+      final: true,
+    },
+  },
   { at: 7000, status: 'listening' },
 ];
 
-// Simulated voice call: no network, no microphone. For unit tests, and for demos when
-// environment.useFakeVoice is on.
+// Scripted call for tests and offline demos.
 export class FakeVoiceCallClient implements VoiceCallClient {
-  // switches a test can flip before starting a call
   microphoneAllowed = true;
   joinFails = false;
 
@@ -33,7 +47,9 @@ export class FakeVoiceCallClient implements VoiceCallClient {
   }
 
   checkMicrophone(): Promise<void> {
-    return this.microphoneAllowed ? Promise.resolve() : Promise.reject(new Error('microphone not allowed'));
+    return this.microphoneAllowed
+      ? Promise.resolve()
+      : Promise.reject(new Error('microphone not allowed'));
   }
 
   join(_joinUrl: string, listener: VoiceCallListener): void {
@@ -55,7 +71,7 @@ export class FakeVoiceCallClient implements VoiceCallClient {
     return Promise.resolve();
   }
 
-  // the far end going away: what a dropped connection or the agent hanging up looks like
+  // simulates a dropped connection or the agent hanging up
   drop(): void {
     const listener = this.listener;
     this.stop();
@@ -65,8 +81,8 @@ export class FakeVoiceCallClient implements VoiceCallClient {
   private play(step: Step): void {
     if (step.line) {
       const last = this.lines.at(-1);
-      // an interim line is replaced by its next version; a final one stays
-      if (last && !last.final && last.speaker === step.line.speaker) this.lines = [...this.lines.slice(0, -1), step.line];
+      if (last && !last.final && last.speaker === step.line.speaker)
+        this.lines = [...this.lines.slice(0, -1), step.line];
       else this.lines = [...this.lines, step.line];
       this.listener?.transcript(this.lines);
     }

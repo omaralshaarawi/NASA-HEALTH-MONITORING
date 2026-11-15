@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-// Checks JSON against contract/schemas/<name>.schema.json. Returns the list of problems (empty = valid).
 @Component
 public class SchemaValidator {
 

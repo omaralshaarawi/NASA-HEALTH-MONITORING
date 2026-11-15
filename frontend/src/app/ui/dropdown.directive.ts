@@ -1,7 +1,6 @@
 import { Directive, ElementRef, inject, signal } from '@angular/core';
 
-// Open / close state and keyboard handling for a button that reveals a list:
-// the Daily Analysis submenu and the astronaut switcher. Items are marked with data-item.
+// items are marked with data-item
 @Directive({
   selector: '[appDropdown]',
   exportAs: 'dropdown',

@@ -11,10 +11,16 @@ import { delayText } from '../../ui/format';
 import { PlainWordsPipe } from '../../ui/plain-words.pipe';
 import { SectionHeaderComponent } from '../../ui/section-header.component';
 
-// Today's readings next to each crew member's own normal, and which of them shaped today's plan.
 @Component({
   selector: 'app-analysis-readings-page',
-  imports: [AwaitingPanelComponent, DecimalPipe, MeasurementGuideModalComponent, PlainWordsPipe, RouterLink, SectionHeaderComponent],
+  imports: [
+    AwaitingPanelComponent,
+    DecimalPipe,
+    MeasurementGuideModalComponent,
+    PlainWordsPipe,
+    RouterLink,
+    SectionHeaderComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './analysis-readings-page.component.html',
   styles: `
@@ -56,7 +62,6 @@ export class AnalysisReadingsPageComponent {
   protected readonly regionLabels = REGION_LABELS;
   protected readonly guideFor = signal<IndicatorId | null>(null);
 
-  // the plan names its triggers by id; the label and today's value are looked up in the assessment
   protected readonly triggers = computed(() => {
     const assessment = this.store.assessment();
     const plan = this.store.plan();

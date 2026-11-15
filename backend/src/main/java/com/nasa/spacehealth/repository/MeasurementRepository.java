@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-// In-memory store, filled from seed.json on start-up. Nothing is saved to disk.
-// Each astronaut's days are kept contiguous (1..N) because the engine depends on that.
+// In memory only, seeded from seed.json. Days stay contiguous (1..N); the engine relies on it.
 @Repository
 public class MeasurementRepository {
 
@@ -41,7 +40,6 @@ public class MeasurementRepository {
         return daysOf(astronautId).lastKey();
     }
 
-    // Days 1..day, oldest first
     public synchronized List<DailyMeasurementAndCompliance> findUpTo(String astronautId, int day) {
         TreeMap<Integer, DailyMeasurementAndCompliance> days = daysOf(astronautId);
         int last = days.lastKey();

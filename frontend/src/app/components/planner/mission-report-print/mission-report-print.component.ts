@@ -1,12 +1,23 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, computed, input, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnDestroy,
+  computed,
+  input,
+  viewChild,
+} from '@angular/core';
 
-import { AssessmentResponse, CountermeasurePlan, DISCLAIMER, RegionId } from '../../../models/contract';
+import {
+  AssessmentResponse,
+  CountermeasurePlan,
+  DISCLAIMER,
+  RegionId,
+} from '../../../models/contract';
 import { REGION_LABELS, exerciseTitle } from '../planner-labels';
 import { SparklineComponent } from '../sparkline/sparkline.component';
 
-// One-page A4 report for the flight surgeon: 14-day readings against the personal baseline,
-// flags, the active plan and its resource estimate. Call print(), or just use the browser's print.
 @Component({
   selector: 'app-mission-report-print',
   imports: [DatePipe, DecimalPipe, SparklineComponent],
@@ -41,7 +52,7 @@ export class MissionReportPrintComponent implements OnDestroy {
   });
 
   constructor() {
-    // also covers Ctrl+P while the report is on screen
+    // also catches Ctrl+P
     window.addEventListener('beforeprint', this.beforePrint);
     window.addEventListener('afterprint', this.afterPrint);
   }
@@ -60,8 +71,7 @@ export class MissionReportPrintComponent implements OnDestroy {
     return REGION_LABELS[id as RegionId] ?? id;
   }
 
-  // While printing, the sheet is moved to <body> and everything else is hidden (see styles.css).
-  // That keeps the dark app, the dialog frame and their scroll containers out of the printout.
+  // print only the sheet: move it to <body> and hide the rest (see styles.css)
   private readonly beforePrint = (): void => {
     if (this.restore) {
       return;

@@ -1,5 +1,14 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, untracked, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+  untracked,
+  viewChild,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { MissionReportPrintComponent } from '../../components/planner/mission-report-print/mission-report-print.component';
@@ -11,12 +20,18 @@ import { TrainingService } from '../../core/training.service';
 import { SectionHeaderComponent } from '../../ui/section-header.component';
 import { StatusChipComponent } from '../../ui/status-chip.component';
 
-// what the main area shows: today's report, a closed day's saved report, or an earlier day's values
 type View = { kind: 'today' } | { kind: 'closed'; day: number } | { kind: 'earlier'; day: number };
 
 @Component({
   selector: 'app-report-page',
-  imports: [DatePipe, MissionReportPrintComponent, ModalShellComponent, RouterLink, SectionHeaderComponent, StatusChipComponent],
+  imports: [
+    DatePipe,
+    MissionReportPrintComponent,
+    ModalShellComponent,
+    RouterLink,
+    SectionHeaderComponent,
+    StatusChipComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './report-page.component.html',
   styleUrl: './report-page.component.css',
@@ -33,19 +48,25 @@ export class ReportPageComponent {
   protected readonly resetting = signal(false);
 
   protected readonly closedDays = computed(() => this.log.of(this.store.crewId()));
-  protected readonly crewName = computed(() => CREW.find((m) => m.id === this.store.crewId())?.name ?? '');
+  protected readonly crewName = computed(
+    () => CREW.find((m) => m.id === this.store.crewId())?.name ?? '',
+  );
 
-  // the day the crew member is on: today's assessment, or the day waiting for readings
-  protected readonly currentDay = computed(() => this.store.assessment()?.mission_day ?? this.store.pendingDay());
+  protected readonly currentDay = computed(
+    () => this.store.assessment()?.mission_day ?? this.store.pendingDay(),
+  );
 
   protected readonly selectedClosed = computed(() => {
     const view = this.view();
-    return view.kind === 'closed' ? (this.closedDays().find((entry) => entry.day === view.day) ?? null) : null;
+    return view.kind === 'closed'
+      ? (this.closedDays().find((entry) => entry.day === view.day) ?? null)
+      : null;
   });
 
-  // Days before the first closed one have no saved report, only the values recorded in the
-  // trend arrays. They are listed without a status, because none was saved for them.
-  private readonly reference = computed(() => this.closedDays().at(-1)?.assessment ?? this.store.assessment());
+  // days before the first closed one were never saved: trend values only, no status
+  private readonly reference = computed(
+    () => this.closedDays().at(-1)?.assessment ?? this.store.assessment(),
+  );
 
   protected readonly earlierDays = computed(() => {
     const reference = this.reference();
@@ -63,12 +84,15 @@ export class ReportPageComponent {
     if (view.kind !== 'earlier' || !reference) return [];
     return reference.indicators.map((indicator) => {
       const index = indicator.trend.length - 1 - (reference.mission_day - view.day);
-      return { label: indicator.label, unit: indicator.unit, value: index >= 0 ? (indicator.trend[index] ?? null) : null };
+      return {
+        label: indicator.label,
+        unit: indicator.unit,
+        value: index >= 0 ? (indicator.trend[index] ?? null) : null,
+      };
     });
   });
 
   constructor() {
-    // another crew member: start again from their today
     effect(() => {
       this.store.crewId();
       untracked(() => this.view.set({ kind: 'today' }));

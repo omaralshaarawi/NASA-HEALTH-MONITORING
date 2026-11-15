@@ -49,9 +49,18 @@
   border: 1px solid;
   border-radius: 0.75rem;
 }
-.banner-green { border-color: color-mix(in srgb, var(--color-ok) 45%, transparent); background: color-mix(in srgb, var(--color-ok) 8%, transparent); }
-.banner-yellow { border-color: color-mix(in srgb, var(--color-warn) 50%, transparent); background: color-mix(in srgb, var(--color-warn) 10%, transparent); }
-.banner-red { border-color: color-mix(in srgb, var(--color-crit) 55%, transparent); background: color-mix(in srgb, var(--color-crit) 12%, transparent); }
+.banner-green {
+  border-color: color-mix(in srgb, var(--color-ok) 45%, transparent);
+  background: color-mix(in srgb, var(--color-ok) 8%, transparent);
+}
+.banner-yellow {
+  border-color: color-mix(in srgb, var(--color-warn) 50%, transparent);
+  background: color-mix(in srgb, var(--color-warn) 10%, transparent);
+}
+.banner-red {
+  border-color: color-mix(in srgb, var(--color-crit) 55%, transparent);
+  background: color-mix(in srgb, var(--color-crit) 12%, transparent);
+}
 
 .stats {
   display: grid;

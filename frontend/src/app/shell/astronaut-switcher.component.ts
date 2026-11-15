@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MissionStore } from '../core/mission-store.service';
 import { DropdownDirective } from '../ui/dropdown.directive';
 
-// Crew switcher in the top bar. There is no login: picking a name changes every page.
 @Component({
   selector: 'app-astronaut-switcher',
   imports: [DropdownDirective],
@@ -22,6 +21,7 @@ import { DropdownDirective } from '../ui/dropdown.directive';
       color: var(--color-ink);
       font: inherit;
       font-size: 0.875rem;
+      white-space: nowrap;
       cursor: pointer;
     }
     .trigger:hover { border-color: var(--color-line-strong); }
@@ -104,6 +104,5 @@ import { DropdownDirective } from '../ui/dropdown.directive';
 })
 export class AstronautSwitcherComponent {
   protected readonly store = inject(MissionStore);
-  // listed by name, as on the design
   protected readonly crew = [...this.store.crew].sort((a, b) => a.name.localeCompare(b.name));
 }

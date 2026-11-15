@@ -4,8 +4,7 @@ import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 
 import { MissionStore } from './mission-store.service';
 
-// Browser tab title: the page name, with a warning in front while triage is recommended,
-// so the emergency is visible from another tab.
+// warning prefix so an emergency shows up in other tabs
 @Injectable({ providedIn: 'root' })
 export class PageTitle extends TitleStrategy {
   private readonly title = inject(Title);
@@ -17,7 +16,7 @@ export class PageTitle extends TitleStrategy {
     effect(() => {
       const warning = this.store.assessment()?.triage_recommended ? '⚠ Emergency · ' : '';
       const page = this.page() ? this.page() + ' · ' : '';
-      this.title.setTitle(warning + page + 'Crew Health');
+      this.title.setTitle(warning + page + 'Astropital');
     });
   }
 

@@ -8,16 +8,17 @@ import { TrainingService } from './training.service';
 
 const MINUTE = 60_000;
 
-// Kai's bundled day-14 plan, with the first two sessions used as A and B.
 const plan = MOCK_PLANS['ast_kai'];
 const [A, B] = plan.draft.sessions.map((s) => s.exercise_id);
 const minutesA = plan.draft.sessions[0].minutes;
 
-// Stands in for the store: the timers only read these three signals.
 function fakeStore(triage = false) {
   return {
     crewId: signal('ast_kai'),
-    assessment: signal<AssessmentResponse | null>({ ...MOCK_ASSESSMENTS['ast_kai'], triage_recommended: triage }),
+    assessment: signal<AssessmentResponse | null>({
+      ...MOCK_ASSESSMENTS['ast_kai'],
+      triage_recommended: triage,
+    }),
     plan: signal<CountermeasurePlan | null>(plan),
   };
 }

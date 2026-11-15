@@ -7,10 +7,13 @@ import { FakeVoiceCallClient } from './fake-voice-call-client';
 import { VOICE_CALL_CLIENT } from './voice-call-client';
 import { CallRequest, VoiceCallService } from './voice-call.service';
 
-const REQUEST: CallRequest = { patient_id: 'ast_lin', environment_id: 'DEEP_SPACECRAFT', distance_km: 225_000_000 };
+const REQUEST: CallRequest = {
+  patient_id: 'ast_lin',
+  environment_id: 'DEEP_SPACECRAFT',
+  distance_km: 225_000_000,
+};
 const REPLY = { joinUrl: 'wss://example.test/join', incident_id: 'inc_test' };
 
-// lets pending promises settle without moving the clock
 const settle = () => vi.advanceTimersByTimeAsync(0);
 
 function setUp() {
@@ -26,7 +29,6 @@ function setUp() {
   const call = TestBed.inject(VoiceCallService);
   const http = TestBed.inject(HttpTestingController);
 
-  // start a call and answer the webhook, the way a working n8n would
   const connect = async () => {
     const started = call.start(REQUEST);
     await settle();
@@ -106,7 +108,6 @@ describe('VoiceCallService', () => {
     expect(fake.left).toBe(1);
     expect(fake.listening).toBe(false);
 
-    // nothing more arrives, and what was said stays on screen
     await vi.advanceTimersByTimeAsync(10_000);
     expect(call.phase()).toBe('ended');
     expect(call.lines()).toHaveLength(1);
@@ -122,7 +123,6 @@ describe('VoiceCallService', () => {
     expect(await first).toBe('inc_test');
     expect(await second).toBe('inc_test');
 
-    // and again once the call is running
     expect(await call.start(REQUEST)).toBe('inc_test');
     http.expectNone(environment.jarvisStartUrl);
     expect(fake.joined).toBe(1);
@@ -142,7 +142,9 @@ describe('VoiceCallService', () => {
     const { call, http } = setUp();
     const started = call.start(REQUEST);
     await settle();
-    http.expectOne(environment.jarvisStartUrl).flush('down', { status: 502, statusText: 'Bad Gateway' });
+    http
+      .expectOne(environment.jarvisStartUrl)
+      .flush('down', { status: 502, statusText: 'Bad Gateway' });
 
     expect(await started).toBeNull();
     expect(call.error()).toBe('webhook');

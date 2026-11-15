@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// The planner end to end with the LLM replaced by a stub, so nothing here needs a key or a network.
+// LLM replaced by a stub, so no key or network needed
 @SpringBootTest(properties = "planner.gemini.api-key=")
 @AutoConfigureMockMvc
 class PlannerApiTest {
@@ -169,7 +169,6 @@ class PlannerApiTest {
         return d;
     }
 
-    // plans as the API returns them
 
     @ParameterizedTest
     @ValueSource(strings = {"ast_nova", "ast_kai", "ast_lin", "ast_kai@9", "ast_lin@3"})

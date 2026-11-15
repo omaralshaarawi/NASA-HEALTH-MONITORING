@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 
 import { FIGURES, Point } from './figures';
 
-// Inline SVG pictogram for one countermeasure. No images or video, so it is instant and prints well.
 @Component({
   selector: 'app-exercise-figure',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +24,7 @@ export class ExerciseFigureComponent {
 
   readonly exerciseId = input.required<string>();
 
-  // several figures share a page, so each needs its own arrowhead id
+  // several figures can share a page
   protected readonly arrowId = 'figure-arrow-' + ExerciseFigureComponent.count++;
   protected readonly arrowRef = `url(#${this.arrowId})`;
 

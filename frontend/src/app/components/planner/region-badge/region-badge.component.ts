@@ -3,8 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { RegionId } from '../../../models/contract';
 import { REGION_LABELS } from '../planner-labels';
 
-// Body-region tag. Regions are told apart by icon and name, not by colour:
-// green / amber / red stay reserved for health status.
+// icons, not colour: green/amber/red are kept for status
 @Component({
   selector: 'app-region-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,5 +32,7 @@ import { REGION_LABELS } from '../planner-labels';
 })
 export class RegionBadgeComponent {
   readonly region = input.required<RegionId | string>();
-  protected readonly label = computed(() => REGION_LABELS[this.region() as RegionId] ?? this.region());
+  protected readonly label = computed(
+    () => REGION_LABELS[this.region() as RegionId] ?? this.region(),
+  );
 }

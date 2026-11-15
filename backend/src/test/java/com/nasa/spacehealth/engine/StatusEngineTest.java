@@ -27,8 +27,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// Checks the Java engine against the Python one: the example files, 47 extra reference
-// outputs and the unit checks from contract/test_engine.py.
+// Java vs Python: the example files, 47 extra reference outputs and contract/test_engine.py.
 @SpringBootTest
 class StatusEngineTest {
 

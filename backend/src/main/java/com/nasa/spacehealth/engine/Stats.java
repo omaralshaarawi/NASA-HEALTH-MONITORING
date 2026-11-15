@@ -3,8 +3,7 @@ package com.nasa.spacehealth.engine;
 import java.util.List;
 import java.util.function.Predicate;
 
-// Small numeric helpers. Sums go left to right, same as numpy on these short arrays,
-// so results match the Python engine bit for bit.
+// Sums go left to right like numpy does on these short arrays, so results match Python exactly.
 final class Stats {
 
     private Stats() {
@@ -28,7 +27,6 @@ final class Stats {
         return Math.sqrt(sum / (values.length - 1));
     }
 
-    // least-squares slope of y over x
     static double slope(double[] x, double[] y) {
         double xMean = mean(x);
         double yMean = mean(y);

@@ -20,12 +20,9 @@ import { ModalShellComponent } from '../modal-shell/modal-shell.component';
 import { REGION_LABELS } from '../planner-labels';
 
 const POLL_MS = 400;
-// this many failed telemetry calls in a row (about 2 s) and the coach counts as gone
+// ~2 s of failed polls
 const MISSES_BEFORE_OFFLINE = 5;
 
-// Camera coach for one training session: the live pose-tracking feed from cv-service, the live
-// counters, a form check, and a way to add the workout to today's record. The webcam is only in
-// use while this dialog is open.
 @Component({
   selector: 'app-cv-coach-modal',
   imports: [ModalShellComponent],
@@ -37,7 +34,6 @@ export class CvCoachModalComponent implements OnInit {
   private readonly coach = inject(CvCoachService);
   protected readonly store = inject(MissionStore);
 
-  // the plan's exercise id; the service matches it to a camera profile
   readonly exerciseId = input.required<string>();
   readonly closed = output<void>();
 
@@ -58,10 +54,11 @@ export class CvCoachModalComponent implements OnInit {
   private readonly feed = viewChild<ElementRef<HTMLImageElement>>('feed');
   private polling: Subscription | null = null;
   private misses = 0;
-  // the camera stream this dialog opened, until it is stopped
   private stream: string | null = null;
 
-  protected readonly holdMode = computed(() => this.telemetry()?.cv_tracking_mode === 'POSTURE_HOLD');
+  protected readonly holdMode = computed(
+    () => this.telemetry()?.cv_tracking_mode === 'POSTURE_HOLD',
+  );
   protected readonly minutesOverride = computed(() => {
     const value = this.minutes().trim();
     return value === '' ? null : Math.max(0, Math.round(Number(value)));
@@ -74,7 +71,7 @@ export class CvCoachModalComponent implements OnInit {
   });
 
   constructor() {
-    // closing the tab skips the normal clean-up, so the camera is stopped from here too
+    // closing the tab skips ngOnDestroy
     const onPageHide = () => {
       if (this.stream) this.coach.stopOnUnload(this.stream);
     };
@@ -93,7 +90,10 @@ export class CvCoachModalComponent implements OnInit {
     this.phase.set('connecting');
     this.problem.set('');
     this.feedProblem.set(false);
-    forkJoin({ list: this.coach.exercises(), selected: this.coach.select(this.exerciseId()) }).subscribe({
+    forkJoin({
+      list: this.coach.exercises(),
+      selected: this.coach.select(this.exerciseId()),
+    }).subscribe({
       next: ({ list, selected }) => {
         this.exercises.set(list);
         this.telemetry.set(selected);
@@ -133,12 +133,15 @@ export class CvCoachModalComponent implements OnInit {
     this.synced.set(null);
     this.syncProblem.set('');
     this.coach
-      .sync({ astronaut_id: assessment.astronaut_id, day: assessment.mission_day, minutes_override: this.minutesOverride() })
+      .sync({
+        astronaut_id: assessment.astronaut_id,
+        day: assessment.mission_day,
+        minutes_override: this.minutesOverride(),
+      })
       .subscribe({
         next: (result) => {
           this.syncing.set(false);
           this.synced.set(result);
-          // the body map, compliance and every page follow the new assessment
           this.store.refresh();
         },
         error: (error: Error) => {
@@ -169,7 +172,9 @@ export class CvCoachModalComponent implements OnInit {
           this.misses = 0;
           this.telemetry.set(t);
         } else if (++this.misses >= MISSES_BEFORE_OFFLINE) {
-          this.goOffline('The camera coach stopped answering. Check that cv-service is still running.');
+          this.goOffline(
+            'The camera coach stopped answering. Check that cv-service is still running.',
+          );
         }
       });
   }
@@ -180,8 +185,7 @@ export class CvCoachModalComponent implements OnInit {
     this.phase.set('offline');
   }
 
-  // Stops polling, drops the video stream and tells cv-service to release the webcam at once,
-  // so the camera is free as soon as the dialog closes and opens again next time.
+  // removing src drops the MJPEG connection; /stop frees the webcam right away
   private disconnect(): void {
     this.polling?.unsubscribe();
     this.polling = null;

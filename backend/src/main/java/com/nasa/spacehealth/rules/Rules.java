@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
 
-// Typed view of contract/rules.json (only the parts the engine uses).
-// Loaded strictly, so a missing key fails start-up. Keys that the snake_case strategy would
-// mangle (e.g. red_z_needs_confirmation -> red_zneeds_confirmation) are mapped by hand.
+// Only the parts of rules.json the engine uses, loaded strictly so a missing key fails start-up.
+// Keys the snake_case strategy would mangle
+// (red_z_needs_confirmation -> red_zneeds_confirmation) are mapped by hand.
 public record Rules(
         String version,
         Constants constants,

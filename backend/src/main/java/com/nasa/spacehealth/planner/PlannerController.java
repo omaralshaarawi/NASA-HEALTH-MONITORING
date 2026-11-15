@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/plans")
 public class PlannerController {
 
-    // tells the UI where the plan came from: SAVED, LIVE or OFFLINE
+    // SAVED, LIVE or OFFLINE
     public static final String SOURCE_HEADER = "X-Plan-Source";
 
     private final PlannerService plannerService;
@@ -24,7 +24,7 @@ public class PlannerController {
         this.plannerService = plannerService;
     }
 
-    // body: the AssessmentResponse from GET /api/assessments/{id}. fresh=true skips saved plans and asks the LLM.
+    // fresh=true skips saved plans and asks the LLM
     @PostMapping("/generate")
     public ResponseEntity<CountermeasurePlan> generate(@RequestBody JsonNode assessment,
                                                        @RequestParam(required = false) Double massKg,

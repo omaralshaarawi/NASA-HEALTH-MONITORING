@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-// Rule-based plan with fixed wording, used when the LLM is not configured, not reachable,
-// or its answer is rejected twice. No network, same input gives the same plan.
+// Used when the LLM isn't configured, can't be reached, or is rejected twice. Deterministic.
 @Component
 public class FallbackPlanner {
 
@@ -184,7 +183,6 @@ public class FallbackPlanner {
     }
 
     private Session session(AssessmentResponse a, ExerciseMenu.Item item, int minutes, String routineReason) {
-        // quote what triggered it, straight from the assessment
         List<String> triggers = a.indicators().stream()
                 .filter(i -> i.status() != Status.GREEN && item.targetSystem().equals(i.region())
                         && !i.reasons().isEmpty())
@@ -199,7 +197,6 @@ public class FallbackPlanner {
         return a.regions().containsKey(region) && a.regions().get(region).status() != Status.GREEN;
     }
 
-    // first of the wanted ids that is allowed in this habitat (and that we have wording for)
     private static ExerciseMenu.Item pick(List<ExerciseMenu.Item> allowed, String... wanted) {
         for (String id : wanted) {
             for (ExerciseMenu.Item item : allowed) {

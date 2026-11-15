@@ -1,7 +1,15 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, booleanAttribute, input, output, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  booleanAttribute,
+  input,
+  output,
+  viewChild,
+} from '@angular/core';
 
-// Shared dialog frame. Uses the native <dialog>, which gives focus trapping, Esc to close
-// and a backdrop for free. Render it with @if and listen to (closed).
+// native <dialog>: focus trap, Esc and backdrop for free
 @Component({
   selector: 'app-modal-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,7 +42,6 @@ export class ModalShellComponent implements AfterViewInit {
 
   readonly heading = input.required<string>();
   readonly eyebrow = input('');
-  // a short question rather than a full page of content
   readonly narrow = input(false, { transform: booleanAttribute });
   readonly closed = output<void>();
 
@@ -49,7 +56,7 @@ export class ModalShellComponent implements AfterViewInit {
     this.dialog().nativeElement.close();
   }
 
-  // a click on the dialog element itself (not its content) is a click on the backdrop
+  // backdrop clicks land on the dialog element itself
   protected onBackdrop(event: MouseEvent): void {
     if (event.target === this.dialog().nativeElement) {
       this.close();

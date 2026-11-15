@@ -25,7 +25,6 @@
 
 @if (a) {
   <div class="mt-6 grid items-start gap-4 lg:grid-cols-[minmax(21rem,26rem)_minmax(0,1fr)]">
-    <!-- the body map -->
     <section class="panel p-5 lg:sticky lg:top-4" aria-labelledby="map-title">
       <h2 id="map-title" class="display m-0 text-[0.8125rem] text-ink">Crew vitals &amp; body map</h2>
 
@@ -53,7 +52,6 @@
     </section>
 
     <div class="min-w-0 space-y-4">
-      <!-- the selected region, or a hint to pick one -->
       @if (region(); as id) {
         <section class="panel p-5" aria-live="polite" aria-labelledby="region-title">
           <div class="flex flex-wrap items-start justify-between gap-3">
@@ -85,7 +83,6 @@
 
       <app-indicator-list [assessment]="a" [onlyRegion]="region()" (indicatorSelected)="guideFor.set($event)" />
 
-      <!-- scans captured today -->
       <section class="panel px-5 py-4" aria-labelledby="scans-title">
         <div class="min-w-0">
           <h2 id="scans-title" class="display m-0 text-[0.8125rem] text-ink">Scans</h2>

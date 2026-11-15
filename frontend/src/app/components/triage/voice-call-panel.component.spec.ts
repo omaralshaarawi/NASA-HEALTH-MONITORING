@@ -8,7 +8,11 @@ import { VOICE_CALL_CLIENT } from '../../core/voice/voice-call-client';
 import { VoiceCallService } from '../../core/voice/voice-call.service';
 import { VoiceCallPanelComponent } from './voice-call-panel.component';
 
-const REQUEST = { patient_id: 'ast_lin', environment_id: 'DEEP_SPACECRAFT', distance_km: 225_000_000 };
+const REQUEST = {
+  patient_id: 'ast_lin',
+  environment_id: 'DEEP_SPACECRAFT',
+  distance_km: 225_000_000,
+};
 
 async function render(options: { microphoneAllowed?: boolean } = {}) {
   const fake = new FakeVoiceCallClient();
@@ -133,8 +137,12 @@ describe('VoiceCallPanelComponent', () => {
     const panel = await render({ microphoneAllowed: false });
 
     expect(panel.status()).toBe('Connection error');
-    expect(panel.page.querySelector('[role=alert]')?.textContent).toContain('microphone could not be used');
-    expect(panel.page.querySelector('[role=alert]')?.textContent).toContain('checklist below still works');
+    expect(panel.page.querySelector('[role=alert]')?.textContent).toContain(
+      'microphone could not be used',
+    );
+    expect(panel.page.querySelector('[role=alert]')?.textContent).toContain(
+      'checklist below still works',
+    );
 
     panel.press('Try again');
     expect(panel.asked()).toBe(1);

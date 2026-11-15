@@ -32,8 +32,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-// Walks an incident through triage_protocol.json. The server keeps track of the current step;
-// the client can only answer it, and the step's "next" map decides where to go.
 @Service
 public class TriageService {
 

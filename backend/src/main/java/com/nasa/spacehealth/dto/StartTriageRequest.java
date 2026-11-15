@@ -1,7 +1,7 @@
 package com.nasa.spacehealth.dto;
 
-// Only patientId is required. The rest default to: the patient, the habitat of the latest day,
-// the habitat's default distance and the latest mission day.
+// Only patientId is required. Defaults: the patient, the latest day and its habitat,
+// and that habitat's default distance.
 public record StartTriageRequest(
         String patientId,
         String reporterId,

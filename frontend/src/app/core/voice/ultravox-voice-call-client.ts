@@ -2,8 +2,7 @@ import { UltravoxSession } from 'ultravox-client';
 
 import { CallLine, ClientStatus, VoiceCallClient, VoiceCallListener } from './voice-call-client';
 
-// SDK session status -> the few states the app shows. "disconnecting" is left out on purpose:
-// "disconnected" follows it straight away.
+// 'disconnecting' is skipped: 'disconnected' follows right after
 const STATUS: Record<string, ClientStatus | undefined> = {
   connecting: 'connecting',
   idle: 'listening',
@@ -18,7 +17,7 @@ export class UltravoxVoiceCallClient implements VoiceCallClient {
   private stopListening: (() => void) | null = null;
 
   async checkMicrophone(): Promise<void> {
-    // asks for permission now, so a refusal is known before a call is created
+    // ask up front so a refusal shows before the call is created
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     stream.getTracks().forEach((track) => track.stop());
   }
@@ -32,9 +31,11 @@ export class UltravoxVoiceCallClient implements VoiceCallClient {
     };
     const onTranscripts = () => {
       listener.transcript(
-        session.transcripts.map(
-          (t): CallLine => ({ speaker: t.speaker === 'agent' ? 'JARVIS' : 'YOU', text: t.text, final: t.isFinal }),
-        ),
+        session.transcripts.map((t): CallLine => ({
+          speaker: t.speaker === 'agent' ? 'JARVIS' : 'YOU',
+          text: t.text,
+          final: t.isFinal,
+        })),
       );
     };
     session.addEventListener('status', onStatus);

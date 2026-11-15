@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-// Python-compatible round() and number formatting, so reason strings and numbers match
-// status_engine.py exactly. Python rounds the exact binary value half-to-even, which is
-// what new BigDecimal(double) + HALF_EVEN gives us.
+// Matches Python round() and f-string formatting so reasons read the same as status_engine.py.
+// Python rounds the exact binary value half-to-even, i.e. new BigDecimal(double) + HALF_EVEN.
 public final class PyFormat {
 
     private PyFormat() {

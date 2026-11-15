@@ -24,11 +24,15 @@ const KIND: Record<EnvironmentType, string> = {
   SURFACE_ROVER: 'Surface rover',
 };
 
-// Where the crew member is and what that means: gravity, distance and signal delay to Earth,
-// and the habitat's own readings. A different habitat can be simulated here.
 @Component({
   selector: 'app-mission-page',
-  imports: [AwaitingPanelComponent, DecimalPipe, HabitatSwitcherComponent, SectionHeaderComponent, StatusChipComponent],
+  imports: [
+    AwaitingPanelComponent,
+    DecimalPipe,
+    HabitatSwitcherComponent,
+    SectionHeaderComponent,
+    StatusChipComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './mission-page.component.html',
   styleUrl: './mission-page.component.css',
@@ -38,7 +42,6 @@ export class MissionPageComponent {
 
   protected readonly body = BODY;
   protected readonly kind = KIND;
-  // above this one-way delay the crew works autonomously (rules.json)
   protected readonly autonomousAfterS = rules.constants.autonomous_delay_s;
 
   protected readonly delay = computed(() => {
@@ -46,7 +49,6 @@ export class MissionPageComponent {
     return assessment ? delayText(assessment.comms.one_way_delay_s) : null;
   });
 
-  // the three habitat readings, as the engine assessed them today
   protected readonly radiation = computed(() => this.indicator('radiation'));
   protected readonly co2 = computed(() => this.indicator('cabin_co2'));
   protected readonly resistive = computed(() => this.indicator('resistive'));

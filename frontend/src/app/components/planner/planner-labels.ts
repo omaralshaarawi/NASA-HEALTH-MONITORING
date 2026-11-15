@@ -17,7 +17,6 @@ export function menuItem(exerciseId: string): MenuItem | undefined {
   return MENU.get(exerciseId);
 }
 
-// Short titles for the cards. The full contract label is shown underneath.
 const TITLES: Record<string, string> = {
   resistive_moderate: 'ARED resistive loading',
   resistive_vigorous: 'ARED resistive loading, vigorous',

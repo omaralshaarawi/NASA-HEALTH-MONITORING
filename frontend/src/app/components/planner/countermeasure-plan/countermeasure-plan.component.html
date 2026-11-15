@@ -1,5 +1,4 @@
 <div class="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]">
-  <!-- sessions -->
   <div class="space-y-4">
     <h2 class="sr-only">Today's sessions</h2>
     @for (s of draft().sessions; track s.exercise_id; let i = $index) {
@@ -32,7 +31,6 @@
     }
   </div>
 
-  <!-- side rail -->
   <aside class="space-y-4">
     <section class="panel px-5 py-5" aria-labelledby="nutrition-title">
       <h2 class="display m-0 text-[0.8125rem] text-ink" id="nutrition-title">Nutrition today</h2>

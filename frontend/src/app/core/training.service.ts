@@ -12,33 +12,34 @@ interface Entry {
 const SAVED_TRAINING = 'crew-health.training';
 const IDLE: Entry = { state: 'idle', elapsedMs: 0 };
 
-// Countdown timers for today's training sessions. This is screen state only: it never touches
-// the assessment, the compliance fields or the plan's resource numbers.
-//
-// Time is always worked out from timestamps, so a tab left in the background stays accurate.
-// A session that was running when the page closed comes back paused at its last saved time.
+// Screen state only, never written back to the assessment. Elapsed time comes from
+// timestamps so background tabs stay accurate; a running timer reloads as paused.
 @Injectable({ providedIn: 'root' })
 export class TrainingService {
   private readonly store = inject(MissionStore);
 
-  // every saved session, keyed by crew member, mission day and exercise
   private readonly entries = signal<Record<string, Entry>>(readSaved());
   private readonly now = signal(Date.now());
-  // the one session whose clock is running
-  private clock: { key: string; exerciseId: string; since: number; base: number; totalMs: number } | null = null;
+  private clock: {
+    key: string;
+    exerciseId: string;
+    since: number;
+    base: number;
+    totalMs: number;
+  } | null = null;
   private ticker: ReturnType<typeof setInterval> | null = null;
 
-  // exercise id of the session that last ran down to zero, for the screen-reader announcement
+  // for the aria-live announcement
   readonly lastCompleted = signal<string | null>(null);
 
-  // no training while an emergency is open
   readonly locked = computed(() => this.store.assessment()?.triage_recommended === true);
 
   private readonly sessions = computed(() => this.store.plan()?.draft.sessions ?? []);
 
-  // the session that is running or paused today, if any
   readonly activeId = computed(() => {
-    const active = this.sessions().find((s) => ['running', 'paused'].includes(this.stateOf(s.exercise_id)));
+    const active = this.sessions().find((s) =>
+      ['running', 'paused'].includes(this.stateOf(s.exercise_id)),
+    );
     return active?.exercise_id ?? null;
   });
 
@@ -73,7 +74,6 @@ export class TrainingService {
     return Math.max(0, this.totalMs(exerciseId) - this.elapsedMs(exerciseId));
   }
 
-  // why Start is not available right now, or '' when it is
   blockedReason(exerciseId: string): string {
     if (this.locked()) return 'Emergency active: follow the triage';
     const active = this.activeId();
@@ -97,7 +97,6 @@ export class TrainingService {
     this.run(exerciseId, this.entry(this.key(exerciseId)).elapsedMs);
   }
 
-  // finish before the countdown ends; the time actually trained is kept
   complete(exerciseId: string): void {
     const state = this.stateOf(exerciseId);
     if (state !== 'running' && state !== 'paused') return;
@@ -114,7 +113,6 @@ export class TrainingService {
     this.save();
   }
 
-  // demo reset: forget every timer
   clearAll(): void {
     this.clock = null;
     this.stopTicker();
@@ -123,10 +121,12 @@ export class TrainingService {
   }
 
   private run(exerciseId: string, base: number): void {
-    // one clock at a time, whoever it belonged to
     if (this.clock) {
       const other = this.clock;
-      this.put(other.key, { state: 'paused', elapsedMs: Math.min(other.totalMs, other.base + (Date.now() - other.since)) });
+      this.put(other.key, {
+        state: 'paused',
+        elapsedMs: Math.min(other.totalMs, other.base + (Date.now() - other.since)),
+      });
     }
     const key = this.key(exerciseId);
     this.clock = { key, exerciseId, since: Date.now(), base, totalMs: this.totalMs(exerciseId) };
@@ -147,7 +147,7 @@ export class TrainingService {
       this.stopTicker();
       return;
     }
-    // keep the saved time fresh, so a reload loses at most half a second
+    // save as we go so a reload loses at most half a second
     this.put(clock.key, { state: 'running', elapsedMs: elapsed });
   }
 
@@ -185,7 +185,7 @@ export class TrainingService {
     try {
       localStorage.setItem(SAVED_TRAINING, JSON.stringify(this.entries()));
     } catch {
-      // no storage: the timers still work until the page is closed
+      // storage unavailable
     }
   }
 }
@@ -193,9 +193,12 @@ export class TrainingService {
 function readSaved(): Record<string, Entry> {
   try {
     const saved = JSON.parse(localStorage.getItem(SAVED_TRAINING) ?? '{}') as Record<string, Entry>;
-    // nobody was timing while the page was closed
+    // nothing ran while the page was closed
     return Object.fromEntries(
-      Object.entries(saved).map(([key, entry]) => [key, entry.state === 'running' ? { ...entry, state: 'paused' as const } : entry]),
+      Object.entries(saved).map(([key, entry]) => [
+        key,
+        entry.state === 'running' ? { ...entry, state: 'paused' as const } : entry,
+      ]),
     );
   } catch {
     return {};

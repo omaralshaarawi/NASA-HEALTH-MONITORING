@@ -113,7 +113,8 @@ export class PvtTestComponent implements OnDestroy {
     }
     const sorted = [...this.responses].sort((a, b) => a - b);
     const middle = Math.floor(sorted.length / 2);
-    const median = sorted.length % 2 ? sorted[middle] : Math.round((sorted[middle - 1] + sorted[middle]) / 2);
+    const median =
+      sorted.length % 2 ? sorted[middle] : Math.round((sorted[middle - 1] + sorted[middle]) / 2);
     const result: PvtResult = {
       median_rt_ms: median,
       lapses_gt500ms: this.responses.filter((response) => response > 500).length,

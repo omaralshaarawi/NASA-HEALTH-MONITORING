@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 
 import { MissionStore } from '../core/mission-store.service';
 
-// Shown in place of a page's content while there is no assessment to display.
 @Component({
   selector: 'app-awaiting-panel',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,5 +24,7 @@ import { MissionStore } from '../core/mission-store.service';
 export class AwaitingPanelComponent {
   protected readonly store = inject(MissionStore);
 
-  readonly hint = input("There is no assessment for today yet. It appears here once today's readings have been logged on the Health page.");
+  readonly hint = input(
+    "There is no assessment for today yet. It appears here once today's readings have been logged on the Health page.",
+  );
 }

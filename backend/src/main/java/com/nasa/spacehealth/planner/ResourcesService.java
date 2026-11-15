@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// Java version of contract/resources.py: what a plan costs the closed-loop life support
-// in extra food energy, water and CO2. Constants come from rules.json "resource_math".
+// Port of contract/resources.py: extra food, water and CO2 a plan costs life support.
+// Constants come from rules.json "resource_math".
 @Service
 public class ResourcesService {
 

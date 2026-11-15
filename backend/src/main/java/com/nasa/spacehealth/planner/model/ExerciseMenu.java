@@ -2,7 +2,6 @@ package com.nasa.spacehealth.planner.model;
 
 import java.util.List;
 
-// contract/exercise_menu.json: the only countermeasures a plan may contain.
 public record ExerciseMenu(int minMinutes, int maxMinutesPerSession, List<Item> items) {
 
     public record Item(

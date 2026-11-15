@@ -6,7 +6,6 @@
   next mission day.
 </app-section-header>
 
-<!-- today, and what can be done with it -->
 <section class="panel mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 px-5 py-4" aria-label="Today">
   <div class="flex min-w-0 flex-1 basis-64 flex-wrap items-center gap-3">
     <span class="display text-lg text-ink">Day {{ currentDay() ?? '…' }}</span>
@@ -31,10 +30,8 @@
 </section>
 
 <div class="mt-4 grid items-start gap-4 lg:grid-cols-[17rem_minmax(0,1fr)]">
-  <!-- the log -->
   <nav class="panel p-3 lg:sticky lg:top-4" aria-label="Daily log">
     <h2 class="eyebrow m-0 px-2 pt-1">Daily log</h2>
-    <!-- on a phone the list scrolls on its own, so the report stays close to the top -->
     <ul class="m-0 mt-2 grid list-none gap-1 overflow-y-auto p-0 max-lg:max-h-64 lg:max-h-[calc(100dvh-12rem)]">
       <li>
         <button type="button" class="row" [attr.aria-current]="isOpen('today') ? 'page' : null" (click)="view.set({ kind: 'today' })">
@@ -69,7 +66,6 @@
     <button type="button" class="reset" (click)="confirming.set('reset')">Reset demo data</button>
   </nav>
 
-  <!-- the selected day -->
   <div class="min-w-0">
     @switch (view().kind) {
       @case ('today') {

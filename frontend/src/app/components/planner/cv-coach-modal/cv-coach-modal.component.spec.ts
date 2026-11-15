@@ -43,7 +43,11 @@ async function render() {
   const store = { assessment: signal(KAI), crewId: signal('ast_kai'), refresh };
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({
-    providers: [provideHttpClient(), provideHttpClientTesting(), { provide: MissionStore, useValue: store }],
+    providers: [
+      provideHttpClient(),
+      provideHttpClientTesting(),
+      { provide: MissionStore, useValue: store },
+    ],
   });
   const http = TestBed.inject(HttpTestingController);
   const fixture = TestBed.createComponent(CvCoachModalComponent);
@@ -59,16 +63,17 @@ async function render() {
   return { fixture, page, http, refresh, update, button };
 }
 
-// answers the opening calls the way a running cv-service would
 function goOnline(http: HttpTestingController): void {
-  http.expectOne(`${CV}/exercises`).flush([{ exercise_id: 'zero_t2_ergometer', name: 'Zero T2 compact ergometer' }]);
+  http
+    .expectOne(`${CV}/exercises`)
+    .flush([{ exercise_id: 'zero_t2_ergometer', name: 'Zero T2 compact ergometer' }]);
   const select = http.expectOne(`${CV}/select`);
   expect(select.request.body).toEqual({ exercise_id: 'zero_t2_ergometer' });
   select.flush(telemetry());
 }
 
 describe('CvCoachModalComponent', () => {
-  // jsdom has no <dialog> behaviour; the real browser opens and closes it natively
+  // jsdom doesn't implement <dialog>
   beforeAll(() => {
     HTMLDialogElement.prototype.showModal ??= function (this: HTMLDialogElement) {
       this.setAttribute('open', '');
@@ -95,10 +100,14 @@ describe('CvCoachModalComponent', () => {
     goOnline(http);
     await update();
 
-    expect(page.querySelector('img')?.getAttribute('src')).toMatch(new RegExp(`^${CV}/video_feed\\?stream=\\w+`));
+    expect(page.querySelector('img')?.getAttribute('src')).toMatch(
+      new RegExp(`^${CV}/video_feed\\?stream=\\w+`),
+    );
 
     await update(400);
-    http.expectOne(`${CV}/telemetry`).flush(telemetry({ reps: 3, severity: 'YELLOW', hud_warning: 'HEAD UP - EYES FORWARD' }));
+    http
+      .expectOne(`${CV}/telemetry`)
+      .flush(telemetry({ reps: 3, severity: 'YELLOW', hud_warning: 'HEAD UP - EYES FORWARD' }));
     await update();
 
     expect(page.querySelector('.stats')?.textContent).toContain('3/ 12');
@@ -116,7 +125,6 @@ describe('CvCoachModalComponent', () => {
     fixture.destroy();
     expect(img.hasAttribute('src')).toBe(false);
 
-    // the webcam is released right away, for this stream only
     const stop = http.expectOne((r) => r.url === `${CV}/stop`);
     expect(stop.request.method).toBe('POST');
     expect(stop.request.params.get('stream')).toBe(stream);
@@ -135,8 +143,20 @@ describe('CvCoachModalComponent', () => {
 
     button('Sync workout to mission log')!.click();
     const sync = http.expectOne(`${CV}/sync-to-backend`);
-    expect(sync.request.body).toEqual({ astronaut_id: 'ast_kai', day: KAI.mission_day, minutes_override: null });
-    sync.flush({ synced: true, exercise_id: 'zero_t2_ergometer', reps_completed: 4, credited_minutes: 20, previous_ared_minutes: 11, new_ared_minutes: 31, updated_assessment: KAI });
+    expect(sync.request.body).toEqual({
+      astronaut_id: 'ast_kai',
+      day: KAI.mission_day,
+      minutes_override: null,
+    });
+    sync.flush({
+      synced: true,
+      exercise_id: 'zero_t2_ergometer',
+      reps_completed: 4,
+      credited_minutes: 20,
+      previous_ared_minutes: 11,
+      new_ared_minutes: 31,
+      updated_assessment: KAI,
+    });
     await update();
 
     expect(refresh).toHaveBeenCalledTimes(1);

@@ -4,8 +4,7 @@ import { AssessmentResponse } from '../../../models/contract';
 import { ModalShellComponent } from '../modal-shell/modal-shell.component';
 import { Attachment, SCAN_GUIDES, ScanKind } from './scan-guides';
 
-// Guided probe / electrode placement plus a simulated capture that is attached to today's record.
-// Store-and-forward only: nothing in this app looks at or interprets the image.
+// simulated capture only; nothing here interprets the image
 @Component({
   selector: 'app-ultrasound-attachment-modal',
   imports: [ModalShellComponent],
@@ -32,9 +31,10 @@ export class UltrasoundAttachmentModalComponent {
   protected readonly guides = SCAN_GUIDES;
   private readonly chosenKind = signal<ScanKind | null>(null);
   protected readonly kind = computed(() => this.chosenKind() ?? this.initialKind());
-  protected readonly guide = computed(() => SCAN_GUIDES.find((g) => g.kind === this.kind()) ?? SCAN_GUIDES[0]);
+  protected readonly guide = computed(
+    () => SCAN_GUIDES.find((g) => g.kind === this.kind()) ?? SCAN_GUIDES[0],
+  );
 
-  // the simulated frame on screen: a seed for the noise, and when it was taken
   protected readonly capture = signal<{ seed: number; atIso: string } | null>(null);
   protected readonly note = signal('');
   protected readonly justAttached = signal<Attachment | null>(null);
@@ -49,7 +49,10 @@ export class UltrasoundAttachmentModalComponent {
   }
 
   protected takeCapture(): void {
-    this.capture.set({ seed: Math.floor(Math.random() * 900) + 1, atIso: new Date().toISOString() });
+    this.capture.set({
+      seed: Math.floor(Math.random() * 900) + 1,
+      atIso: new Date().toISOString(),
+    });
     this.justAttached.set(null);
   }
 
@@ -73,7 +76,7 @@ export class UltrasoundAttachmentModalComponent {
   }
 }
 
-// A made-up heartbeat trace for the simulated strip: flat line, small P wave, sharp QRS, rounded T.
+// fake ECG trace: flat line, P wave, QRS, rounded T
 function ecgPath(seed: number): string {
   const beat = 64 + (seed % 5) * 4;
   let d = 'M0 60';

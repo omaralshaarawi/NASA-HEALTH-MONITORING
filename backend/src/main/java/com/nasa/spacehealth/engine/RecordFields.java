@@ -2,7 +2,7 @@ package com.nasa.spacehealth.engine;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-// Reads values out of a daily record by the dotted paths used in rules.json ("vitals.hr_rest_bpm").
+// dotted paths as used in rules.json, e.g. "vitals.hr_rest_bpm"
 final class RecordFields {
 
     private RecordFields() {

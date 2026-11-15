@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-// Page heading: small caption, title, and an optional line of text passed as content.
 @Component({
   selector: 'app-section-header',
   changeDetection: ChangeDetectionStrategy.OnPush,

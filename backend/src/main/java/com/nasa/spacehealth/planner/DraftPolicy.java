@@ -19,9 +19,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// Server-side rules for a draft, on top of the contract's validate_draft():
-// clamp the two numbers the LLM is allowed to write, force escalation where it is not optional,
-// and reject anything the contract forbids but the Python validator does not look at.
+// On top of validate_draft(): clamp the two numbers the LLM may write, force escalation where
+// it isn't optional, and reject things the contract forbids but the Python validator doesn't check.
 @Component
 public class DraftPolicy {
 
@@ -55,7 +54,6 @@ public class DraftPolicy {
                 .toList();
     }
 
-    // Returns a cleaned copy. Only fixes what is safe to fix; everything else is left for check().
     public JsonNode clamp(JsonNode raw, AssessmentResponse assessment) {
         if (raw == null || !raw.isObject()) {
             return raw;
@@ -116,7 +114,6 @@ public class DraftPolicy {
         }
     }
 
-    // Empty list = the draft can be used.
     public List<String> check(JsonNode draft, AssessmentResponse assessment, double gravityG) {
         if (draft == null || !draft.isObject()) {
             return List.of("the answer is not a JSON object");

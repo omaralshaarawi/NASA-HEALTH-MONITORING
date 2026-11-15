@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-// Assessment in, complete plan out. Where the draft comes from, in order:
+// Where the draft comes from, in order:
 //   1. a saved plan for exactly the same LLM input (recorded file or earlier live answer), unless fresh=true
 //   2. a live LLM answer
 //   3. a saved plan again, if the live call failed
@@ -51,7 +51,6 @@ public class PlannerService {
     private static final double MIN_MASS_KG = 30;
     private static final double MAX_MASS_KG = 200;
 
-    // what one assessment turns into before any LLM call
     private record Request(AssessmentResponse assessment, double gravity, List<ExerciseMenu.Item> allowed,
                            String input, String inputHash) {
     }

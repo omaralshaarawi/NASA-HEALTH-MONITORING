@@ -8,10 +8,14 @@ import { TrainingService } from '../../core/training.service';
 import { AwaitingPanelComponent } from '../../ui/awaiting-panel.component';
 import { SectionHeaderComponent } from '../../ui/section-header.component';
 
-// Today's training sessions with their timers, the nutrition change and the life-support cost.
 @Component({
   selector: 'app-analysis-plan-page',
-  imports: [AwaitingPanelComponent, CountermeasurePlanComponent, CvCoachModalComponent, SectionHeaderComponent],
+  imports: [
+    AwaitingPanelComponent,
+    CountermeasurePlanComponent,
+    CvCoachModalComponent,
+    SectionHeaderComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './analysis-plan-page.component.html',
 })
@@ -19,10 +23,8 @@ export class AnalysisPlanPageComponent {
   protected readonly store = inject(MissionStore);
   protected readonly training = inject(TrainingService);
 
-  // the exercise the camera coach is open for, if any
   protected readonly coachFor = signal<string | null>(null);
 
-  // the plan in one sentence, put together from its own fields
   protected readonly summary = computed(() => {
     const plan = this.store.plan();
     if (!plan) return '';

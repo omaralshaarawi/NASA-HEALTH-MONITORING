@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { MissionStore } from './mission-store.service';
 import { VoiceCallService } from './voice/voice-call.service';
 
-// The emergency action, shared by the alert strip and the Home card so both do exactly the same thing:
-// open the triage page, which starts the checklist and the voice call.
 @Injectable({ providedIn: 'root' })
 export class EmergencyService {
   private readonly store = inject(MissionStore);
@@ -14,7 +12,6 @@ export class EmergencyService {
 
   readonly active = computed(() => this.store.assessment()?.triage_recommended === true);
 
-  // wording for comms.emergency_action
   readonly label = computed(() =>
     this.store.assessment()?.comms.emergency_action === 'CALL_FLIGHT_SURGEON'
       ? 'Call flight surgeon'
@@ -22,10 +19,12 @@ export class EmergencyService {
   );
 
   open(): void {
-    // a call is already connecting or running: show it, never start a second one
+    // already in a call: just show it
     const incidentId = this.voice.incidentId();
     if (this.voice.active()) {
-      void this.router.navigate(['/triage'], { queryParams: incidentId ? { incident: incidentId } : {} });
+      void this.router.navigate(['/triage'], {
+        queryParams: incidentId ? { incident: incidentId } : {},
+      });
       return;
     }
     const assessment = this.store.assessment();

@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-// Java version of validate_draft() in contract/resources.py. Works on raw JSON because the
-// draft comes from an LLM and may have missing fields or wrong types.
-// Returns the list of problems (empty = OK), with the same wording as the Python version.
+// Port of validate_draft() in contract/resources.py, same messages. Works on raw JSON
+// because LLM output can have missing fields or wrong types.
 @Component
 public class DraftValidator {
 

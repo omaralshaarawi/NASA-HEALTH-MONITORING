@@ -8,15 +8,13 @@ export interface ScanGuide {
   tab: string;
   title: string;
   device: string;
-  // what the two numbered points in the diagram are
+  // labels for diagram points 1 and 2
   points: [string, string];
   steps: string[];
   why: string;
   fact?: { value: string; caption: string };
 }
 
-// Placement help for the three capture types. Training content for a prototype:
-// the app stores the capture and forwards it, it never interprets it.
 export const SCAN_GUIDES: ScanGuide[] = [
   {
     kind: 'OCULAR_ULTRASOUND',
@@ -32,14 +30,20 @@ export const SCAN_GUIDES: ScanGuide[] = [
       'Freeze, save the frame, then repeat for the other eye.',
     ],
     why: 'The head-ward fluid shift raises pressure behind the eye. Over months it can flatten the back of the eye and swell the optic nerve: Spaceflight Associated Neuro-ocular Syndrome (SANS). Regular scans let the flight surgeon follow it.',
-    fact: { value: 'About 70%', caption: 'of crew on long space-station missions show signs of SANS' },
+    fact: {
+      value: 'About 70%',
+      caption: 'of crew on long space-station missions show signs of SANS',
+    },
   },
   {
     kind: 'CARDIAC_ULTRASOUND',
     tab: 'Heart ultrasound',
     title: 'Heart ultrasound',
     device: 'Ultrasound 2 · phased-array probe',
-    points: ['Beside the breastbone, left side of the chest', 'Lower left chest, at the tip of the heart'],
+    points: [
+      'Beside the breastbone, left side of the chest',
+      'Lower left chest, at the tip of the heart',
+    ],
     steps: [
       'Strap in with the chest bare. The operator hooks both feet in restraints so both hands are free.',
       'Put gel on the probe and place it just left of the breastbone (point 1).',
@@ -47,14 +51,20 @@ export const SCAN_GUIDES: ScanGuide[] = [
       'Save a clip of a few heartbeats, then repeat from the lower left chest (point 2).',
     ],
     why: 'With no gravity to work against, the heart changes shape and the muscle slowly deconditions. Ultrasound shows how it fills and pumps, which matters before a landing or heavy surface work.',
-    fact: { value: 'Deconditioning', caption: 'the heart works less against gravity and adapts to it' },
+    fact: {
+      value: 'Deconditioning',
+      caption: 'the heart works less against gravity and adapts to it',
+    },
   },
   {
     kind: 'ECG',
     tab: 'ECG',
     title: 'Resting ECG',
     device: 'Four-electrode ECG recorder',
-    points: ['Upper electrodes below each collarbone', 'Lower electrodes on each side of the lower abdomen'],
+    points: [
+      'Upper electrodes below each collarbone',
+      'Lower electrodes on each side of the lower abdomen',
+    ],
     steps: [
       'Wipe the skin dry. Shave if needed so the electrodes stick.',
       'Place the four electrodes as shown: two below the collarbones, two on the lower abdomen.',

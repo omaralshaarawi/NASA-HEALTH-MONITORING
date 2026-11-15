@@ -2,9 +2,17 @@ import { ChangeDetectionStrategy, Component, computed, input, output, signal } f
 import { FormsModule } from '@angular/forms';
 
 import { ModalShellComponent } from '../planner/modal-shell/modal-shell.component';
-import { Attachment, SCAN_GUIDES, ScanKind } from '../planner/ultrasound-attachment-modal/scan-guides';
+import {
+  Attachment,
+  SCAN_GUIDES,
+  ScanKind,
+} from '../planner/ultrasound-attachment-modal/scan-guides';
 import { UltrasoundAttachmentModalComponent } from '../planner/ultrasound-attachment-modal/ultrasound-attachment-modal.component';
-import { AssessmentResponse, DailyMeasurementAndCompliance, EnvironmentProfile } from '../../models/contract';
+import {
+  AssessmentResponse,
+  DailyMeasurementAndCompliance,
+  EnvironmentProfile,
+} from '../../models/contract';
 import { PvtResult, PvtTestComponent } from './pvt-test.component';
 
 @Component({
@@ -79,7 +87,6 @@ export class MeasurementFormModalComponent {
   readonly assessment = input.required<AssessmentResponse>();
   readonly nextMissionDay = input.required<number>();
   readonly environment = input.required<EnvironmentProfile>();
-  // scans already captured today, sent along with these readings
   readonly scans = input<Attachment[]>([]);
   readonly submitting = input(false);
   readonly error = input('');
@@ -114,13 +121,27 @@ export class MeasurementFormModalComponent {
   protected submit(): void {
     const values = this.vitals;
     const vitals = {
-      ...(this.numberOrUndefined(values.hr) === undefined ? {} : { hr_rest_bpm: this.numberOrUndefined(values.hr) }),
-      ...(this.numberOrUndefined(values.sbp) === undefined ? {} : { sbp_mmHg: this.numberOrUndefined(values.sbp) }),
-      ...(this.numberOrUndefined(values.dbp) === undefined ? {} : { dbp_mmHg: this.numberOrUndefined(values.dbp) }),
-      ...(this.numberOrUndefined(values.glucose) === undefined ? {} : { glucose_mg_dl: this.numberOrUndefined(values.glucose) }),
-      ...(this.numberOrUndefined(values.temp) === undefined ? {} : { temp_c: this.numberOrUndefined(values.temp) }),
-      ...(this.numberOrUndefined(values.sleep) === undefined ? {} : { sleep_h: this.numberOrUndefined(values.sleep) }),
-      ...(this.numberOrUndefined(values.mood) === undefined ? {} : { mood_1_10: this.numberOrUndefined(values.mood) }),
+      ...(this.numberOrUndefined(values.hr) === undefined
+        ? {}
+        : { hr_rest_bpm: this.numberOrUndefined(values.hr) }),
+      ...(this.numberOrUndefined(values.sbp) === undefined
+        ? {}
+        : { sbp_mmHg: this.numberOrUndefined(values.sbp) }),
+      ...(this.numberOrUndefined(values.dbp) === undefined
+        ? {}
+        : { dbp_mmHg: this.numberOrUndefined(values.dbp) }),
+      ...(this.numberOrUndefined(values.glucose) === undefined
+        ? {}
+        : { glucose_mg_dl: this.numberOrUndefined(values.glucose) }),
+      ...(this.numberOrUndefined(values.temp) === undefined
+        ? {}
+        : { temp_c: this.numberOrUndefined(values.temp) }),
+      ...(this.numberOrUndefined(values.sleep) === undefined
+        ? {}
+        : { sleep_h: this.numberOrUndefined(values.sleep) }),
+      ...(this.numberOrUndefined(values.mood) === undefined
+        ? {}
+        : { mood_1_10: this.numberOrUndefined(values.mood) }),
     };
     const env = this.environment();
     const measurement: DailyMeasurementAndCompliance = {

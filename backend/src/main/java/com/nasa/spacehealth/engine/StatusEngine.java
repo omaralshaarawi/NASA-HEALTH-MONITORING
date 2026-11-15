@@ -31,17 +31,13 @@ import static com.nasa.spacehealth.engine.RecordFields.number;
 import static com.nasa.spacehealth.engine.RecordFields.numberOrZero;
 
 /*
- * Java version of contract/status_engine.py. All thresholds come from rules.json.
+ * Port of contract/status_engine.py; thresholds come from rules.json.
  *
- * Each indicator gets three checks and the worst one wins:
- *   - absolute limits (work from day 1)
- *   - Z score against the astronaut's own baseline (mission days 1-7)
- *   - 7-day drift (slope), which can only raise it to YELLOW
- * A Z-based RED needs two bad readings in a row; a single one becomes YELLOW + re-measure.
- * Region = worst member, overall = worst region.
+ * Per indicator the worst of: absolute limits, Z score against days 1-7, and 7-day drift
+ * (drift only goes up to YELLOW). A Z-based RED needs two bad readings in a row, otherwise
+ * it's YELLOW + re-measure. Region = worst member, overall = worst region.
  *
- * Operation order follows the Python code closely so the numbers come out identical
- * (StatusEngineTest checks this against the example files).
+ * Keep the operation order close to the Python so the numbers stay identical (StatusEngineTest).
  */
 @Service
 public class StatusEngine {
@@ -133,7 +129,6 @@ public class StatusEngine {
                 case "limit_only" -> results.put(ind.id(), assessLimitOnly(ind, number(today, ind.path())));
                 case "ratio" -> results.put(ind.id(), assessRadiation(number(today, ind.path()), env));
                 default -> {
-                    // compliance and composite indicators are handled below
                 }
             }
         }

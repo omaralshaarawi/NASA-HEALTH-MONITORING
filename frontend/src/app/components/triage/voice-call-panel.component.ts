@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, ElementRef, computed, effect, inject, output, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  computed,
+  effect,
+  inject,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 
 import { CallError, VoiceCallService } from '../../core/voice/voice-call.service';
 
@@ -23,8 +33,6 @@ const PROBLEMS: Record<CallError, string> = {
   lost: 'The connection was lost and the call dropped. Try again when the link is back.',
 };
 
-// The JARVIS voice call inside the triage page: what the call is doing, live subtitles,
-// and the mute and end controls. The checklist below it works with or without the call.
 @Component({
   selector: 'app-voice-call-panel',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,12 +67,11 @@ const PROBLEMS: Record<CallError, string> = {
 export class VoiceCallPanelComponent {
   protected readonly call = inject(VoiceCallService);
 
-  // "Call again" and "Try again": the page starts a new call and follows its incident
   readonly callAgain = output<void>();
 
   protected readonly confirmingEnd = signal(false);
   private readonly log = viewChild<ElementRef<HTMLElement>>('log');
-  // follow new lines until the reader scrolls up to look at older ones
+  // stop auto-scrolling once the user scrolls up
   private following = true;
 
   protected readonly look = computed<Look>(() => {
@@ -91,7 +98,6 @@ export class VoiceCallPanelComponent {
     this.following = log.scrollHeight - log.scrollTop - log.clientHeight < 24;
   }
 
-  // one extra tap, because ending the call in the middle of an emergency should not be an accident
   protected end(): void {
     if (!this.confirmingEnd()) {
       this.confirmingEnd.set(true);

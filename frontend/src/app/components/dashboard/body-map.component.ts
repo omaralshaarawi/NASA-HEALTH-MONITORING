@@ -2,20 +2,20 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 
 import { RegionAssessment, RegionId, Status } from '../../models/contract';
 import { REGION_LABELS } from '../planner/planner-labels';
+import { SiMarkComponent } from '../../ui/si-mark.component';
 
 interface Spot {
   id: RegionId;
-  // marker position on the stage, in percent
+  // marker position, % of the stage
   x: number;
   y: number;
-  // how far the warm patch reaches around the marker
+  // glow radius, % of the stage
   reach: [number, number];
-  // which side the label sits on, and where its leader line ends
   side: 'left' | 'right';
   labelY: number;
 }
 
-// Positions are tied to body-wireframe.webp, which is centred in a square stage.
+// tuned to body-wireframe.webp, centred in a square stage
 const SPOTS: Spot[] = [
   { id: 'HEAD_NEURO', x: 50, y: 12.5, reach: [9, 8], side: 'right', labelY: 12 },
   { id: 'CHEST_CARDIO', x: 52.3, y: 30, reach: [13, 8], side: 'right', labelY: 30 },
@@ -23,10 +23,9 @@ const SPOTS: Spot[] = [
   { id: 'SPINE_BONE', x: 50, y: 50.5, reach: [11, 6], side: 'left', labelY: 66 },
 ];
 
-// The four body regions drawn over the wireframe figure. Colour, shape and word all come from
-// the region status in the assessment; pressing a label or a marker selects that region.
 @Component({
   selector: 'app-body-map',
+  imports: [SiMarkComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     :host { display: block; }
@@ -36,6 +35,12 @@ const SPOTS: Spot[] = [
       max-width: 31rem;
       margin-inline: auto;
       aspect-ratio: 1;
+    }
+    .stage-mark {
+      position: absolute;
+      right: 16%;
+      bottom: 3%;
+      z-index: 1;
     }
     .stage img {
       position: absolute;
@@ -118,6 +123,7 @@ const SPOTS: Spot[] = [
       </svg>
 
       <img src="/assets/body-wireframe.webp" alt="" width="840" height="1125" />
+      <app-si-mark class="stage-mark" />
 
       <svg aria-hidden="true">
         @for (spot of spots; track spot.id) {

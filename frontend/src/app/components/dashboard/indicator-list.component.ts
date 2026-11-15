@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
-import { AssessmentResponse, IndicatorAssessment, IndicatorId, RegionId } from '../../models/contract';
+import {
+  AssessmentResponse,
+  IndicatorAssessment,
+  IndicatorId,
+  RegionId,
+} from '../../models/contract';
 import { REGION_LABELS } from '../planner/planner-labels';
 import { SparklineComponent } from '../planner/sparkline/sparkline.component';
 
-// One glass card per indicator: today's value, its status and reasons exactly as the engine
-// gave them, the 14-day trend, and a way into the 0 g measurement guide.
 @Component({
   selector: 'app-indicator-list',
   imports: [SparklineComponent],

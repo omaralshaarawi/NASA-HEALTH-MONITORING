@@ -7,12 +7,10 @@
         </marker>
       </defs>
 
-      <!-- drafting grid -->
       <g class="grid">
         <path d="M0 40H240M0 80H240M0 120H240M40 0V160M80 0V160M120 0V160M160 0V160M200 0V160" />
       </g>
 
-      <!-- equipment behind the body -->
       @switch (f.scene) {
         @case ('ared') {
           <path class="gear" d="M52 140H196" />
@@ -90,7 +88,7 @@
         }
       }
 
-      <!-- the figure: far limbs first so the near ones overlap them -->
+      <!-- far limbs first so the near ones overlap them -->
       <g fill="none" stroke-linecap="round" stroke-linejoin="round">
         <polyline class="body-far" stroke-width="8" [attr.points]="line(f.pose.hip, f.pose.farLeg[0], f.pose.farLeg[1])" />
         <polyline class="body-far" stroke-width="6.5" [attr.points]="line(f.pose.shoulder, f.pose.farArm[0], f.pose.farArm[1])" />
@@ -100,7 +98,6 @@
       </g>
       <circle [attr.cx]="f.pose.head[0]" [attr.cy]="f.pose.head[1]" r="9" fill="#dfe8f2" />
 
-      <!-- parts worn on the body, drawn over it -->
       @switch (f.scene) {
         @case ('cuff') {
           <path d="M132.5 75.5L138.5 87" stroke="var(--color-signal)" stroke-width="6" fill="none" />
@@ -116,7 +113,6 @@
         }
       }
 
-      <!-- numbered callouts -->
       @for (c of f.callouts; track c.label; let i = $index) {
         <circle class="tag" [attr.cx]="c.at[0]" [attr.cy]="c.at[1]" r="8" />
         <text class="tag-text" [attr.x]="c.at[0]" [attr.y]="c.at[1]">{{ i + 1 }}</text>

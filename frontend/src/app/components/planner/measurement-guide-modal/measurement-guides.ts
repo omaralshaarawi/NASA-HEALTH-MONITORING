@@ -1,15 +1,13 @@
 import { IndicatorId, Status } from '../../../models/contract';
 import rules from '../../../models/rules.json';
 
-// Text for the three guide cards. Background facts follow NASA Human Research Program (HRP)
-// public material as collected by the team: check the exact wording before quoting it in the pitch.
-// Limits are NOT written here; they are read from rules.json below.
+// Facts follow NASA HRP material; check the wording before quoting it in the pitch.
+// Limits come from rules.json, not from here.
 
 export interface MeasurementGuide {
   instrument: string;
   how: string[];
   why: string[];
-  // one headline fact for the "why" card
   fact?: { value: string; caption: string };
   act: string[];
   hazard: string;
@@ -29,7 +27,7 @@ const BLOOD_PRESSURE: MeasurementGuide = {
   ],
   fact: { value: 'Head-ward', caption: 'fluid shift in the first days of weightlessness' },
   act: [
-    'YELLOW: re-measure after resting, and check today\'s sleep, hydration and workload.',
+    "YELLOW: re-measure after resting, and check today's sleep, hydration and workload.",
     'High reading with chest pain, severe headache or breathlessness: start the emergency triage checklist.',
     'Low reading with dizziness: stop work, rest with a crewmate nearby and report to the flight surgeon.',
   ],
@@ -73,7 +71,10 @@ export const GUIDES: Record<IndicatorId, MeasurementGuide> = {
       'Muscles that are not loaded take up less sugar, so the body handles glucose less efficiently during long periods without weight-bearing.',
       'Shifted sleep, stress hormones and a changed diet push in the same direction.',
     ],
-    fact: { value: 'Unloaded muscle', caption: 'uses less glucose, so levels are harder to control' },
+    fact: {
+      value: 'Unloaded muscle',
+      caption: 'uses less glucose, so levels are harder to control',
+    },
     act: [
       'Low reading with shaking, sweating or confusion: eat fast carbohydrate from the ration, re-check, and tell a crewmate.',
       'Repeated high fasting readings: report to the flight surgeon and keep up the resistive exercise.',
@@ -94,7 +95,10 @@ export const GUIDES: Record<IndicatorId, MeasurementGuide> = {
       'Warm air does not rise without gravity and sweat does not run off, so the body loses heat less easily.',
       'Spaceflight also changes the immune system. Stress hormones, radiation and poor sleep weaken defences, and dormant viruses can become active again. A rise in temperature may be the first sign of infection.',
     ],
-    fact: { value: 'Dormant viruses', caption: 'can reactivate when immunity is altered in flight' },
+    fact: {
+      value: 'Dormant viruses',
+      caption: 'can reactivate when immunity is altered in flight',
+    },
     act: [
       'YELLOW: rest, drink, and re-measure later the same day.',
       'RED, or fever with other symptoms: follow the onboard medical checklist and report to the flight surgeon.',
@@ -155,7 +159,10 @@ export const GUIDES: Record<IndicatorId, MeasurementGuide> = {
       'Reaction time slows with lost sleep, high cabin carbon dioxide and heavy workload, often before you feel tired.',
       'NASA uses a short reaction test of this kind on the space station so crews can check their own alertness.',
     ],
-    fact: { value: 'Before you feel it', caption: 'reaction time shows fatigue earlier than you notice' },
+    fact: {
+      value: 'Before you feel it',
+      caption: 'reaction time shows fatigue earlier than you notice',
+    },
     act: [
       'YELLOW: take a rest break and repeat the test before any safety-critical task.',
       'RED: hand over or postpone critical tasks such as piloting, robotics or a spacewalk.',
@@ -190,7 +197,7 @@ export const GUIDES: Record<IndicatorId, MeasurementGuide> = {
       'Wear your personal dosimeter whenever the procedure says so.',
     ],
     why: [
-      'Beyond the protection of Earth\'s magnetic field, crews are exposed to galactic cosmic rays all the time and to solar particle events during solar storms.',
+      "Beyond the protection of Earth's magnetic field, crews are exposed to galactic cosmic rays all the time and to solar particle events during solar storms.",
       'Radiation raises long-term cancer risk and, in high doses, affects the nervous system, the heart and the immune system.',
     ],
     act: [
@@ -209,7 +216,10 @@ export const GUIDES: Record<IndicatorId, MeasurementGuide> = {
     why: [
       'Bones that carry no weight lose mineral, and muscles shrink with them. Loading the skeleton is the main protection.',
     ],
-    fact: { value: '1 to 1.5%', caption: 'of bone mineral lost per month in weight-bearing bones if nothing is done' },
+    fact: {
+      value: '1 to 1.5%',
+      caption: 'of bone mineral lost per month in weight-bearing bones if nothing is done',
+    },
     act: [
       'YELLOW: do the planned resistive session today and do not skip the next one.',
       'If equipment or schedule is the reason, tell the flight surgeon so the plan can change.',
@@ -219,10 +229,7 @@ export const GUIDES: Record<IndicatorId, MeasurementGuide> = {
 
   ration: {
     instrument: 'Meal log (% of ration eaten)',
-    how: [
-      'Log how much of today\'s planned ration you ate.',
-      'A day with no log counts as zero.',
-    ],
+    how: ["Log how much of today's planned ration you ate.", 'A day with no log counts as zero.'],
     why: [
       'Appetite often drops in flight and food tastes different when the head is congested by the fluid shift.',
       'Eating too little speeds up bone and muscle loss and weakens the immune system.',
@@ -243,7 +250,10 @@ export const GUIDES: Record<IndicatorId, MeasurementGuide> = {
       'Stress hormones, radiation and poor sleep all alter the immune system, and the effects add up.',
       'In a sealed habitat microbes are shared by the whole crew and can change their behaviour in flight.',
     ],
-    fact: { value: 'Dormant viruses', caption: 'can reactivate when immunity is altered in flight' },
+    fact: {
+      value: 'Dormant viruses',
+      caption: 'can reactivate when immunity is altered in flight',
+    },
     act: [
       'Protect sleep, eat the full ration and keep up hygiene.',
       'Run the habitat surface swab and air check.',
@@ -265,7 +275,6 @@ interface IndicatorRule {
   abs?: Record<string, number>;
 }
 
-// The limits the engine applies to this indicator, in plain words, straight from rules.json.
 export function limitsFor(id: IndicatorId): Limit[] {
   const rule = (rules.indicators as IndicatorRule[]).find((r) => r.id === id);
   if (!rule) {
@@ -276,22 +285,32 @@ export function limitsFor(id: IndicatorId): Limit[] {
   const unit = rule.unit === 'C' ? '°C' : rule.unit;
   const limits: Limit[] = [];
 
-  if (abs['yellow_hi'] !== undefined) limits.push({ status: 'YELLOW', text: `${abs['yellow_hi']} ${unit} or higher` });
-  if (abs['yellow_lo'] !== undefined) limits.push({ status: 'YELLOW', text: `${abs['yellow_lo']} ${unit} or lower` });
+  if (abs['yellow_hi'] !== undefined)
+    limits.push({ status: 'YELLOW', text: `${abs['yellow_hi']} ${unit} or higher` });
+  if (abs['yellow_lo'] !== undefined)
+    limits.push({ status: 'YELLOW', text: `${abs['yellow_lo']} ${unit} or lower` });
   if (rule.kind === 'anchor') {
     limits.push({
       status: 'YELLOW',
       text: `${g.z_yellow} standard deviations away from your own days 1-${g.anchor_days} baseline, or a steady ${g.drift_window_days}-day drift`,
     });
   }
-  if (abs['red_hi'] !== undefined) limits.push({ status: 'RED', text: `above ${abs['red_hi']} ${unit}` });
-  if (abs['red_lo'] !== undefined) limits.push({ status: 'RED', text: `below ${abs['red_lo']} ${unit}` });
+  if (abs['red_hi'] !== undefined)
+    limits.push({ status: 'RED', text: `above ${abs['red_hi']} ${unit}` });
+  if (abs['red_lo'] !== undefined)
+    limits.push({ status: 'RED', text: `below ${abs['red_lo']} ${unit}` });
   if (rule.kind === 'anchor') {
-    limits.push({ status: 'RED', text: `${g.z_red} standard deviations from baseline on two readings in a row` });
+    limits.push({
+      status: 'RED',
+      text: `${g.z_red} standard deviations from baseline on two readings in a row`,
+    });
   }
 
   if (id === 'radiation') {
-    limits.push({ status: 'YELLOW', text: `${rules.radiation.ratio_yellow}x the rate expected for this habitat` });
+    limits.push({
+      status: 'YELLOW',
+      text: `${rules.radiation.ratio_yellow}x the rate expected for this habitat`,
+    });
     limits.push({ status: 'RED', text: `${rules.radiation.ratio_red}x the expected rate` });
   }
   if (id === 'resistive') {
@@ -303,8 +322,14 @@ export function limitsFor(id: IndicatorId): Limit[] {
   }
   if (id === 'ration') {
     const r = rules.compliance.ration;
-    limits.push({ status: 'YELLOW', text: `under ${r.low_pct}% for ${r.low_days_yellow} days in a row` });
-    limits.push({ status: 'RED', text: `under ${r.very_low_pct}% for ${r.very_low_days_red} days in a row` });
+    limits.push({
+      status: 'YELLOW',
+      text: `under ${r.low_pct}% for ${r.low_days_yellow} days in a row`,
+    });
+    limits.push({
+      status: 'RED',
+      text: `under ${r.very_low_pct}% for ${r.very_low_days_red} days in a row`,
+    });
   }
   if (id === 'immune_risk') {
     const c = rules.composites.immune_risk;

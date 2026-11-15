@@ -1,10 +1,25 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Injector, afterNextRender, computed, inject, input, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Injector,
+  afterNextRender,
+  computed,
+  inject,
+  input,
+  signal,
+  viewChild,
+} from '@angular/core';
 
 import { TrainingService } from '../../../core/training.service';
 
-const STATE_WORDS = { idle: 'Not started', running: 'Running', paused: 'Paused', done: 'Completed' };
+const STATE_WORDS = {
+  idle: 'Not started',
+  running: 'Running',
+  paused: 'Paused',
+  done: 'Completed',
+};
 
-// Countdown and controls for one training session. All state lives in TrainingService.
 @Component({
   selector: 'app-session-timer',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,12 +43,10 @@ const STATE_WORDS = { idle: 'Not started', running: 'Running', paused: 'Paused',
 export class SessionTimerComponent {
   protected readonly training = inject(TrainingService);
   private readonly injector = inject(Injector);
-  // the first button of whatever state the timer is in
   private readonly main = viewChild<ElementRef<HTMLButtonElement>>('main');
 
   readonly exerciseId = input.required<string>();
   readonly minutes = input.required<number>();
-  // the flight surgeon sets and times this protocol: ask before starting
   readonly needsDirection = input(false);
 
   protected readonly confirming = signal(false);
@@ -47,12 +60,16 @@ export class SessionTimerComponent {
     return total ? Math.round((this.training.elapsedMs(this.exerciseId()) / total) * 100) : 0;
   });
 
-  // mm:ss left on the clock; once the session is done, the time that was trained
   protected readonly clock = computed(() => {
     const id = this.exerciseId();
-    const ms = this.state() === 'done' ? this.training.elapsedMs(id) : this.training.remainingMs(id);
+    const ms =
+      this.state() === 'done' ? this.training.elapsedMs(id) : this.training.remainingMs(id);
     const seconds = Math.ceil(ms / 1000);
-    return String(Math.floor(seconds / 60)).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0');
+    return (
+      String(Math.floor(seconds / 60)).padStart(2, '0') +
+      ':' +
+      String(seconds % 60).padStart(2, '0')
+    );
   });
 
   protected start(): void {
@@ -75,7 +92,7 @@ export class SessionTimerComponent {
     this.keepFocus();
   }
 
-  // the pressed button is replaced by the next state's buttons; keep the keyboard on the timer
+  // the clicked button gets replaced, so move focus to the new one
   private keepFocus(): void {
     afterNextRender(() => this.main()?.nativeElement.focus(), { injector: this.injector });
   }

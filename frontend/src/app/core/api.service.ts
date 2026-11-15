@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
 
 export const API_BASE = environment.apiBase;
 
-// where the backend got the plan from (X-Plan-Source header); MOCK means the backend was not reachable
+// X-Plan-Source header; MOCK means the backend was unreachable
 export type PlanSource = 'LIVE' | 'SAVED' | 'OFFLINE' | 'MOCK';
 
 export interface GeneratedPlan {
@@ -32,7 +32,6 @@ export interface AstronautSummary {
 
 export type TriageAnswer = 'yes' | 'no' | 'done';
 
-// what opens a triage incident; the voice workflow takes the same fields
 export interface TriageStartRequest {
   patient_id: string;
   reporter_id?: string;
@@ -96,7 +95,6 @@ export interface TriageIncident {
   disclaimer: string;
 }
 
-// The backend explains a refused request in its body; use that when it is there.
 export function apiErrorMessage(error: unknown, fallback: string): string {
   if (typeof error === 'object' && error !== null && 'error' in error) {
     const body = (error as { error?: { message?: string; error?: string } }).error;
@@ -125,7 +123,9 @@ export class ApiService {
     if (options.day !== undefined) params = params.set('day', options.day);
     if (options.envId) params = params.set('envId', options.envId);
     if (options.distanceKm !== undefined) params = params.set('distanceKm', options.distanceKm);
-    return this.http.get<AssessmentResponse>(`${API_BASE}/api/assessments/${astronautId}`, { params });
+    return this.http.get<AssessmentResponse>(`${API_BASE}/api/assessments/${astronautId}`, {
+      params,
+    });
   }
 
   postMeasurement(measurement: DailyMeasurementAndCompliance): Observable<AssessmentResponse> {
@@ -144,7 +144,11 @@ export class ApiService {
     return this.http.post<TriageIncident>(`${API_BASE}/api/triage/start`, request);
   }
 
-  triageStep(request: { incident_id: string; answer: TriageAnswer; step_id: string }): Observable<TriageIncident> {
+  triageStep(request: {
+    incident_id: string;
+    answer: TriageAnswer;
+    step_id: string;
+  }): Observable<TriageIncident> {
     return this.http.post<TriageIncident>(`${API_BASE}/api/triage/step`, request);
   }
 
@@ -156,7 +160,6 @@ export class ApiService {
     return this.http.get<TriageIncident>(`${API_BASE}/api/triage/${incidentId}`);
   }
 
-  // fresh = true asks for a newly written plan instead of the saved one
   generatePlan(assessment: AssessmentResponse, fresh = false): Observable<GeneratedPlan> {
     return this.http
       .post<CountermeasurePlan>(`${API_BASE}/api/plans/generate`, assessment, {

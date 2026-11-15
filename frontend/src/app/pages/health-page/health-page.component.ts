@@ -15,7 +15,6 @@ import { AwaitingPanelComponent } from '../../ui/awaiting-panel.component';
 import { SectionHeaderComponent } from '../../ui/section-header.component';
 import { StatusChipComponent } from '../../ui/status-chip.component';
 
-// What each region stands for, in the crew member's words rather than the engine's.
 const REGION_NOTES: Record<RegionId, string> = {
   HEAD_NEURO:
     'Sleep, mood and reaction time. Without gravity, body fluid moves towards the head, so rest and alertness are watched closely.',
@@ -56,14 +55,16 @@ export class HealthPageComponent {
   protected readonly formError = signal('');
   protected readonly notice = signal('');
 
-  // The readings form needs who and where. On a day still waiting for readings that comes from
-  // the day just closed; nothing about the new day is filled in.
+  // waiting for the next day's readings: use the closed day for who and where
   protected readonly formContext = computed(
-    () => this.store.assessment() ?? (this.store.pendingDay() ? (this.store.lastClosed()?.assessment ?? null) : null),
+    () =>
+      this.store.assessment() ??
+      (this.store.pendingDay() ? (this.store.lastClosed()?.assessment ?? null) : null),
   );
-  protected readonly formDay = computed(() => this.store.assessment()?.mission_day ?? this.store.pendingDay() ?? 0);
+  protected readonly formDay = computed(
+    () => this.store.assessment()?.mission_day ?? this.store.pendingDay() ?? 0,
+  );
 
-  // labels of the indicators that set the selected region's status
   protected readonly drivers = computed(() => {
     const assessment = this.store.assessment();
     const region = this.region();
@@ -97,7 +98,12 @@ export class HealthPageComponent {
       },
       error: (error: unknown) => {
         this.saving.set(false);
-        this.formError.set(apiErrorMessage(error, 'These readings could not be saved. Check the connection and try again.'));
+        this.formError.set(
+          apiErrorMessage(
+            error,
+            'These readings could not be saved. Check the connection and try again.',
+          ),
+        );
       },
     });
   }
